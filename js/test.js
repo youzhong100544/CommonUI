@@ -11,31 +11,132 @@ console.log("###################################################################
 console.log("# Start - test.js #");
 console.log("#################################################################################################################");
 
+console.log("Number.MAX_VALUE = %d", Number.MAX_SAFE_INTEGER);
+console.log("Number.MAX_SAFE_INTEGER = %i", Number.MAX_SAFE_INTEGER);
 
-/*
-	variables   变量
-	constants   常量
- */
 
-var var_test_array_01 = new Array(11, 22, 33, 44, 55);
-var var_test_array_02 = [1, 2, 3, 4, 5, 6];
+// 立即执行函数（自执行函数）
+// 立即执行函数的写法
+// ( function ( “ 参数 ” ) { " 函数方法 " ; } ) ( “ 给参数传的值 ” )
+// ( function ( " 参数 " ) { “ 函数方法 ” ; } ( " 给参数传的值 " ) )
+// ! function ( " 参数 " ) { " 函数方法 " ; } ( " 给参数传的值 " )　 
+// ! 可以换作 void 或其他运算符（比如 +，-，= 等，都能起到立即执行的作用）
+!function fn_IIFE_test_sum(a,b){
+	console.log(`sum = ${a + b}`);
+    return sum = a + b;
+}(1, 2);
 
-for (var i = 0; i < var_test_array_01.length; i++) {
-	console.log(var_test_array_01[i]);
-	// console.log 格式化
-	console.log("var_test_array_01[%d] = %d", i, var_test_array_01[i]);
-	// 模板字符串
-	console.log(`var_test_array_01[${i}] = ${var_test_array_01[i]}`);
+// 判断参数类型
+!function fn_determine_parameter_type(){
+	var a = "iamstring.";
+	var b = 222;
+	var c= [1,2,3];
+	var d = new Date();
+	var e = function(){alert(111);};
+	var f = function(){this.name="22";};
 
+	// 1. 最常见的判断方法：typeof
+	console.log(typeof a); // string
+	console.log(typeof b); // number
+	console.log(typeof c); // object
+	console.log(typeof d); // object
+	console.log(typeof e); // function
+	console.log(typeof f); // function
+	// 其中typeof返回的类型都是字符串形式，需注意，例如：
+	console.log(typeof a == "string"); // true
+	console.log(typeof a == String);   // false
+
+	// 2. 判断已知对象类型的方法： instanceof
+
+	console.log(c instanceof Array);    // true
+	console.log(d instanceof Date);     // true
+	console.log(f instanceof Function); // true
+	// console.log(f instanceof function); // '(' expected.ts(
+	// 注意：instanceof 后面一定要是对象类型，并且大小写不能错，该方法适合一些条件选择或分支。
+
+}();
+
+(function fn_test_date(){
+	let now = new Date();
+	console.log(`now: ${now}`);
+
+	// 获取当前时间戳
+	console.log(`new Date().valueOf(): ${new Date().valueOf()}`);
+	// getTime() 返回从 1970 年 1 月 1 日至今的毫秒数
+	console.log(`new Date().getTime(): ${new Date().getTime()}`);
+	console.log(`Date.parse(new Date()): ${Date.parse(new Date())}`);
+
+}());
+
+(function fn_test_formatted_current_date(){
+	// getYear(); //获取当前年份(2位)
+	// getFullYear(); //获取完整的年份(4位,1970-????)
+	// getMonth(); //获取当前月份(0-11,0代表1月)
+	// getDate(); //获取当前日(1-31)
+	// getDay(); //获取当前星期X(0-6,0代表星期天)
+	// getTime(); //获取当前时间(从1970.1.1开始的毫秒数)
+	// getHours(); //获取当前小时数(0-23)
+	// getMinutes(); //获取当前分钟数(0-59)
+	// getSeconds(); //获取当前秒数(0-59)
+	// getMilliseconds(); //获取当前毫秒数(0-999)
+	// toLocaleDateString(); //获取当前日期
+	// toLocaleString( ); //获取日期与时间
+
+	let date = new Date();
+
+	// console.log(`date.getFullYear(): ${date.getFullYear()}`);
+	// console.log(`date.getMonth(): ${date.getMonth()}`);
+	// console.log(`date.getDate(): ${date.getDate()}`);
+
+	const year = date.getFullYear();  
+	const month = (date.getMonth() + 1).toString().padStart(2, '0');  
+	const day = date.getDate().toString().padStart(2, '0'); 
+	const hour = date.getHours().toString().padStart(2, '0');
+	const minute = date.getMinutes().toString().padStart(2, '0');
+	const second = date.getSeconds().toString().padStart(2, '0');
+	const formattedDate = `${year}-${month}-${day} ${hour}:${minute}:${second}`;  
+	
+	console.log(formattedDate);
+	console.log(`${formattedDate}`);
+
+	const show_day = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+	const dayOfWeek = date.getDay(); // 获取星期几  
+	console.log(show_day[dayOfWeek]);
+
+	return formattedDate;
+}());
+
+
+function fn_test_formatted_date(date = new Date()){
+	let var_local_date;
+	if (date instanceof Date) {
+		var_local_date = date;
+	}
+
+	if (typeof a == "number") {
+		var_local_date = new Date(date);
+	}
+
+	if (typeof a == "string") {
+		var_local_date = new Date(parseInt(date));
+	}
+
+	const year = var_local_date.getFullYear();  
+	const month = (var_local_date.getMonth() + 1).toString().padStart(2, '0');  
+	const day = var_local_date.getDate().toString().padStart(2, '0'); 
+	const hour = var_local_date.getHours().toString().padStart(2, '0');
+	const minute = var_local_date.getMinutes().toString().padStart(2, '0');
+	const second = var_local_date.getSeconds().toString().padStart(2, '0');
+	const formattedDate = `${year}-${month}-${day} ${hour}:${minute}:${second}`;  
+	
+	console.log(formattedDate);
+	console.log(`${formattedDate}`);
+
+	const show_day = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+	const dayOfWeek = var_local_date.getDay(); // 获取星期几  
+	console.log(show_day[dayOfWeek]);
 }
-
-console.log("-------------------");
-
-for (let i = 0; i < var_test_array_01.length; i++) {
-	console.log(var_test_array_01[i]);
-}
-
-
+	
 /**
  * 获取 HTMLElement 元素 style 样式信息
  *
@@ -191,4 +292,4 @@ function fn_get_div_size_info(HTMLElement, type = 1) {
 	return _string_style;
 }
 
-console.log("= End - test.js ===========================================================================================================");
+console.log("= End - test.js =================================================================================================");
