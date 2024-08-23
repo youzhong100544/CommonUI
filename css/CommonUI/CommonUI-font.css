@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+@font-face {
+	/* 自定义字体名 */
+	font-family: 'AlibabaPuHuiTi-3-35-Thin';
+	/* 字体路径 */
+	src: url(../font/AlibabaPuHuiTi-3/AlibabaPuHuiTi-3-35-Thin/AlibabaPuHuiTi-3-35-Thin.ttf);
+}
+

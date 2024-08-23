@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+
+	<title>test-scrollbar</title>
+
+	<link rel="stylesheet" type="text/css" href="../../../css/CommonUI.css"/>
+
+	<style>
+		.t10 {
+			width: 300px;
+			height: 200px;
+			border: 1px solid black;
+			white-space: nowrap; /* 不换行 */
+		}
+
+		.t20 {
+			width: 300px;
+			height: 200px;
+			border: 1px solid black;
+			white-space: nowrap; /* 不换行 */
+
+			overflow: auto;
+		}
+
+		.t30 {
+			width: 300px;
+			height: 200px;
+			border: 1px solid black;
+			white-space: nowrap; /* 不换行 */
+
+			/* 一旦设置了overflow-y:auto; 横向超出必然会出现滚动条 */
+			/* overflow-x: auto; */
+			/* overflow-y: visible; */
+			/* overflow-x: visible; */
+			/* overflow-y: auto; */
+		}
+		.t31 {
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
+		.t32 {
+			overflow-x: hidden;
+			overflow-y: auto;
+		}
+		
+		
+		.t100 {
+			width: 300px;
+			height: 200px;
+			border: 1px solid black;
+			white-space: nowrap; /* 不换行 */
+		}
+		.t101 {
+			overflow: auto;
+		}
+		.t102 {
+			overflow: scroll;
+		}
+
+
+		.t1000 {
+			width: 300px;
+			height: 200px;
+			border: 1px solid black;
+			white-space: nowrap; /* 不换行 */
+		}
+
+	</style>
+
+	<script>
+		window.onload = function () {
+			let str = 
+				"0123456789<br/>" + 
+				"1111111111<br/>" + 
+				"2222222222<br/>" + 
+				"3333333333<br/>" + 
+				"4444444444<br/>" + 
+				"----------<br/>";
+
+			let str1 = 
+				"00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000<br/>" + 
+				"0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789-0123456789<br/>" + 
+				"111111111111111111111111111<br/>" + 
+				"22222222222222<br/>" + 
+				"33333333333<br/>" + 
+				"4444444444444444444444<br/>" + 
+				"5555555555555<br/>" + 
+				"6666666666666<br/>" + 
+				"7777777777777777<br/>" + 
+				"888888888888888888888<br/>" + 
+				"999999999999999999999999999999999<br/>" + 
+				"00000000000000000000000000000000000000000<br/>" + 
+				"111111111111111111111111111<br/>" + 
+				"22222222222222<br/>" + 
+				"33333333333<br/>" + 
+				"4444444444444444444444<br/>" + 
+				"5555555555555<br/>" + 
+				"6666666666666<br/>" + 
+				"7777777777777777<br/>" + 
+				"888888888888888888888<br/>" + 
+				"999999999999999999999999999999999<br/>" + 
+				"------------------------------------------------------<br/>";
+			
+			let str2 = 
+				"0000000000000000000000000000000000000000000000000000000000000000000000000000000000000<br/>" + 
+				"111111111111111111111111111<br/>" + 
+				"2222222222<br/>" + 
+				"3333333333<br/>" + 
+				"4444444444<br/>" + 
+				"----------<br/>";
+
+			let str3 = 
+				"0000000000<br/>" + 
+				"1111111111<br/>" + 
+				"2222222222<br/>" + 
+				"3333333333<br/>" + 
+				"4444444444<br/>" + 
+				"5555555555<br/>" + 
+				"6666666666<br/>" + 
+				"7777777777<br/>" + 
+				"8888888888<br/>" + 
+				"9999999999<br/>" + 
+				"----------<br/>";
+				
+			let t11 = document.getElementById("t11");
+			t11.innerHTML = str1;
+			let t12 = document.getElementById("t12");
+			t12.innerHTML = str2;
+			let t13 = document.getElementById("t13");
+			t13.innerHTML = str3;
+
+
+			let t21 = document.getElementById("t21");
+			t21.innerHTML = str1;
+			let t22 = document.getElementById("t22");
+			t22.innerHTML = str2;
+			let t23 = document.getElementById("t23");
+			t23.innerHTML = str3;
+
+
+			let t31 = document.getElementById("t31");
+			t31.innerHTML = str1;
+			let t32 = document.getElementById("t32");
+			t32.innerHTML = str1;
+
+
+			let t101 = document.getElementById("t101");
+			t101.innerHTML = str;
+			let t102 = document.getElementById("t102");
+			t102.innerHTML = str;
+			let t103 = document.getElementById("t103");
+			t103.innerHTML = str1;
+			let t104 = document.getElementById("t104");
+			t104.innerHTML = str1;
+
+
+			let t1000 = document.getElementById("t1000");
+			t1000.innerHTML = str1;
+
+			let t1010 = document.getElementById("t1010");
+			t1010.innerHTML = str1;
+		}
+	</script>
+</head>
+<body>
+	<div style="border: 1px solid red; display: inline-block;">
+		外层 div 设置成 display: inline-block; 以使 div 被内容撑开；<br/>
+		这里主要是想显示 子div 的内容
+
+		<div id="t11" class="t10">
+
+		</div>
+	</div>
+
+	<br/>
+	<br/>
+
+	<div style="border: 1px solid red; display: inline-block;">
+		外层 div 设置成 display: inline-block; 以使 div 被内容撑开；<br/>
+		这里主要是想显示 子div 的内容
+
+		<div id="t12" class="t10">
+		</div>
+	</div>
+
+	<br/>
+	<br/>
+
+	<div style="border: 1px solid red; display: inline-block;">
+		外层 div 设置成 display: inline-block; 以使 div 被内容撑开；<br/>
+		这里主要是想显示 子div 的内容
+
+		<div id="t13" class="t10">
+
+		</div>
+	</div>
+	
+
+	<br/>
+	<hr/>
+	<hr/>
+	<br/>
+
+	<div id="t21" class="t20">
+		
+	</div>
+
+	<br/>
+
+	<div id="t22" class="t20">
+		
+	</div>
+
+	<br/>
+
+	<div id="t23" class="t20">
+		
+	</div>
+
+
+	<br/>
+	<hr/>
+	<hr/>
+	<br/>
+
+	<div id="t31" class="t30 t31">
+		
+	</div>
+
+	<br/>
+
+	<div id="t32" class="t30 t32">
+		
+	</div>
+
+	<br/>
+
+
+	<br/>
+	<hr/>
+	<hr/>
+	<br/>
+
+
+	overflow scroll 和auto的使用差别<br/>
+	<br/>
+
+	<div id="t101" class="t100 t101">
+
+	</div>
+
+	<div id="t102" class="t100 t102">
+
+	</div>
+
+	<div id="t103" class="t100 t101">
+
+	</div>
+
+	<div id="t104" class="t100 t102">
+
+	</div>
+
+		
+	<br/>
+	<hr/>
+	<hr/>
+	<br/>
+
+	<div id="t1000" class="t1000 CommonUI-custom-scrollbar-style">
+
+	</div>
+
+	<br/>
+	<hr/>
+	<br/>
+
+	<div id="t1010" class="t1000 CommonUI-custom-scrollbar-style-hidden">
+
+	</div>
+
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+
+</body>
+</html>

@@ -292,4 +292,13 @@ function fn_get_div_size_info(HTMLElement, type = 1) {
 	return _string_style;
 }
 
+
+function setCoords(e) {
+    let str = `
+        Offset X/Y: ${e.offsetX}, ${e.offsetY}
+        Viewport X/Y: ${e.clientX}, ${e.clientY}
+        Page X/Y: ${e.pageX}, ${e.pageY}
+        Screen X/Y: ${e.screenX}, ${e.screenY}`;
+}
+
 console.log("= End - test.js =================================================================================================");
