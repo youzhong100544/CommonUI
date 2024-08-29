@@ -11,6 +11,25 @@
 /* # Start - CommonUI-Admin.css # */
 /* ################################################################################################################# */
 
+@import url("CommonUI-Admin-layoutStyleDefault.css");
+@import url("CommonUI-Admin-layoutStyleGridDefault.css");
+@import url("CommonUI-Admin-layoutStyleGridScalable.css");
+
+@import url("CommonUI-Admin-themeDefault.css");
+@import url("CommonUI-Admin-themeLight.css");
+@import url("CommonUI-Admin-themeDark.css");
+
+.CommonUI-Admin-app {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* 
+.CommonUI-Admin-app.center-display {
+    width: 1300px;
+    height: 100vh;
+    margin: 0 auto;
+} */
 
 /* = End =========================================================================================================== */
 

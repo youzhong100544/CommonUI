@@ -1,0 +1,114 @@
+/**
+ * @description: CSS styles.
+ *
+ * @author: 个性原子弹
+ * @since: 
+ * @date:
+ */
+
+
+/* ################################################################################################################# */
+/* # Start - CommonUI-Admin-layoutStyleGrid.css # */
+/* ################################################################################################################# */
+
+:root {
+	--layout-of-logo-width: 260px;
+	--layout-of-logo-height: 60px;
+}
+
+.admin-layout {
+	/* width: 100vw; */
+	/* height: 100vh; */
+	width: 100%;
+	height: 100%;
+
+	/*
+		overflow
+			值			描述
+			visible		默认值。内容不会被修剪，会呈现在元素框之外。
+			hidden		内容会被修剪，并且其余内容是不可见的。
+			scroll		内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
+			auto		如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
+			inherit		规定应该从父元素继承 overflow 属性的值。
+
+		只设置水平滚动条：
+			<div style="width: 100px; overflow-x: auto;"></div>
+		只设置垂直滚动条：
+			<div style="height: 300px; overflow-y: auto;"></div>
+		水平与垂直都设置：
+			<div style="width: 100px; height: 300px; overflow-x: auto; overflow-y: auto;"></div>
+	*/
+	/* overflow: hidden; */
+}
+
+/* 
+	布局之后发现出现滚动框
+	* {margin: 0; padding: 0; box-sizing: border-box;}
+	*::before, *::after {margin: 0; padding: 0; box-sizing: border-box;}
+*/
+
+
+/* 布局样式 - 默认 */
+.admin-layout.layout-style-grid {
+	display: grid;
+
+	/*grid-template-columns: 260px calc(100vw - 260px);*/
+	/*grid-template-rows: 60px calc(100vh - 60px);*/
+
+	/*grid-template-columns: 260px 1fr;*/
+	/*grid-template-rows: 60px 1fr;*/
+
+	/*grid-template-columns: var(--logo-width-of-layout-style-default) calc(100vw - var(--logo-width-of-layout-style-default));*/
+	/*grid-template-rows: var(--logo-height-of-layout-style-default) calc(100vh - var(--logo-height-of-layout-style-default));*/
+
+	grid-template-columns: var(--layout-of-logo-width) 1fr;
+	grid-template-rows: var(--layout-of-logo-height) 1fr;
+
+	gap: 0;
+
+	grid-template-areas:
+						'layout-logo	layout-header'
+						'layout-sidebar layout-main'
+	;
+}
+
+
+.admin-layout.layout-style-grid .layout-logo {
+	/* layout-logo 和 grid-template-areas 中 layout-logo 名字匹配 */
+	grid-area: layout-logo;
+
+	/* border: 1px solid black; */
+	background-color: red;
+}
+
+.admin-layout.layout-style-grid .layout-header {
+	/* layout-header 和 grid-template-areas 中 layout-header 名字匹配 */
+	grid-area: layout-header;
+
+	/* border: 1px solid black; */
+	background-color: green;
+}
+
+.admin-layout.layout-style-grid .layout-sidebar {
+	/* layout-sidebar 和 grid-template-areas 中 layout-sidebar 名字匹配 */
+	grid-area: layout-sidebar;
+
+	/* border: 1px solid black; */
+	background-color: blue;
+
+	/*resize: horizontal;*/
+	/*resize: vertical;*/
+}
+
+.admin-layout.layout-style-grid .layout-main {
+	/* layout-content 和 grid-template-areas 中 layout-main 名字匹配 */
+	grid-area: layout-main;
+
+	/* border: 1px solid black; */
+	background-color: Cyan;
+}
+
+
+/* = End =========================================================================================================== */
+
+

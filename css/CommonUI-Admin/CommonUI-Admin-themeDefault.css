@@ -1,0 +1,37 @@
+/**
+ * @description: CSS styles.
+ *
+ * @author: 个性原子弹
+ * @since: 
+ * @date:
+ */
+
+
+.CommonUI-Admin-app[data-theme="default"] {
+	> .admin-layout {
+		> .layout-logo {
+			background-color: #000000;
+			color: #FFFFFF;
+		}
+	
+		> .layout-header {
+			background-color: #FFFFFF;
+			color: #000000;
+		}
+	
+		> .layout-sidebar {
+			background-color: black;
+			color: white;
+		}
+	
+		> .layout-main {
+			background-color: white;
+			color: black;
+		}
+	
+		> .layout-spacer {
+			background-color: #F7F7F7;
+		}
+	}
+	
+}
