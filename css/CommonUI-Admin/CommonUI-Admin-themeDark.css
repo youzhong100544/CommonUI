@@ -8,10 +8,32 @@
 
 
 
-:root {
-	--logo-background-color: black;
-	--header-background-color: black;
-	--sidebar-background-color: black;
-	--main-background-color: black;
+ .CommonUI-Admin-app[data-theme="dark"] {
+	> .admin-layout {
+		> .layout-logo {
+			background-color: #000000;
+			color: #FFFFFF;
+		}
+	
+		> .layout-header {
+			background-color: #000000;
+			color: #FFFFFF;
+		}
+	
+		> .layout-sidebar {
+			background-color: #000000;
+			color: #FFFFFF;
+		}
+	
+		> .layout-main {
+			background-color: #000000;
+			color: #FFFFFF;
+		}
+	
+		> .layout-spacer {
+			background-color: #F7F7F7;
+		}
+	}
+	
 }
 
