@@ -11,17 +11,17 @@ console.log("###################################################################
 console.log("# Start - CommonUI.js #");
 console.log("#################################################################################################################");
 
-const isSupported = window.CSS && window.CSS.supports && window.CSS.supports('--bEnableDebug', 'true');
-if (isSupported) {
-	/* supported */
-	console.log('当前浏览器支持 CSS变量')
-} else {
-	/* not supported */
-	console.log('当前浏览器不支持 CSS变量')
-}
-
 let bEnableDebug = true;
 
-import  "./CommonUI-Admin.js";
+const moduleEnum = {
+    Admin: 'Admin',
+    Blog: 'Blog',
+};
+
+import "./CommonUI-Debug.js";
+
+import "./CommonUI-Admin.js";
+
+import "./CommonUI-Blog.js";
 
 console.log("= End - CommonUI.js =============================================================================================");
