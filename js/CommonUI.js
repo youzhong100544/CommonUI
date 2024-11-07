@@ -7,6 +7,15 @@
  */
 
 
+import "./CommonUI-Debug.js";
+
+import * as util from "./CommonUI-Util.js";
+
+import "./CommonUI-Admin.js";
+
+import "./CommonUI-Blog.js";
+
+
 console.log("#################################################################################################################");
 console.log("# Start - CommonUI.js #");
 console.log("#################################################################################################################");
@@ -18,13 +27,7 @@ const moduleEnum = {
     Blog: 'Blog',
 };
 
-import "./CommonUI-Debug.js";
 
-import "./CommonUI-Util.js";
-
-import "./CommonUI-Admin.js";
-
-import "./CommonUI-Blog.js";
 
 console.log("= End - CommonUI.js =============================================================================================");
 
