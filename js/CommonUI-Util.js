@@ -16,11 +16,23 @@ export let _CommonUI_Util = {
 	},
 
 	typeUtils: {
-		isString: function (o) { //是否字符串
+		/**
+		 * 判断是否为字符串
+		 * 
+		 * @param {object} o 
+		 * @returns 
+		 */
+		isString: function (o) {
+			console.log(Object.prototype);
 			return Object.prototype.toString.call(o).slice(8, -1) === 'String';
 		},
-		
-		isNumber: function (o) { //是否数字
+		/**
+		 * 判断是否字为数字
+		 * 
+		 * @param {object} o 
+		 * @returns 
+		 */
+		isNumber: function (o) {
 			return Object.prototype.toString.call(o).slice(8, -1) === 'Number';
 		},
 		
@@ -139,8 +151,4 @@ export let _CommonUI_Util = {
 };
 
 
-// export default _CommonUI_Util;
-
-// export default {
-//     name: "Util"
-// };
+export default _CommonUI_Util;
