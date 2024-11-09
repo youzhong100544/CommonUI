@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>test export import</title>
+
+		<!-- Cascading Style Sheets(CSS)文件 -->
+		<!-- <link rel="stylesheet" type="text/css" href="./test.css"/> -->
+
+		<!-- JavaScript(JS) 文件 -->
+		<!-- <script type="text/javascript" src="./js/main.js"></script> -->
+		<script type="module" src="./js/main.js"></script>
+
+		<style>
+
+		</style>
+
+		<script>
+
+		</script>
+
+		<script type="module">
+			import moduleA from './js/a.js';
+
+			import moduleB from './js/b.js';
+			import * as bModule from './js/b.js';
+
+
+			console.log(moduleA.name);
+			console.log(moduleB);
+			console.log(bModule.add(4, 7));
+
+		</script>
+	</head>
+	<body>
+
+	</body>
+</html>

@@ -7,7 +7,7 @@
  */
 
 
-export let _CommonUI_Util = {
+let _CommonUI_Util = {
 
 	objectUtils: {
 		isNull: function (obj) {
