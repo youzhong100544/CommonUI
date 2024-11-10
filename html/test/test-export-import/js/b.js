@@ -36,4 +36,5 @@ export function divide(a, b) {
 function showInfo() {
     console.log("I'm b.js showInfo()");
 }
-export default showInfo;
+// export default showInfo;
+export {showInfo as default}; // 和上面 export default showInfo; 效果一样
