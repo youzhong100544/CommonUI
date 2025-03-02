@@ -16,7 +16,13 @@
 	--layout-of-logo-height: 60px;
 }
 
-.admin-layout {
+
+.CommonUI-Admin-app {
+    width: 100vw;
+    height: 100vh;
+}
+
+.CommonUI-Admin-app[data-lauoutStyle="default"] > .admin-layout {
 	/* width: 100vw; */
 	/* height: 100vh; */
 	width: 100%;
@@ -49,7 +55,7 @@
 
 
 /* 布局样式 - 默认 */
-.admin-layout.layout-style-default {
+.CommonUI-Admin-app[data-lauoutStyle="default"] > .admin-layout {
 	display: grid;
 
 	/*grid-template-columns: 260px calc(100vw - 260px);*/
@@ -73,7 +79,7 @@
 }
 
 
-.admin-layout.layout-style-default .layout-logo {
+.CommonUI-Admin-app[data-lauoutStyle="default"] > .admin-layout > .layout-logo {
 	/* layout-logo 和 grid-template-areas 中 layout-logo 名字匹配 */
 	grid-area: layout-logo;
 
@@ -81,7 +87,7 @@
 	/* background-color: red; */
 }
 
-.admin-layout.layout-style-default .layout-header {
+.CommonUI-Admin-app[data-lauoutStyle="default"] > .admin-layout > .layout-header {
 	/* layout-header 和 grid-template-areas 中 layout-header 名字匹配 */
 	grid-area: layout-header;
 
@@ -89,7 +95,7 @@
 	/* background-color: green; */
 }
 
-.admin-layout.layout-style-default .layout-sidebar {
+.CommonUI-Admin-app[data-lauoutStyle="default"] > .admin-layout > .layout-sidebar {
 	/* layout-sidebar 和 grid-template-areas 中 layout-sidebar 名字匹配 */
 	grid-area: layout-sidebar;
 
@@ -100,7 +106,7 @@
 	/*resize: vertical;*/
 }
 
-.admin-layout.layout-style-default .layout-main {
+.CommonUI-Admin-app[data-lauoutStyle="default"] > .admin-layout > .layout-main {
 	/* layout-content 和 grid-template-areas 中 layout-main 名字匹配 */
 	grid-area: layout-main;
 

@@ -1,23 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
-		<meta charset="utf-8"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<!-- 响应式布局 -->
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<!-- 
+			name="viewport"   视口标签属性
+				"viewport" <meta> 标签的基本属性如下所示：
+					width
+						控制视口的大小。
+						这可以设置为特定像素数（如'width=600'），也可以设置为特殊值device-width，即 100vw，100% 的视口宽度。最小值为 1。最大值为 10000。负值会被忽略。
+
+					height
+						控制视口的大小。
+						这可以设置为特定像素数（如 width=600），也可以设置为特殊值 device-height，即 100vh，100% 的视口高度。最小值为 1。最大值为 10000。负值会被忽略。
+
+					initial-scale
+						控制页面首次加载时显示的缩放倍数。
+						最小值是 0.1。最大值是 10。默认值为 1。负值会被忽略。
+
+					minimum-scale
+						控制页面允许缩小的倍数。
+						最小值是 0.1。最大值是 10。默认值为 1。负值会被忽略。
+
+					maximum-scale
+						控制页面允许放大的倍数。
+						设置一个低于 3 的值将不具备无障碍访问性。最小值是 0.1。最大值是 10。默认值为 1。负值会被忽略。
+
+					user-scalable
+						控制是否允许页面上的放大和缩小操作。
+						有效值为 0、1、yes 或 no。默认值为 1，与 yes 相同。将值设置为 0（即与 no 相同）将违反 Web 内容无障碍指南（WCAG）。
+
+					interactive-widget
+						指定交互式 UI 组件（如虚拟键盘）对页面视口的影响。
+						有效值：resizes-visual、resizes-content 或 overlays-content。默认值：resizes-visual。
+		 -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1"/>-->
-		<!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"/>-->
 
 		<title> CommonUI-Admin </title>
 
-		<link rel="stylesheet" type="text/css" href="../../css/CommonUI.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/CommonUI.css" />
 		<!-- <script type="text/javascript" src="../../js/CommonUI.js"></script> -->
 		<script type="module" src="../../js/CommonUI.js"></script>
-		
+
 	</head>
+
 	<body>
-		<div id="CommonUI-Admin-app" class="CommonUI-Admin-app" data-theme="default">
-			<div id="admin-layout" class="admin-layout layout-style-default">
+		<div id="CommonUI-Admin-app" class="CommonUI-Admin-app" data-lauoutStyle="default" data-theme="default">
+			<div id="admin-layout" class="admin-layout">
 				<div id="layout-logo" class="layout-logo">
 					<div class="logo-content">
 						logo
@@ -37,6 +69,9 @@
 				</div>
 
 				<div id="layout-main" class="layout-main">
+					<div class="main-pagetabs">
+						main-pagetabs
+					</div>
 					<div class="main-content">
 						main
 					</div>
@@ -44,4 +79,5 @@
 			</div>
 		</div>
 	</body>
+
 </html>
