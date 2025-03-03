@@ -13,7 +13,7 @@
 /* 统一化浏览器默认 CSS */
 @import url("CommonUI/CommonUI-normalize.css");
 
-@import url("CommonUI/CommonUI-Variables.css");
+@import url("CommonUI/CommonUI-custom-properties.css");
 
 @import url("CommonUI/CommonUI-font.css");
 @import url("CommonUI/CommonUI-scrollbar.css");
@@ -30,6 +30,24 @@ html {
 
 body {
     /* font-size: 16px; */
+
+    /*
+		overflow
+			值			描述
+			visible		默认值。内容不会被修剪，会呈现在元素框之外。
+			hidden		内容会被修剪，并且其余内容是不可见的。
+			scroll		内容会被修剪，但是浏览器会显示滚动条以便查看其余的内容。
+			auto		如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容。
+			inherit		规定应该从父元素继承 overflow 属性的值。
+
+		只设置水平滚动条：
+			<div style="width: 100px; overflow-x: auto;"></div>
+		只设置垂直滚动条：
+			<div style="height: 300px; overflow-y: auto;"></div>
+		水平与垂直都设置：
+			<div style="width: 100px; height: 300px; overflow-x: auto; overflow-y: auto;"></div>
+	*/
+	/* overflow: hidden; */
 }
 
 .container {
@@ -52,7 +70,7 @@ body {
     margin-left: auto;
 }
 
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
     .container, .container-lg, .container-md, .container-sm, .container-xl {
         max-width: 1140px;
     }
@@ -71,4 +89,4 @@ body {
     .container, .container-sm {
         max-width: 540px;
     }
-}
+} */

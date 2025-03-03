@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+
+/* CSS custom properties (variables) */
+/* CSS 自定义属性 (变量) */
+:root {
+	--layout-of-logo-width: 260px;
+	--layout-of-logo-height: 60px;
+
+	--layout-of-header-width: calc(100vw - var(--layout-of-logo-width));
+	--layout-of-header-height: var(--layout-of-logo-height);
+
+	--layout-of-sidebar-width: var(--layout-of-logo-width);
+	--layout-of-sidebar-height: calc(100vh - var(--layout-of-logo-height));
+
+	--layout-of-main-width: calc(100vw - var(--layout-of-logo-width));
+	--layout-of-main-height: calc(100vh - var(--layout-of-logo-height));
+
+	--layout-of-main-pagetabs-width: var(--layout-of-main-width);
+	--layout-of-main-pagetabs-height: 40px;
+
+	--layout-of-main-content-width: var(--layout-of-main-width);
+	--layout-of-main-content-height: calc(var(--layout-of-main-height) - var(--layout-of-main-pagetabs-height));
+
+	--layout-of-spacer: 5px;
+}

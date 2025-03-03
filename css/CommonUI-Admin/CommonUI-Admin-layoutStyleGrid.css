@@ -11,12 +11,6 @@
 /* # Start - CommonUI-Admin-layoutStyleGrid.css # */
 /* ################################################################################################################# */
 
-:root {
-	--layout-of-logo-width: 260px;
-	--layout-of-logo-height: 60px;
-}
-
-
 .CommonUI-Admin-app {
     width: 100vw;
     height: 100vh;

@@ -11,12 +11,6 @@
 /* # Start - CommonUI-Admin-layoutStyleGridScalable.css # */
 /* ################################################################################################################# */
 
-:root {
-	--layout-of-logo-width: 260px;
-	--layout-of-logo-height: 60px;
-	--layout-of-spacer: 5px;
-}
-
 .admin-layout {
 	/* width: 100vw; */
 	/* height: 100vh; */

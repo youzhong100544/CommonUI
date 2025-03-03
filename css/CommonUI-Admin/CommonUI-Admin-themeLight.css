@@ -7,10 +7,50 @@
  */
 
 
-
 :root {
 	--logo-background-color: white;
 	--header-background-color: white;
 	--sidebar-background-color: white;
 	--main-background-color: white;
+}
+
+.CommonUI-Admin-app[data-theme="light"] {
+	& > .admin-layout {
+		& > .layout-logo {
+			background-color: white;
+			color: black;
+			border-bottom: 1px solid #F2F2F2;
+		}
+	
+		& > .layout-header {
+			background-color: #FFFFFF;
+			color: #000000;
+			border-bottom: 1px solid #F2F2F2;
+		}
+	
+		& > .layout-sidebar {
+			background-color: #FFFFFF;
+			color: #000000;
+		}
+	
+		& > .layout-main {
+			background-color: #FFFFFF;
+			color: #000000;
+
+			& > .main-pagetabs {
+				background-color: #FFFFFF;
+				color: #000000;
+				box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+			}
+			& > .main-content {
+				background-color: #F2F2F2;
+				color: black;
+			}
+		}
+	
+		& > .layout-spacer {
+			background-color: #F7F7F7;
+		}
+	}
+	
 }

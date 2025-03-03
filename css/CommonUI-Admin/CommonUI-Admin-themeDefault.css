@@ -7,45 +7,43 @@
  */
 
 
-.CommonUI-Admin-app[data-theme="default"] {
-	& > .admin-layout {
-		& > .layout-logo {
-			background-color: #000000;
-			color: #FFFFFF;
-			box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15);
-		}
-	
-		& > .layout-header {
-			background-color: #FFFFFF;
-			color: #000000;
-			border-bottom: 1px solid #c1c1c1;
-		}
-	
-		& > .layout-sidebar {
-			background-color: black;
-			color: white;
-		}
-	
-		& > .layout-main {
-			/* background-color: white; */
-			/* background-color: #FFFFFF; */
-			background-color: #F2F2F2;
-			color: black;
+.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-logo {
+	background-color: #000000;
+	color: #FFFFFF;
+	/* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15); */
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+}
 
-			& > .main-pagetabs {
-				background-color: #fff;
-				color: black;
-				box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-			}
-			& > .main-content {
-				background-color: #F2F2F2;
-				color: black;
-			}
-		}
-	
-		& > .layout-spacer {
-			background-color: #F7F7F7;
-		}
-	}
-	
+.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-header {
+	background-color: #FFFFFF;
+	color: #000000;
+	border-bottom: 1px solid #F2F2F2;
+	/* border-bottom: 1px solid #c1c1c1; */
+}
+
+.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-sidebar {
+	background-color: black;
+	color: white;
+}
+
+.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-main {
+	/* background-color: white; */
+	/* background-color: #FFFFFF; */
+	background-color: #F2F2F2;
+	color: black;
+}
+
+.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-main > .main-pagetabs {
+	background-color: #fff;
+	color: black;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+}
+
+.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-main > .main-content {
+	background-color: #F2F2F2;
+	color: black;
+}
+
+.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-spacer {
+	background-color: #F7F7F7;
 }

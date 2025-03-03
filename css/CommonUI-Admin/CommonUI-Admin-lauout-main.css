@@ -1,0 +1,42 @@
+/**
+ * @description: CSS styles.
+ *
+ * @author: 个性原子弹
+ * @since: 
+ * @date:
+ */
+
+
+/* ################################################################################################################# */
+/* # Start - CommonUI-Admin-lauout-main.css # */
+/* ################################################################################################################# */
+
+.CommonUI-Admin-app > .admin-layout > .layout-main > .main-pagetabs  {
+    /* width: 100%; */
+    /* height: 40px; */
+    width: var(--layout-of-main-pagetabs-width);
+    height: var(--layout-of-main-pagetabs-height);
+    line-height: var(--layout-of-main-pagetabs-height);
+    /* padding: 0 80px 0 40px; */
+
+    /* 
+        这里设置的 background-color 会失效
+        因为 属性选择器 CommonUI-Admin-app[data-theme="default"] 比类选择器 .CommonUI-Admin-app 优先级高
+    */
+    /* background-color: brown; */
+
+}
+
+.CommonUI-Admin-app > .admin-layout > .layout-main > .main-content {
+    /* width: 100%; */
+    /* height: 100%; */
+    width: var(--layout-of-main-content-width);
+    height: var(--layout-of-main-content-height);
+
+    /* background-color: rgb(156, 20, 20); */
+    
+}
+
+/* = End =========================================================================================================== */
+
+

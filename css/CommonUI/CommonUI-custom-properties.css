@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
-/* 全局变量 */
+/* CSS custom properties (variables) */
+/* CSS 自定义属性 (变量) */
 :root {
 	--bEnableDebug: true;
 

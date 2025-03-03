@@ -11,6 +11,8 @@
 /* # Start - CommonUI-Admin.css # */
 /* ################################################################################################################# */
 
+@import url("CommonUI-Admin-custom-properties.css");
+
 @import url("CommonUI-Admin-layoutStyleDefault.css");
 @import url("CommonUI-Admin-layoutStyleGrid.css");
 @import url("CommonUI-Admin-layoutStyleGridScalable.css");
@@ -19,23 +21,11 @@
 @import url("CommonUI-Admin-themeLight.css");
 @import url("CommonUI-Admin-themeDark.css");
 
+@import url("CommonUI-Admin-lauout-logo.css");
+@import url("CommonUI-Admin-lauout-header.css");
+@import url("CommonUI-Admin-lauout-sidebar.css");
+@import url("CommonUI-Admin-lauout-main.css");
 
-.CommonUI-Admin-app {
-    width: 100vw;
-    height: 100vh;
-}
-
-.CommonUI-Admin-app > .admin-layout > .layout-main > .main-pagetabs  {
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    padding: 0 80px 0 40px;
-}
-
-.CommonUI-Admin-app > .admin-layout > .layout-main > .main-content {
-    width: 100%;
-    height: 100%;
-}
 
 /* = End =========================================================================================================== */
 
