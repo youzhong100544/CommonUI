@@ -7,33 +7,36 @@
  */
 
 
+div.CommonUI-Admin-app[data-theme="dark"] {
 
- .CommonUI-Admin-app[data-theme="dark"] {
-	> .admin-layout {
-		> .layout-logo {
-			background-color: #000000;
-			color: #FFFFFF;
-		}
-	
-		> .layout-header {
-			background-color: #000000;
-			color: #FFFFFF;
-		}
-	
-		> .layout-sidebar {
-			background-color: #000000;
-			color: #FFFFFF;
-		}
-	
-		> .layout-main {
-			background-color: #000000;
-			color: #FFFFFF;
-		}
-	
-		> .layout-spacer {
-			background-color: #F7F7F7;
-		}
-	}
-	
+	--theme-base-background-color: black;
+	--theme-base-color: white;
+
+	--theme-logo-background-color: #000000;
+	--theme-logo-color: #FFFFFF;
+
+	--theme-header-background-color: #000000;
+	--theme-header-color: #FFFFFF;
+
+	--theme-sidebar-background-color: #000000;
+	--theme-sidebar-color: #FFFFFF;
+	--theme-sidebar-a-tag-background-color: #000000;
+	--theme-sidebar-a-tag-color: #FFFFFF;
+	--theme-sidebar-a-tag-hover-background-color: #0000a4;
+	--theme-sidebar-a-tag-hover-color: #FFFFFF;
+
+	--theme-main-background-color: #000000;
+	--theme-main-color: #FFFFFF;
+
+	--theme-main-pagetabs-background-color: #000000;
+	--theme-main-pagetabs-color: #FFFFFF;
+
+	--theme-main-content-background-color: #000000;
+	--theme-main-content-color: #FFFFFF;
+
+	--theme-spacer-background-color: #F7F7F7;
+
+	--theme-svg-stroke: #FFFFFF;
+	--theme-svg-fill: #FFFFFF;
 }
 

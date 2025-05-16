@@ -7,50 +7,36 @@
  */
 
 
-:root {
-	--logo-background-color: white;
-	--header-background-color: white;
-	--sidebar-background-color: white;
-	--main-background-color: white;
+div.CommonUI-Admin-app[data-theme="light"] {
+
+	--theme-base-background-color: white;
+	--theme-base-color: black;
+
+	--theme-logo-background-color: #FFFFFF;
+	--theme-logo-color: #000000;
+
+	--theme-header-background-color: #FFFFFF;
+	--theme-header-color: #000000;
+
+	--theme-sidebar-background-color: #FFFFFF;
+	--theme-sidebar-color: #000000;
+	--theme-sidebar-a-tag-background-color: #FFFFFF;
+	--theme-sidebar-a-tag-color: #000000;
+	--theme-sidebar-a-tag-hover-background-color: #0000a4;
+	--theme-sidebar-a-tag-hover-color: #FFFFFF;
+
+	--theme-main-background-color: #FFFFFF;
+	--theme-main-color: #000000;
+
+	--theme-main-pagetabs-background-color: #FFFFFF;
+	--theme-main-pagetabs-color: #000000;
+
+	--theme-main-content-background-color: #F2F2F2;
+	--theme-main-content-color: #000000;
+
+	--theme-spacer-background-color: #F7F7F7;
+
+	--theme-svg-stroke: #000000;
+	--theme-svg-fill: #000000;
 }
 
-.CommonUI-Admin-app[data-theme="light"] {
-	& > .admin-layout {
-		& > .layout-logo {
-			background-color: white;
-			color: black;
-			border-bottom: 1px solid #F2F2F2;
-		}
-	
-		& > .layout-header {
-			background-color: #FFFFFF;
-			color: #000000;
-			border-bottom: 1px solid #F2F2F2;
-		}
-	
-		& > .layout-sidebar {
-			background-color: #FFFFFF;
-			color: #000000;
-		}
-	
-		& > .layout-main {
-			background-color: #FFFFFF;
-			color: #000000;
-
-			& > .main-pagetabs {
-				background-color: #FFFFFF;
-				color: #000000;
-				box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-			}
-			& > .main-content {
-				background-color: #F2F2F2;
-				color: black;
-			}
-		}
-	
-		& > .layout-spacer {
-			background-color: #F7F7F7;
-		}
-	}
-	
-}

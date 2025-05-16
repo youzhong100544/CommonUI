@@ -6,44 +6,35 @@
  * @date:
  */
 
+div.CommonUI-Admin-app[data-theme="default"] {
 
-.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-logo {
-	background-color: #000000;
-	color: #FFFFFF;
-	/* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15); */
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-}
+	--theme-base-background-color: white;
+	--theme-base-color: black;
 
-.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-header {
-	background-color: #FFFFFF;
-	color: #000000;
-	border-bottom: 1px solid #F2F2F2;
-	/* border-bottom: 1px solid #c1c1c1; */
-}
+	--theme-logo-background-color: #000000;
+	--theme-logo-color: #FFFFFF;
 
-.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-sidebar {
-	background-color: black;
-	color: white;
-}
+	--theme-header-background-color: #FFFFFF;
+	--theme-header-color: #000000;
 
-.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-main {
-	/* background-color: white; */
-	/* background-color: #FFFFFF; */
-	background-color: #F2F2F2;
-	color: black;
-}
+	--theme-sidebar-background-color: #000000;
+	--theme-sidebar-color: #FFFFFF;
+	--theme-sidebar-a-tag-background-color: #000000;
+	--theme-sidebar-a-tag-color: #FFFFFF;
+	--theme-sidebar-a-tag-hover-background-color: #0000a4;
+	--theme-sidebar-a-tag-hover-color: #FFFFFF;
 
-.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-main > .main-pagetabs {
-	background-color: #fff;
-	color: black;
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
-}
+	--theme-main-background-color: #FFFFFF;
+	--theme-main-color: #000000;
 
-.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-main > .main-content {
-	background-color: #F2F2F2;
-	color: black;
-}
+	--theme-main-pagetabs-background-color: #FFFFFF;
+	--theme-main-pagetabs-color: #000000;
 
-.CommonUI-Admin-app[data-theme="default"] > .admin-layout > .layout-spacer {
-	background-color: #F7F7F7;
+	--theme-main-content-background-color: #F2F2F2;
+	--theme-main-content-color: #000000;
+
+	--theme-spacer-background-color: #F7F7F7;
+
+	--theme-svg-stroke: #FFFFFF;
+	--theme-svg-fill: #FFFFFF;
 }

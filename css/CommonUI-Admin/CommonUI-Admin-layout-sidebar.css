@@ -1,0 +1,319 @@
+/**
+ * @description: CSS styles.
+ *
+ * @author: 个性原子弹
+ * @since: 
+ * @date:
+ */
+
+
+/* ################################################################################################################# */
+/* # Start - CommonUI-Admin-layout-sidebar.css # */
+/* ################################################################################################################# */
+
+/*
+	相关说明：
+		<ul> 和 <li> 标签的显示属性解析
+			默认显示特性
+				<ul> 无序列表
+					● 默认 display 值：block (块级元素)
+					● 典型表现：
+						□ 独占一行
+						□ 可以设置宽度、高度、内外边距
+						□ 默认带有 padding-left (通常是 40px) 和 list-style-type: disc (项目符号)
+
+				<li> 列表项
+					● 默认 display 值：list-item (特殊显示类型)
+					● 典型表现：
+						□ 表现为块级元素特性（独占一行）
+						□ 前面带有项目符号/编号
+						□ 可以包含其他块级和内联元素
+
+		<a> 标签的显示属性解析
+			默认显示特性
+				1、默认情况下：
+					● 是 inline (内联元素)
+					● 表现为典型的行内元素特性：
+						□ 不会独占一行
+						□ 宽度由内容决定
+						□ 不能直接设置宽度/高度（除非改变显示方式）
+
+				2、特殊行为：
+					● 可以包含其他块级元素（HTML5规范允许）
+					● 即使包含块级元素，默认仍保持 display: inline
+
+		SVG 标签的显示属性解析
+			SVG (<svg>) 标签的默认显示行为在不同上下文中有所不同：
+
+			默认显示特性
+				1、在HTML文档中：
+					● 默认 display 值为 inline（内联元素）
+					● 但具有特殊的 "replaced element" 特性，类似于 <img>
+				2、在独立SVG文件中：
+					● 作为根元素时没有常规的CSS display概念
+
+		ul li 的默认样式
+			list-style CSS 属性是一个简写对属性集合，包括list-style-type, list-style-image, 和 list-style-position。
+
+			CSS list-style 属性是设置list-style-type, list-style-image 和 list-style-position 的简写属性。
+
+
+		display: flex 元素的显示特性
+			当一个元素设置了 display: flex 后，它的显示行为会发生显著变化：
+
+			核心结论
+				display: flex 会创建一个块级弹性容器，具体表现为：
+
+					1、对外表现为块级元素特性：
+						● 默认宽度为100%（独占一行）
+						● 可以设置宽度、高度、内外边距等块级属性
+					2、对内创建弹性布局上下文：
+						● 子元素成为弹性项目(flex items)
+						● 子元素默认排成一行
+						● 子元素的 float、clear 和 vertical-align 将失效
+ */
+
+:root {
+	--sidebar-a-tag-width: 100%;
+	--sidebar-a-tag-height: 40px;
+
+	/* SVG 图标大小 */
+	/*--sidebar-svg-icon-width: var(--sidebar-a-tag-height);*/
+	--sidebar-svg-icon-width: 40px;
+	--sidebar-svg-icon-height: var(--sidebar-a-tag-height);
+
+	/* 文本区域大小 */
+	--sidebar-text-width: calc(var(--layout-of-sidebar-width) - var(--sidebar-svg-icon-width) - var(--sidebar-svg-submenu-toggle-width));
+	--sidebar-text-height: var(--sidebar-a-tag-height);
+	
+	/* SVG 图标大小 */
+	/*--sidebar-svg-submenu-toggle-width: var(--sidebar-a-tag-height);*/
+	--sidebar-svg-submenu-toggle-width: 40px;
+	--sidebar-svg-submenu-toggle-height: var(--sidebar-a-tag-height);
+}
+
+/* Start - 侧边栏菜单列表通用样式 */
+
+/*
+div.layout-sidebar > div.sidebar-content > div.sidebar-list {
+	box-sizing: border-box;
+}
+*/
+
+/* 去除掉 ul li 标签的默认样式 */
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul {
+	list-style: none;
+}
+
+/* 去除掉 a 标签的默认样式 */
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul li a {
+	text-decoration: none; /* 去除默认的下划线 */
+	outline: none;	/* 去除旧版浏览器的点击后的外虚线框 */
+	color: inherit; /* 使其继承父元素的文本颜色 */
+	/* color: #000;	*/ /* 去除默认的颜色和点击后变化的颜色 */
+}
+
+/* Start - 侧边栏 菜单 SVG 图标样式  */
+
+/*
+html元素：块元素(display: block;)、行内块元素(display: inline-block;)、行内元素(display: inline;)
+
+SVG
+	默认显示属性
+		● SVG元素本身：<svg> 的默认 display 属性值是 inline（内联元素）
+		● SVG内部元素：SVG内部的各种元素（如 <rect>, <circle>, <path> 等）默认都是 display: inline 的
+*/
+
+/*
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul li svg {
+	width: 30px;
+	height: 30px;
+}
+*/
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul li svg path {
+	stroke-width: 5px;
+	/* stroke: red; */
+	/* fill: red; */
+	stroke: var(--theme-svg-stroke);
+	fill: var(--theme-svg-fill);
+	/* round/butt/square */
+	stroke-linecap: round; 
+	stroke-linejoin: round;
+}
+
+/* End - 侧边栏 菜单 SVG 图标样式 */
+
+/* End - 侧边栏 菜单列表 通用样式 */
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul {
+	/*width: 100%;*/
+	/*height: 100%;*/
+	/*border: 1px solid red; !* 调试用 *!*/
+}
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li {
+	width: 100%;
+	/* height: 60px; */
+	min-height: 40px;
+	/* line-height: 1.5; */ /* 推荐设置行高 */
+	/* border: 1px solid rgb(238, 231, 22); */ /* 调试用 */
+}
+
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a {
+	border-radius: .5em;
+	/*padding: .85em;*/
+}
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a {
+	color: var(--theme-sidebar-a-tag-color);
+}
+
+
+/* 子项 flex 布局 */
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a {
+	display: flex;
+	/*flex-direction: row;*/
+	/*flex-wrap: nowrap;*/
+	/*flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。*/
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	/*justify-content: space-between;*/
+	align-items: center;
+	/*gap: 1em;*/
+	/*gap: 1px;*/
+}
+
+/* svg 图标 */
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.svg-icon {
+	width: var(--sidebar-svg-icon-width);
+	height: var(--sidebar-svg-icon-height);
+
+	/* border: 1px solid rgb(192, 14, 124); */ /* 调试用 */
+
+	/*子元素 svg 居中*/
+	display: flex;
+	justify-content: center; /* 水平居中 */
+	align-items: center;     /* 垂直居中 */
+}
+
+
+/* 文本 */
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.text {
+	width: var(--sidebar-text-width);
+	height: var(--sidebar-text-height);
+
+	/* border: 1px solid rgb(227, 132, 30); */ /* 调试用 */
+
+	line-height: var(--sidebar-text-height); /* 等于容器高度 */
+	/*text-align: center;*/
+
+	white-space: nowrap;
+	overflow: hidden; /* 超出宽度部分隐藏 */
+	text-overflow: ellipsis; /* 超出部分以省略号代替 */
+}
+
+
+/* svg 图标 - 折叠展开 */
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.svg-submenu-toggle {
+	width: var(--sidebar-svg-submenu-toggle-width);
+	height: var(--sidebar-svg-submenu-toggle-height);
+
+	/* border: 1px solid rgb(39, 191, 150); */ /* 调试用 */
+
+	/*子元素 svg 居中*/
+	display: flex;
+	justify-content: center; /* 水平居中 */
+	align-items: center;     /* 垂直居中 */
+}
+
+/* Start - 子菜单的折叠/展开 */
+
+/* 
+	transition（过渡）、transform（变换）、translate（移动）、animation（动画）
+
+	CSS transition 属性
+	
+		transition 属性是一个简写属性，用于设置四个过渡属性：
+
+			transition-property
+			transition-duration
+			transition-timing-function
+			transition-delay
+		
+		注释：请始终设置 transition-duration 属性，否则时长为 0，就不会产生过渡效果。
+*/
+
+
+/* 
+	transition 不能在 display: none 和 display: block 之间进行过度，
+	并且也不能在 height: 0 和 height: auto 之间进行过度。
+
+	解决办法
+		使用 jQuery 的 slideToggle() 方法
+*/
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul.sub-menu {
+	display: none;
+	/* transition: 0.3s ease-in-out; */
+}
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul.sub-menu.show {
+	display: block;
+}
+
+/*
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul.sub-menu {
+	display: none;
+	opacity: 0;
+	transition-property: display opacity;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in-out;
+	transition-behavior: allow-discrete;
+	// transition: display 0.3s ease-in-out, opacity 0.3s ease-in-out;
+	
+}
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list ul.sub-menu.show {
+	display: block;
+	opacity: 1;
+	@starting-style {
+		opacity: 0;
+	}
+}
+*/
+
+/* End - 子菜单的折叠/展开 */
+
+/* Start - 侧边栏 菜单 default 样式 */
+
+/* 鼠标移入, 左边边框变色 */
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul[data-sidebarStyle="default"] li a {
+	position: relative;
+}
+
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul[data-sidebarStyle="default"] li a:hover::before {
+	content: ' ';
+
+	width: 2px;
+	height: var(--sidebar-a-tag-height);
+
+	/*background-color: #ff2525;*/
+	background-color: var(--theme-sidebar-a-tag-color);
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/* 鼠标移入, 背景变色 */
+div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a:hover {
+	background-color: var(--theme-sidebar-a-tag-hover-background-color);
+}
+
+/* End - 侧边栏 菜单 default 样式 */
+
+/* = End =========================================================================================================== */
+
+

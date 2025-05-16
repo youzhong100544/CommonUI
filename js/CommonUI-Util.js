@@ -23,9 +23,10 @@ let _CommonUI_Util = {
 		 * @returns 
 		 */
 		isString: function (o) {
-			console.log(Object.prototype);
+			// console.log(Object.prototype);
 			return Object.prototype.toString.call(o).slice(8, -1) === 'String';
 		},
+
 		/**
 		 * 判断是否字为数字
 		 * 
@@ -149,6 +150,3 @@ let _CommonUI_Util = {
 		},
     },
 };
-
-
-export default _CommonUI_Util;

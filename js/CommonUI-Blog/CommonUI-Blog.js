@@ -233,6 +233,7 @@ var fn_toggle_layout_style = (layoutStyle) => {
 
 console.log("= End - CommonUI-Blog.js =======================================================================================");
 
+/* 
 window.onload = function () {
 
     const var_element_layout_layout = document.querySelector('.admin-layout.layout-style-grid-scalable');
@@ -277,4 +278,4 @@ window.onload = function () {
             true 
         );
     }
-}
+}*/

@@ -23,4 +23,31 @@
 	--layout-of-main-content-height: calc(var(--layout-of-main-height) - var(--layout-of-main-pagetabs-height));
 
 	--layout-of-spacer: 5px;
+
+	--theme-base-background-color: white;
+	--theme-base-color: black;
+
+	--theme-logo-background-color: #000000;
+	--theme-logo-color: #FFFFFF;
+
+	--theme-header-background-color: #FFFFFF;
+	--theme-header-color: #000000;
+
+	--theme-sidebar-background-color: #000000;
+	--theme-sidebar-color: #FFFFFF;
+	--theme-sidebar-a-tag-background-color: #000000;
+	--theme-sidebar-a-tag-color: #FFFFFF;
+	--theme-sidebar-a-tag-hover-background-color: #0000a4;
+	--theme-sidebar-a-tag-hover-color: #FFFFFF;
+
+	--theme-main-background-color: #FFFFFF;
+	--theme-main-color: #000000;
+
+	--theme-main-pagetabs-background-color: #FFFFFF;
+	--theme-main-pagetabs-color: #000000;
+
+	--theme-main-content-background-color: #F2F2F2;
+	--theme-main-content-color: #000000;
+
+	--theme-spacer-background-color: #F7F7F7;
 }

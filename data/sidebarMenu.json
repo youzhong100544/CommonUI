@@ -1,0 +1,152 @@
+[
+	{
+		"id": 1,
+		"parentId": 0,
+		"nameZh": "主页",
+		"nameEn": "Homepage",
+		"level": 1,
+		"sort": 1,
+		"url": null,
+		"icon": "../../lib/google/icon/home_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg",
+		"description": null,
+		"state": 1,
+		"childMenus": [
+			{
+				"id": 2,
+				"parentId": 1,
+				"nameZh": "控制台1",
+				"nameEn": "Console1",
+				"level": 2,
+				"sort": 1,
+				"url": "page/console.html",
+				"icon": null,
+				"description": null,
+				"state": 1,
+				"childMenus": [
+					{
+						"id": 4,
+						"parentId": 2,
+						"nameZh": "控制台1-1",
+						"nameEn": "Console1-1",
+						"level": 3,
+						"sort": 1,
+						"url": "page/console.html",
+						"icon": null,
+						"description": null,
+						"state": 1,
+						"childMenus": [
+							{
+								"id": 6,
+								"parentId": 4,
+								"nameZh": "控制台2-2-2",
+								"nameEn": "Console2-2-2",
+								"level": 3,
+								"sort": 2,
+								"url": "page/console.html",
+								"icon": null,
+								"description": null,
+								"state": 1,
+								"childMenus": []
+							}
+						]
+					},
+					{
+						"id": 5,
+						"parentId": 2,
+						"nameZh": "控制台2-2",
+						"nameEn": "Console2-2",
+						"level": 3,
+						"sort": 2,
+						"url": "page/console.html",
+						"icon": null,
+						"description": null,
+						"state": 1,
+						"childMenus": []
+					}
+				]
+			},
+			{
+				"id": 3,
+				"parentId": 1,
+				"nameZh": "控制台2",
+				"nameEn": "Console2",
+				"level": 2,
+				"sort": 2,
+				"url": "page/console.html",
+				"icon": null,
+				"description": null,
+				"state": 1,
+				"childMenus": []
+			}
+		]
+	},
+	{
+		"id": 200,
+		"parentId": 0,
+		"nameZh": "测试1",
+		"nameEn": "test1",
+		"level": 1,
+		"sort": 1,
+		"url": null,
+		"icon": null,
+		"description": null,
+		"state": 1,
+		"childMenus": []
+	},
+	{
+		"id": 300,
+		"parentId": 0,
+		"nameZh": "测试2",
+		"nameEn": "test2",
+		"level": 1,
+		"sort": 1,
+		"url": null,
+		"icon": null,
+		"description": null,
+		"state": 1,
+		"childMenus": [
+			{
+				"id": 310,
+				"parentId": 300,
+				"nameZh": "test3",
+				"nameEn": "Console",
+				"level": 2,
+				"sort": 1,
+				"url": "page/home.html",
+				"icon": null,
+				"description": null,
+				"state": 1,
+				"childMenus": [
+					
+				]
+			},
+			{
+				"id": 320,
+				"parentId": 300,
+				"nameZh": "测试4",
+				"nameEn": "test4",
+				"level": 2,
+				"sort": 1,
+				"url": null,
+				"icon": null,
+				"description": null,
+				"state": 1,
+				"childMenus": [
+					{
+						"id": 410,
+						"parentId": 320,
+						"nameZh": "测试5",
+						"nameEn": "test5",
+						"level": 3,
+						"sort": 1,
+						"url": null,
+						"icon": null,
+						"description": null,
+						"state": 1,
+						"childMenus": []
+					}
+				]
+			}
+		]
+	}
+]

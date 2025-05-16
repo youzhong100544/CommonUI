@@ -1,0 +1,51 @@
+/**
+ * @description: CSS styles.
+ *
+ * @author: 个性原子弹
+ * @since: 
+ * @date:
+ */
+
+
+.CommonUI-Admin-app > .admin-layout > .layout-logo {
+	background-color: var(--theme-logo-background-color);
+	color: var(--theme-logo-color);
+	/* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .15); */
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+}
+
+.CommonUI-Admin-app > .admin-layout > .layout-header {
+	background-color: var(--theme-header-background-color);
+	color: var(--theme-header-color);
+	border-bottom: 1px solid #F2F2F2;
+	/* border-bottom: 1px solid #c1c1c1; */
+}
+
+.CommonUI-Admin-app > .admin-layout > .layout-sidebar {
+	background-color: var(--theme-sidebar-background-color);
+	color: var(--theme-sidebar-color);
+}
+
+.CommonUI-Admin-app > .admin-layout > .layout-main {
+	/* background-color: white; */
+	/* background-color: #FFFFFF; */
+	/* background-color: #F2F2F2; */
+	/* color: black; */
+	background-color: var(--theme-main-background-color);
+	color: var(--theme-main-color);
+}
+
+.CommonUI-Admin-app > .admin-layout > .layout-main > .main-pagetabs {
+	background-color: var(--theme-main-pagetabs-background-color);
+	color: var(--theme-main-pagetabs-color);
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+}
+
+.CommonUI-Admin-app > .admin-layout > .layout-main > .main-content {
+	background-color: var(--theme-main-content-background-color);
+	color: var(--theme-main-content-color);
+}
+
+.CommonUI-Admin-app > .admin-layout > .layout-spacer {
+	background-color: var(--theme-spacer-background-color);
+}
