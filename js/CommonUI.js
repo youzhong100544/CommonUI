@@ -17,7 +17,7 @@ const CommonUI_Config = {
 	version: false, // 是否在模块请求时加入版本号参数（以更新模块缓存）
 	b_enable_debug: true, // 是否开启调试模式
 	b_introduced_jQuery: false, // 是否引入了 jQuery
-	moduleEnum: {
+	module_enum: {
 		Admin: 'Admin',
 		Blog: 'Blog',
 	},
@@ -333,7 +333,17 @@ function _fn_load_svg_and_replace_img() {
 /* End - 加载 SVG 图像，并替换 img 标签 */
 
 
-window.onload = function(){
+/*
+	window.onload 等同于 window.addEventListener("load")
+ */
+
+document.addEventListener('DOMContentLoaded', function () {
+	console.log("CommonUI.js - document.addEventListener\('DOMContentLoaded'\)");
+});
+
+window.onload = function () {
+	console.log("CommonUI.js - window.onload");
+
 	let a = 123;
 	let b = "str";
 
@@ -349,6 +359,12 @@ window.onload = function(){
 	// 把 img 标签引入的 SVG 替换为内嵌 SVG
 	// _fn_load_svg_and_replace_img();
 }
+
+window.addEventListener('load', function () {
+	console.log("CommonUI.js - window.addEventListener\('load'\)");
+})
+
+
 
 console.log("= End - CommonUI.js =============================================================================================");
 

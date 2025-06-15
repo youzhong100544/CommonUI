@@ -81,15 +81,19 @@
 	/*--sidebar-svg-icon-width: var(--sidebar-a-tag-height);*/
 	--sidebar-svg-icon-width: 40px;
 	--sidebar-svg-icon-height: var(--sidebar-a-tag-height);
+	
 
 	/* 文本区域大小 */
-	--sidebar-text-width: calc(var(--layout-of-sidebar-width) - var(--sidebar-svg-icon-width) - var(--sidebar-svg-submenu-toggle-width));
+	--sidebar-text-width: calc(var(--layout-of-sidebar-width) - var(--sidebar-svg-icon-width) - var(--sidebar-svg-submenu-toggle-width) - var(--sidebar-text-margin-left) - var(--sidebar-text-margin-right));
 	--sidebar-text-height: var(--sidebar-a-tag-height);
-	
-	/* SVG 图标大小 */
+	--sidebar-text-margin-left: 5px;
+	--sidebar-text-margin-right: 5px;
+
+	/* 折叠/展开 SVG 图标大小 */
 	/*--sidebar-svg-submenu-toggle-width: var(--sidebar-a-tag-height);*/
 	--sidebar-svg-submenu-toggle-width: 40px;
 	--sidebar-svg-submenu-toggle-height: var(--sidebar-a-tag-height);
+	
 }
 
 /* Start - 侧边栏菜单列表通用样式 */
@@ -155,13 +159,16 @@ div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul {
 div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li {
 	width: 100%;
 	/* height: 60px; */
-	min-height: 40px;
+	/* min-height: 40px; */
+	min-height: var(--sidebar-a-tag-height);
 	/* line-height: 1.5; */ /* 推荐设置行高 */
 	/* border: 1px solid rgb(238, 231, 22); */ /* 调试用 */
 }
 
 
 div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a {
+	width: var(--sidebar-a-tag-width);
+	height: var(--sidebar-a-tag-height);
 	border-radius: .5em;
 	/*padding: .85em;*/
 }
@@ -191,12 +198,11 @@ div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.svg-ic
 
 	/* border: 1px solid rgb(192, 14, 124); */ /* 调试用 */
 
-	/*子元素 svg 居中*/
+	/* 子元素 svg 居中 */
 	display: flex;
 	justify-content: center; /* 水平居中 */
 	align-items: center;     /* 垂直居中 */
 }
-
 
 /* 文本 */
 div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.text {
@@ -205,6 +211,9 @@ div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.text {
 
 	/* border: 1px solid rgb(227, 132, 30); */ /* 调试用 */
 
+	margin-left: var(--sidebar-text-margin-left);
+	margin-right: var(--sidebar-text-margin-right);
+
 	line-height: var(--sidebar-text-height); /* 等于容器高度 */
 	/*text-align: center;*/
 
@@ -212,7 +221,6 @@ div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.text {
 	overflow: hidden; /* 超出宽度部分隐藏 */
 	text-overflow: ellipsis; /* 超出部分以省略号代替 */
 }
-
 
 /* svg 图标 - 折叠展开 */
 div.layout-sidebar > div.sidebar-content > div.sidebar-list > ul li a div.svg-submenu-toggle {

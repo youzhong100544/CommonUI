@@ -14,19 +14,9 @@ console.log("###################################################################
 // 基础配置
 const CommonUI_Admin_Config = {
 	version: false, // 是否在模块请求时加入版本号参数（以更新模块缓存）
-	bEnableDebug: true, // 是否开启调试模式
+	b_enable_debug: true, // 是否开启调试模式
 	
 };
-
-(function (window) {
-	var fn_load_script = (function () {
-		let scriptElementCommonUIAdminSidebar = document.createElement("script");
-		scriptElementCommonUIAdminSidebar.setAttribute("type", "text/javascript");
-		scriptElementCommonUIAdminSidebar.setAttribute("src", "../../js/CommonUI-Admin/CommonUI-Admin-sidebar.js");
-		document.head.appendChild(scriptElementCommonUIAdminSidebar);
-	}());
-})(window);
-
 
 /** 定义变量 */
 const _admin_object = {
@@ -231,6 +221,15 @@ const layoutStyleEnum = {
 	LAYOUT_STYLE_GRID_SCALABLE: 'layout-style-grid-scalable'
 };
 
+
+(function (window) {
+	var fn_load_script = (function () {
+		let scriptElementCommonUIAdminSidebar = document.createElement("script");
+		scriptElementCommonUIAdminSidebar.setAttribute("type", "text/javascript");
+		scriptElementCommonUIAdminSidebar.setAttribute("src", "../../js/CommonUI-Admin/CommonUI-Admin-sidebar.js");
+		document.head.appendChild(scriptElementCommonUIAdminSidebar);
+	}());
+})(window);
 
 
 /**

@@ -16,12 +16,6 @@
 	--layout-of-main-width: calc(100vw - var(--layout-of-logo-width));
 	--layout-of-main-height: calc(100vh - var(--layout-of-logo-height));
 
-	--layout-of-main-pagetabs-width: var(--layout-of-main-width);
-	--layout-of-main-pagetabs-height: 40px;
-
-	--layout-of-main-content-width: var(--layout-of-main-width);
-	--layout-of-main-content-height: calc(var(--layout-of-main-height) - var(--layout-of-main-pagetabs-height));
-
 	--layout-of-spacer: 5px;
 
 	--theme-base-background-color: white;
