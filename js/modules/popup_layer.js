@@ -7,7 +7,7 @@
  */
 
 
-/* 对话框、模态框和弹出框 */
+/* 对话框、模态框、抽屉和弹出框 */
 
 /*
 	Dialog	对话或者会话
@@ -24,3 +24,8 @@
 
 	常见的模态弹框种类有对话框(Dialog/Alter)，动作栏(Actionbar/Actionsheet/ActionView)和浮层(Popover/Popup)。
 */
+
+(function (window) {
+	'use strict';
+
+})(window);

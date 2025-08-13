@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+
+		<style>
+
+		</style>
+
+		<script>
+			var name = "hiahia";
+			var Name = "piupiu";
+			var NAME = "biubiu";
+			var color = "green"
+			
+			function sayName(){
+				console.log(name);
+			}
+
+			function sayColor(){
+				console.log(window.color);
+			}
+
+			console.log(name); 			// hiahia
+			console.log(window.name); 	// hiahia
+
+			console.log(Name); 			// piupiu
+			console.log(window.Name); 	// piupiu
+
+			console.log(NAME); 			// biubiu
+			console.log(window.NAME); 	// biubiu
+
+			console.log(color); 		// green
+			console.log(window.color); 	// green
+
+			sayName(); 			// hiahia
+			window.sayName(); 	// hiahia
+			
+			sayColor(); 		// green
+			window.sayColor(); 	// green
+
+		</script>
+		
+	</head>
+	<body>
+		<h1>CommonUI - 演示案例</h1>
+
+	</body>
+</html>

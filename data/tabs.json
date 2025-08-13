@@ -1,0 +1,41 @@
+[
+	{
+		"id": 1,
+		"parentId": 0,
+		"name": "主页",
+		"nameZh": "主页",
+		"nameEn": "Homepage",
+		"level": 1,
+		"sort": 1,
+		"url": null,
+		"icon": "../../lib/google/icon/home_24dp_1F1F1F_FILL0_wght400_GRAD0_opsz24.svg",
+		"description": null,
+		"state": 1
+	},
+	{
+		"id": 2,
+		"parentId": 0,
+		"name": "测试1",
+		"nameZh": "测试1",
+		"nameEn": "test1",
+		"level": 1,
+		"sort": 1,
+		"url": null,
+		"icon": null,
+		"description": null,
+		"state": 1
+	},
+	{
+		"id": 3,
+		"parentId": 0,
+		"name": "测试2",
+		"nameZh": "测试2",
+		"nameEn": "test2",
+		"level": 1,
+		"sort": 1,
+		"url": null,
+		"icon": null,
+		"description": null,
+		"state": 1
+	}
+]

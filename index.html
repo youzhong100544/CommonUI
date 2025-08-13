@@ -4,9 +4,31 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Document</title>
+
+		<style>
+
+		</style>
+
+		<script>
+			/*
+				window.onload 等同于 window.addEventListener("load")
+			*/
+			document.addEventListener('DOMContentLoaded', function () {
+				console.log("document.addEventListener\('DOMContentLoaded'\)");
+			});
+
+			window.onload = function () {
+				console.log("window.onload");
+			}
+
+			window.addEventListener('load', function () {
+				console.log("window.addEventListener\('load'\)");
+			})
+		</script>
+		
 	</head>
 	<body>
-		<h1>index</h1>
+		<h1>CommonUI</h1>
 
 		<br>
 

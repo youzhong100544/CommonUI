@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+
+		<style>
+
+		</style>
+
+		<script>
+			
+			console.log(this); 
+
+		</script>
+
+		<script>
+
+			console.log(window); 
+
+		</script>
+
+		<script>
+
+			console.log(global);  // Uncaught ReferenceError: global is not defined
+
+		</script>
+
+		<script>
+
+			console.log(window.global);  // undefined
+
+		</script>
+		
+	</head>
+	<body>
+		<h1>CommonUI - 演示案例</h1>
+
+	</body>
+</html>

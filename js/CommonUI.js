@@ -12,16 +12,99 @@ console.log("# Start - CommonUI.js #");
 console.log("#################################################################################################################");
 
 
-// 基础配置
-const CommonUI_Config = {
-	version: false, // 是否在模块请求时加入版本号参数（以更新模块缓存）
-	b_enable_debug: true, // 是否开启调试模式
-	b_introduced_jQuery: false, // 是否引入了 jQuery
-	module_enum: {
-		Admin: 'Admin',
-		Blog: 'Blog',
+class Person {
+	// 1. 实例属性（类字段语法）
+	name = "Default Name";
+	age;
+
+	// 2. 静态属性
+	static version = "1.0.0";
+
+	constructor(name, age) {
+		this.name = name;
+		this.age = age;
+	}
+
+	get name() {
+		return this.name;
+	}
+
+	set name(name) {
+		this.name = name;
+	}
+
+	// 3. 原型方法（自动加到 prototype）
+	greet() {
+		console.log(`Hi, I'm ${this.name}`);
+	}
+}
+
+const _CommonUI = {
+	id: '_CommonUI',
+	name: '_CommonUI',
+
+	// foo
+	foo() {
+		console.log(this.name);
+		console.log(_CommonUI.name);
 	},
 	
+	// bar
+	bar: function () {
+		console.log(this.name);
+		console.log(_CommonUI.name);
+
+	}
+}
+
+
+// =====================================================================================
+// =====================================================================================
+// =====================================================================================
+
+
+// 用户配置
+const User_Config_Options = {
+	// 是否在模块请求时加入版本号参数（以更新模块缓存）
+	version: false, 
+	
+	// 是否开启调试模式
+	b_enable_debug: true, 
+};
+
+
+// 常量
+const CommonUI_Constant = {
+	// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
+	environment_array: ['local', 'development ', 'test', 'production'],
+
+	// 部署环境; browser-浏览器, server_local-本地服务器, server_test-测试服务器
+	run_environment_array: ['browser', 'server_local', 'server_test'],
+
+	// 模块
+	module_array: ['all', 'admin', 'blog'],
+};
+
+
+// 基础配置
+const CommonUI_Config = {
+	// 是否在模块请求时加入版本号参数（以更新模块缓存）
+	version: false, 
+
+	// 是否开启调试模式
+	b_enable_debug: true,
+
+	// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
+	environment: CommonUI_Constant.environment_array[0],
+
+	// 部署环境; browser-浏览器, server_local-本地服务器, server_test-测试服务器
+	run_environment: CommonUI_Constant.run_environment_array[0],
+
+	// 路径
+	path: 'local',
+
+	// 是否引入了 jQuery
+	b_introduced_jQuery: false,
 };
 
 
@@ -29,14 +112,372 @@ const CommonUI_Config = {
 const CommonUI_Cache = {
 
 };
+
+
+class CommonUI {
+
+	// 2. 静态属性
+	static version = "1.0.0";
+
+	// 基础配置
+	CommonUI_Config = {
+
+		// 是否开启调试模式
+		b_enable_debug: true,
+
+		// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
+		environment: CommonUI_Constant.environment_array[0],
+
+		// =======================================================
+		// =======================================================
+
+		// 部署环境; browser-浏览器, server_local-本地服务器, server_test-测试服务器
+		run_environment: CommonUI_Constant.run_environment_array[0],
+
+		// 路径
+		path: 'local',
+
+		// 是否引入了 jQuery
+		b_introduced_jQuery: false,
+	};
+	
+	constructor(User_Config_Options = {}) {
+		console.log("class CommonUI 构造函数");
+
+		// JavaScript：输出对象的不同方法及实例
+		
+		// 1、
+		// 打印变量 CommonUI_Config:[object Object]
+		// console.log(`打印变量 CommonUI_Config:${this.CommonUI_Config}`);
+
+		// 2、
+		// console.log("打印变量 CommonUI_Config:", this.CommonUI_Config);
+
+		// 3、
+		// 打印变量 CommonUI_Config:[object Object]
+		// console.dir("打印变量 CommonUI_Config:" + this.CommonUI_Config);
+
+		// 4、
+		// console.log("打印变量 CommonUI_Config:", this.CommonUI_Config);
+
+		// 5、
+		console.log("打印变量 CommonUI_Config:" + JSON.stringify(this.CommonUI_Config));
+		console.log("打印变量 CommonUI_Config:" + JSON.stringify(User_Config_Options));
+		
+		/*
+			判断 JavaScript 对象是否为空对象的方法
+				
+				使用 Object.keys()
+
+					Object.keys() 方法返回一个包含对象所有可枚举属性的数组。通过判断该数组的长度是否为 0，可以判断对象是否为空。
+
+					let data = {};
+					console.log(Object.keys(data).length === 0); // true
+		*/
+		if (Object.keys(User_Config_Options).length === 0) {
+			console.log("CommonUI 初始化 -> 用户设置参数 User_Config_Options 为空");
+		} else {
+			if (User_Config_Options.b_enable_debug) {
+				this.CommonUI_Config.b_enable_debug = User_Config_Options.b_enable_debug;
+			}
+
+			if (User_Config_Options.environment) {
+				this.CommonUI_Config.environment = User_Config_Options.environment;
+			}
+			
+		}
+
+		console.log("打印变量 CommonUI_Config:" + JSON.stringify(this.CommonUI_Config));
+
+		this.getApplicationRunEnvironment();
+
+	}
+
+
+	getApplicationRunEnvironment() {
+
+		// console.log(this.CommonUI_Config.environment);
+
+		// console.log(window.location);
+
+		// console.log(window.document.location);
+		// console.log(document.location);
+		
+		// 这种写法是 ES6 (ECMAScript 2015) 引入的对象解构赋值语法。
+		// 这是一种从对象中提取属性值并赋值给变量的简洁方式。
+		const { protocol, hostname } = window.location;
+
+		// 属性			示例值					描述
+		// protocol		"https:"				协议部分
+		// hostname		"www.example.com"		域名
+		// port			"8080"					端口号
+		// pathname		"/products"				路径部分
+		// search		"?id=123"				查询字符串
+		// hash			"#section1"				锚点部分
+
+		// 浏览器
+		// hash: ""
+		// host: ""
+		// hostname: ""
+		// href: "file:///D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
+		// origin: "file://"
+		// pathname: "/D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
+		// port: ""
+		// protocol: "file:"
+		
+		// Live Server - http://127.0.0.1:5500/html/index.html
+		// hash: ""
+		// host: "127.0.0.1:5500"
+		// hostname: "127.0.0.1"
+		// href: "http://127.0.0.1:5500/html/index.html"
+		// origin: "http://127.0.0.1:5500"
+		// pathname: "/html/index.html"
+		// port: "5500"
+		// protocol: "http:"
+		
+		// Live Server - http://localhost:5500/html/index.html
+		// hash: ""
+		// host: "localhost:5500"
+		// hostname: "localhost"
+		// href: "http://localhost:5500/html/index.html"
+		// origin: "http://localhost:5500"
+		// pathname: "/html/index.html"
+		// port: "5500"
+		// protocol: "http:"
+		
+		if (protocol === 'file:') {
+			console.log("部署环境:" + "browser");
+			// this.CommonUI_Config.environment = 'browser';
+			this.CommonUI_Config.environment = CommonUI_Constant.run_environment_array[0];
+		}
+
+		if (protocol === 'http:') {
+			if (hostname === 'localhost' || hostname === '127.0.0.1') {
+				console.log("部署环境:" + "server_local");
+				// this.CommonUI_Config.environment = 'server_local';
+				this.CommonUI_Config.environment = CommonUI_Constant.run_environment_array[1];
+			}
+		}
+
+		// console.log(this.CommonUI_Config.environment);
+	}
+}
+
+// new CommonUI();
+// new CommonUI({});
+new CommonUI({b_enable_debug: false,});
+// const _obj_CommonUI = new CommonUI();
+// const _obj_CommonUI = new CommonUI({});
+// const _obj_CommonUI = new CommonUI({});
   
 (function (window) {
 	'use strict';
+
+	/* 
+		问题
+			如何判断一个前端项目是在浏览器中直接打开（如 file:// 协议），
+			还是通过本地服务器（如 http://localhost）启动的？
+		
+		解答
+			1、判断原理
+				可以通过 JavaScript 检查当前页面的 协议（protocol） 或 域名（host） 来判断运行环境
+	
+				常见协议类型：
+				+-------------------+------------------------------+----------------------------------------------+
+				|协议				|含义							|示例
+				+-------------------------------------------------------------------------------------------------+
+				|file:				|浏览器直接打开本地 HTML 文件	 |file:///C:/project/index.html
+				|http:/https:		|通过本地或远程服务器加载网页	  |http://localhost:3000,https://example.com
+				+-------------------+------------------------------+----------------------------------------------+
+			2、使用
+				方法一：
+					const isRunningOnServer = 
+						window.location.protocol === 'http:' || 
+						window.location.protocol === 'https:'
+					;
+
+					console.log('是否通过服务器运行:', isRunningOnServer);
+
+					输出说明：
+						● 如果你在浏览器中直接双击 .html 文件打开，输出为 false
+						● 如果你使用 Live Server、Vite、Webpack Dev Server、Node.js 等服务器打开，输出为 true
+
+				方法二：结合 host 判断是否是本地开发服务器
+					const isLocalhost = 
+						window.location.hostname === 'localhost' || 
+						window.location.hostname === '127.0.0.1'
+					;
+
+					console.log('是否运行在 localhost:', isLocalhost);
+
+				方法一与方法二结合
+					结合上面两个判断，可以更精确控制逻辑：
+						function checkEnvironment() {
+							const protocol = window.location.protocol;
+							const host = window.location.host;
+
+							if (protocol === 'file:') {
+								console.log('当前是本地文件模式（file://）');
+							} else if (protocol.startsWith('http') && host.includes('localhost')) {
+								console.log('当前运行在本地服务器（如 Vite、Live Server）');
+							} else {
+								console.log('当前运行在正式服务器上');
+							}
+						}
+
+						checkEnvironment();
+
+				封装成通用函数（推荐）
+					function getRunEnvironment() {
+						const { protocol, hostname } = window.location;
+
+						if (protocol === 'file:') {
+							return 'local-file'; // 本地文件打开
+						} else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+							return 'dev-server'; // 本地开发服务器
+						} else {
+							return 'production'; // 生产环境服务器
+						}
+					}
+
+					// 使用
+					const env = getRunEnvironment();
+					console.log('运行环境:', env);
+
+					if (env === 'local-file') {
+						alert('请使用服务器运行此页面，部分功能可能受限。');
+					}
+			3、Vue / React 中的使用建议
+				如果你使用的是 Vue、React 等现代框架：
+					● 在组件生命周期钩子中使用（如 mounted() 或 useEffect()）
+					● 可以封装成一个全局插件或自定义 Hook
+
+				使用
+					import { useEffect, useState } from 'react';
+
+					function useAppEnvironment() {
+						const [env, setEnv] = useState(null);
+
+						useEffect(() => {
+							const { protocol } = window.location;
+							if (protocol === 'file:') {
+								setEnv('local-file');
+							} else if (window.location.hostname === 'localhost') {
+								setEnv('dev-server');
+							} else {
+								setEnv('production');
+							}
+						}, []);
+
+						return env;
+					}
+
+					// 使用
+					function App() {
+						const env = useAppEnvironment();
+
+						if (env === 'local-file') {
+							return <div>请使用服务器运行本应用</div>;
+						}
+
+						return <div>欢迎使用本应用！</div>;
+					}
+		总结
+			+-----------------------+----------------------------------------+
+			|目标				    |方法							          |
+			+----------------------------------------------------------------+
+			|判断是否本地文件打开    |window.location.protocol === 'file:'
+			|判断是否本地服务器运行  |hostname === 'localhost'
+			|封装判断逻辑           |写成通用函数或 React Hook
+			|多环境支持             |支持local-file、dev-server、production
+			+----------------------------------------------------------------+
+
+	*/
+	/**
+	 * 查看部署环境 
+	 */
+	let _fn_get_run_environment = (function (window) {
+		const { protocol, hostname } = window.location;
+
+		// console.log(protocol);
+		// console.log(hostname);
+		// console.log(protocol, hostname);
+
+		// 浏览器
+		// file:
+		// 
+		// file: 
+		
+		// Live Server - http://127.0.0.1:5500/html/index.html
+		// http:
+		// 127.0.0.1
+		// http: 127.0.0.1
+		
+		// Live Server - http://localhost:5500/html/index.html
+		// http:
+		// localhost
+		// http: localhost
+		
+		if (protocol === 'file:') {
+			console.log("部署环境:" + "browser");
+			// CommonUI_Config.environment = 'browser';
+			CommonUI_Config.environment = CommonUI_Constant.run_environment_array[0];
+		}
+
+		if (protocol === 'http:') {
+			if (hostname === 'localhost' || hostname === '127.0.0.1') {
+				console.log("部署环境:" + "server_local");
+				// CommonUI_Config.environment = 'server_local';
+				CommonUI_Config.environment = CommonUI_Constant.run_environment_array[1];
+			}
+		}
+
+		// console.log(CommonUI_Config.environment);
+		
+	})(window);
 
 	/**
 	 * 加载 script 脚本 
 	 */
 	let _fn_load_script = (function () {
+
+		/* 1、获取当前 CommonUI.js 的文件路径 */
+		// 1.1、获取当前正在执行的 script 标签
+		const currentScriptElement = document.currentScript;
+		// 1.2、用 getAttribute() 获取原始值
+		// 获取原始 src 属性值（未解析）
+		const currentScriptSrcAttributeValue = currentScriptElement.getAttribute('src');
+		// 输出当前脚本的完整路径
+		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+		console.log(`当前 CommonUI.js 的文件路径:${currentScriptSrcAttributeValue}`); 
+		// 1.3、
+		const currentScriptPath = currentScriptElement.src;
+		// 输出当前脚本的完整路径
+		// 当前 CommonUI.js 的文件路径:file:///D:/Develop/My%20Repositories/Github/CommonUI/js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:http://127.0.0.1:5500/js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:http://localhost:5500/js/CommonUI.js
+		console.log(`当前 CommonUI.js 的文件路径:${currentScriptPath}`); 
+
+
+		const strIndex = currentScriptSrcAttributeValue.indexOf("/js/CommonUI.js");
+		// console.log(`strIndex:${strIndex}`); 
+		const pathPrefix = currentScriptSrcAttributeValue.substring(0, strIndex);
+		// console.log(`pathPrefix:${pathPrefix}`);
+
+		const jQuery_path = pathPrefix + "/lib/jquery/jquery-3.7.1.js";
+		
+		const CommonUI_Debug_path = pathPrefix + "/js/CommonUI-Debug.js";
+		const CommonUI_Common_path = pathPrefix + "/js/CommonUI-Common.js"
+		const CommonUI_Util_path = pathPrefix + "/js/CommonUI-Util.js"
+		
+		// const CommonUI_Admin_path = pathPrefix + "/js/CommonUI-Admin/CommonUI-Admin.js"
+		
+		const CommonUI_Module_Menus_path = pathPrefix + "/js/modules/menus.js"
+		const CommonUI_Module_Tabs_path = pathPrefix + "/js/modules/tabs.js"
+		
+		// 2、设置要加载的 js 文件路径
 
 		// 判断是否加载了 jQuery， 如果没有在加载 jQuery
 		if (typeof jQuery !== 'undefined') {
@@ -54,11 +495,11 @@ const CommonUI_Cache = {
 			// 设置全局变量
 			// CommonUI_Config['b_introduced_jQuery'] = false;			
 			CommonUI_Config.b_introduced_jQuery = false;
-			
+
 			// 加载 jQuery
 			let scriptElementjQuery = document.createElement("script");
 			scriptElementjQuery.setAttribute("type", "text/javascript");
-			scriptElementjQuery.setAttribute("src", "../../lib/jquery/jquery-3.7.1.js");
+			scriptElementjQuery.setAttribute("src", jQuery_path);
 			
 			// 方式一：在第一个 script 标签前 加载 jQuery
 			function insertBeforeFirstScriptElement() {
@@ -83,28 +524,27 @@ const CommonUI_Cache = {
 		if (CommonUI_Config.b_enable_debug) {
 			let scriptElementCommonUIDebug = document.createElement("script");
 			scriptElementCommonUIDebug.setAttribute("type", "text/javascript");
-			scriptElementCommonUIDebug.setAttribute("src", "../../js/CommonUI-Debug.js");
+			scriptElementCommonUIDebug.setAttribute("src", CommonUI_Debug_path);
 			document.head.appendChild(scriptElementCommonUIDebug);
 		}
 
 		let scriptElementCommonUICommon = document.createElement("script");
 		scriptElementCommonUICommon.setAttribute("type", "text/javascript");
-		scriptElementCommonUICommon.setAttribute("src", "../../js/CommonUI-Common.js");
+		scriptElementCommonUICommon.setAttribute("src", CommonUI_Common_path);
 		document.head.appendChild(scriptElementCommonUICommon);
 
 		let scriptElementCommonUIUtil = document.createElement("script");
 		scriptElementCommonUIUtil.setAttribute("type", "text/javascript");
-		scriptElementCommonUIUtil.setAttribute("src", "../../js/CommonUI-Util.js");
+		scriptElementCommonUIUtil.setAttribute("src", CommonUI_Util_path);
 		document.head.appendChild(scriptElementCommonUIUtil);
 
 		let scriptElementCommonUIAdmin = document.createElement("script");
 		scriptElementCommonUIAdmin.setAttribute("type", "text/javascript");
-		scriptElementCommonUIAdmin.setAttribute("src", "../../js/CommonUI-Admin/CommonUI-Admin.js");
+		scriptElementCommonUIAdmin.setAttribute("src", CommonUI_Admin_path);
 		document.head.appendChild(scriptElementCommonUIAdmin);
 	}());
 	
 })(window);
-
 
 
 

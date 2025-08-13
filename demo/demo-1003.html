@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+
+		<style>
+
+		</style>
+
+		<script>
+			
+			console.log(this); 
+
+		</script>
+
+		<script>
+			
+			function sayHello(){
+				console.log(this);
+			}
+
+			sayHello();
+			window.sayHello();
+
+			class Person {
+				constructor() {
+					console.log(this);
+				}
+			}
+
+			const person = new Person();
+		</script>
+	</head>
+	<body>
+		<h1>CommonUI - 演示案例</h1>
+
+	</body>
+</html>
