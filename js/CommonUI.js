@@ -65,85 +65,115 @@ const _CommonUI = {
 
 // 用户配置
 const User_Config_Options = {
-	// 是否在模块请求时加入版本号参数（以更新模块缓存）
-	version: false, 
 	
 	// 是否开启调试模式
 	b_enable_debug: true, 
-};
 
-
-// 常量
-const CommonUI_Constant = {
 	// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
-	environment_array: ['local', 'development ', 'test', 'production'],
-
-	// 部署环境; browser-浏览器, server_local-本地服务器, server_test-测试服务器
-	run_environment_array: ['browser', 'server_local', 'server_test'],
+	environment: 'local',
 
 	// 模块
-	module_array: ['all', 'admin', 'blog'],
-};
-
-
-// 基础配置
-const CommonUI_Config = {
-	// 是否在模块请求时加入版本号参数（以更新模块缓存）
-	version: false, 
-
-	// 是否开启调试模式
-	b_enable_debug: true,
-
-	// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
-	environment: CommonUI_Constant.environment_array[0],
-
-	// 部署环境; browser-浏览器, server_local-本地服务器, server_test-测试服务器
-	run_environment: CommonUI_Constant.run_environment_array[0],
-
-	// 路径
-	path: 'local',
-
-	// 是否引入了 jQuery
-	b_introduced_jQuery: false,
-};
-
-
-// 模块加载缓存信息
-const CommonUI_Cache = {
-
+	modules: ['all'],
+	
 };
 
 
 class CommonUI {
 
-	// 2. 静态属性
+	// 私有 - 项目通用常量
+	#application_common_constant = {
+
+		// 部署环境; browser-浏览器, server-本地服务器
+		deployment_environment_info_array: ['browser', 'server'],
+		
+		// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
+		environment_array: ['local', 'development ', 'test', 'production'],
+
+		// 模块
+		module_object: {
+			icon: '/js/modules/icon.js',
+			menu: '/js/modules/menu.js',
+			tab: '/js/modules/tab.js',
+
+			admin: '/js/CommonUI-Admin/CommonUI-Admin.js',
+			blog: '/js/CommonUI-Blog/CommonUI-blog.js',
+
+			lib: {
+				jQuery: '/lib/jQuery/jquery-3.7.1/jquery-3.7.1.js',
+				jQuery_UI: {
+					css: '/lib/jQuery/jquery-ui-1.14.1/jquery-ui.css',
+					js: '/lib/jQuery/jquery-ui-1.14.1/jquery-ui.js',
+				}
+			}
+		},
+	};
+
+	// 1. 静态属性 - 版本号
 	static version = "1.0.0";
 
-	// 基础配置
-	CommonUI_Config = {
+	// 项目配置信息 configuration 
+	application_config_info = {
 
 		// 是否开启调试模式
 		b_enable_debug: true,
 
 		// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
-		environment: CommonUI_Constant.environment_array[0],
+		// environment: this.#application_common_constant.environment_array[0],
+		environment: undefined,
 
-		// =======================================================
-		// =======================================================
+		// 模块
+		modules: ['all'],
+	};
 
-		// 部署环境; browser-浏览器, server_local-本地服务器, server_test-测试服务器
-		run_environment: CommonUI_Constant.run_environment_array[0],
+	
+	// 部署环境; browser-浏览器, server-本地服务器
+	// application_deployment_environment = this.#application_common_constant.deployment_environment_info_array[0];
+	application_deployment_environment;
+	
+	// 项目运行环境; 
+	application_run_environment = {
+		platform: 'Windows',
+		platform_version: '',
+
+		device_name: '',
+
+		browser: 'Google',
+		browser_version: '',
+	}
+	
+	// 项目基础信息
+	application_base_info = {
 
 		// 路径
 		path: 'local',
 
-		// 是否引入了 jQuery
-		b_introduced_jQuery: false,
-	};
+		// 第三方库
+		other_library: {
+			// 是否引入了 jQuery
+			b_introduced_jQuery: false,
+		}
+
+	}
+
 	
 	constructor(User_Config_Options = {}) {
 		console.log("class CommonUI 构造函数");
 
+		this.initConfigurationInformation(User_Config_Options);
+
+		this.getApplicationRunEnvironment();
+
+		this.getDeviceInfo();
+
+		this.loadScript();
+
+	}
+
+
+	/**
+	 * 初始化配置信息(Initialize configuration information)
+	 */
+	initConfigurationInformation(User_Config_Options) { 
 		// JavaScript：输出对象的不同方法及实例
 		
 		// 1、
@@ -161,7 +191,7 @@ class CommonUI {
 		// console.log("打印变量 CommonUI_Config:", this.CommonUI_Config);
 
 		// 5、
-		console.log("打印变量 CommonUI_Config:" + JSON.stringify(this.CommonUI_Config));
+		console.log("打印变量 CommonUI_Config:" + JSON.stringify(this.application_config_info));
 		console.log("打印变量 CommonUI_Config:" + JSON.stringify(User_Config_Options));
 		
 		/*
@@ -177,101 +207,48 @@ class CommonUI {
 		if (Object.keys(User_Config_Options).length === 0) {
 			console.log("CommonUI 初始化 -> 用户设置参数 User_Config_Options 为空");
 		} else {
-			if (User_Config_Options.b_enable_debug) {
-				this.CommonUI_Config.b_enable_debug = User_Config_Options.b_enable_debug;
+			if (!_CommonUI_Util.typeUtils.isUndefined(User_Config_Options.b_enable_debug)) {
+				// 判断参数是否为字符串
+				if (_CommonUI_Util.typeUtils.isBoolean(User_Config_Options.b_enable_debug)) { 
+					this.application_config_info.b_enable_debug = User_Config_Options.b_enable_debug;
+				}
 			}
 
 			if (User_Config_Options.environment) {
-				this.CommonUI_Config.environment = User_Config_Options.environment;
+				this.application_config_info.environment = User_Config_Options.environment;
+			}
+
+			if (User_Config_Options.modules) {
+				// 判断参数是否为字符串
+				if (_CommonUI_Util.typeUtils.isString(User_Config_Options.modules)) { 
+					console.log("用户设置参数 User_Config_Options -> modules为字符串");
+
+					// 'all'.toLowerCase();
+					// 'all'.toLocaleLowerCase();
+					if (User_Config_Options.modules === 'all') { 
+						console.log("加载所有模块");
+					}
+				}
+				// 判断参数是否为数组
+				if (_CommonUI_Util.typeUtils.isArray(User_Config_Options.modules)) { 
+					console.log("用户设置参数 User_Config_Options -> modules为数组");
+					console.log("加载指定模块");
+
+					let moduleArray = User_Config_Options.modules;
+					
+					for (let index = 0; index < moduleArray.length; index++) {
+						const element = moduleArray[index];
+					}
+				}
+				
+				
 			}
 			
 		}
 
-		console.log("打印变量 CommonUI_Config:" + JSON.stringify(this.CommonUI_Config));
-
-		this.getApplicationRunEnvironment();
+		console.log("打印变量 CommonUI_Config:" + JSON.stringify(this.application_config_info));
 
 	}
-
-
-	getApplicationRunEnvironment() {
-
-		// console.log(this.CommonUI_Config.environment);
-
-		// console.log(window.location);
-
-		// console.log(window.document.location);
-		// console.log(document.location);
-		
-		// 这种写法是 ES6 (ECMAScript 2015) 引入的对象解构赋值语法。
-		// 这是一种从对象中提取属性值并赋值给变量的简洁方式。
-		const { protocol, hostname } = window.location;
-
-		// 属性			示例值					描述
-		// protocol		"https:"				协议部分
-		// hostname		"www.example.com"		域名
-		// port			"8080"					端口号
-		// pathname		"/products"				路径部分
-		// search		"?id=123"				查询字符串
-		// hash			"#section1"				锚点部分
-
-		// 浏览器
-		// hash: ""
-		// host: ""
-		// hostname: ""
-		// href: "file:///D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
-		// origin: "file://"
-		// pathname: "/D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
-		// port: ""
-		// protocol: "file:"
-		
-		// Live Server - http://127.0.0.1:5500/html/index.html
-		// hash: ""
-		// host: "127.0.0.1:5500"
-		// hostname: "127.0.0.1"
-		// href: "http://127.0.0.1:5500/html/index.html"
-		// origin: "http://127.0.0.1:5500"
-		// pathname: "/html/index.html"
-		// port: "5500"
-		// protocol: "http:"
-		
-		// Live Server - http://localhost:5500/html/index.html
-		// hash: ""
-		// host: "localhost:5500"
-		// hostname: "localhost"
-		// href: "http://localhost:5500/html/index.html"
-		// origin: "http://localhost:5500"
-		// pathname: "/html/index.html"
-		// port: "5500"
-		// protocol: "http:"
-		
-		if (protocol === 'file:') {
-			console.log("部署环境:" + "browser");
-			// this.CommonUI_Config.environment = 'browser';
-			this.CommonUI_Config.environment = CommonUI_Constant.run_environment_array[0];
-		}
-
-		if (protocol === 'http:') {
-			if (hostname === 'localhost' || hostname === '127.0.0.1') {
-				console.log("部署环境:" + "server_local");
-				// this.CommonUI_Config.environment = 'server_local';
-				this.CommonUI_Config.environment = CommonUI_Constant.run_environment_array[1];
-			}
-		}
-
-		// console.log(this.CommonUI_Config.environment);
-	}
-}
-
-// new CommonUI();
-// new CommonUI({});
-new CommonUI({b_enable_debug: false,});
-// const _obj_CommonUI = new CommonUI();
-// const _obj_CommonUI = new CommonUI({});
-// const _obj_CommonUI = new CommonUI({});
-  
-(function (window) {
-	'use strict';
 
 	/* 
 		问题
@@ -396,50 +373,369 @@ new CommonUI({b_enable_debug: false,});
 	/**
 	 * 查看部署环境 
 	 */
-	let _fn_get_run_environment = (function (window) {
+	getApplicationRunEnvironment() {
+
+		// console.log(this.application_deployment_environment);
+
+		// console.log(window.location);
+
+		// console.log(window.document.location);
+		// console.log(document.location);
+		
+		// 这种写法是 ES6 (ECMAScript 2015) 引入的对象解构赋值语法。
+		// 这是一种从对象中提取属性值并赋值给变量的简洁方式。
 		const { protocol, hostname } = window.location;
 
-		// console.log(protocol);
-		// console.log(hostname);
-		// console.log(protocol, hostname);
+		// 属性			示例值					描述
+		// protocol		"https:"				协议部分
+		// hostname		"www.example.com"		域名
+		// port			"8080"					端口号
+		// pathname		"/products"				路径部分
+		// search		"?id=123"				查询字符串
+		// hash			"#section1"				锚点部分
 
 		// 浏览器
-		// file:
-		// 
-		// file: 
+		// hash: ""
+		// host: ""
+		// hostname: ""
+		// href: "file:///D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
+		// origin: "file://"
+		// pathname: "/D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
+		// port: ""
+		// protocol: "file:"
 		
 		// Live Server - http://127.0.0.1:5500/html/index.html
-		// http:
-		// 127.0.0.1
-		// http: 127.0.0.1
+		// hash: ""
+		// host: "127.0.0.1:5500"
+		// hostname: "127.0.0.1"
+		// href: "http://127.0.0.1:5500/html/index.html"
+		// origin: "http://127.0.0.1:5500"
+		// pathname: "/html/index.html"
+		// port: "5500"
+		// protocol: "http:"
 		
 		// Live Server - http://localhost:5500/html/index.html
-		// http:
-		// localhost
-		// http: localhost
+		// hash: ""
+		// host: "localhost:5500"
+		// hostname: "localhost"
+		// href: "http://localhost:5500/html/index.html"
+		// origin: "http://localhost:5500"
+		// pathname: "/html/index.html"
+		// port: "5500"
+		// protocol: "http:"
 		
 		if (protocol === 'file:') {
-			console.log("部署环境:" + "browser");
-			// CommonUI_Config.environment = 'browser';
-			CommonUI_Config.environment = CommonUI_Constant.run_environment_array[0];
+			console.log("部署环境:" + "browser 浏览器");
+			// this.application_deployment_environment = 'browser';
+			this.application_deployment_environment = this.#application_common_constant.deployment_environment_info_array[0];
 		}
 
-		if (protocol === 'http:') {
+		if (protocol === 'http:' || protocol === 'https:') {
+			console.log("部署环境:" + "server 服务器");
+			// this.application_deployment_environment = 'server';
+			this.application_deployment_environment = this.#application_common_constant.deployment_environment_info_array[1];
+		
 			if (hostname === 'localhost' || hostname === '127.0.0.1') {
 				console.log("部署环境:" + "server_local");
-				// CommonUI_Config.environment = 'server_local';
-				CommonUI_Config.environment = CommonUI_Constant.run_environment_array[1];
 			}
 		}
 
-		// console.log(CommonUI_Config.environment);
-		
-	})(window);
+		// console.log(this.application_deployment_environment);
+	}
 
 	/**
-	 * 加载 script 脚本 
+	 * 获取运行设备信息
 	 */
-	let _fn_load_script = (function () {
+	getDeviceInfo() {
+		// lib.dom.d.ts
+		// /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/userAgent) */
+		// readonly userAgent: string;
+		if (window.navigator.userAgent) {
+			let ua = window.navigator.userAgent;
+
+			// Edge
+			// 	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0
+			// 
+			// Google
+			// 	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+			// 
+			// Firefox
+			// 	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:142.0) Gecko/20100101 Firefox/142.0
+			
+			// console.log(ua);
+			
+			// Edge
+			// 	userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0
+			// 
+			// Google
+			// 	userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+			// 
+			// Firefox
+			// 	userAgent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:142.0) Gecko/20100101 Firefox/142.0
+			
+			// console.log(`userAgent: ${ua}`);
+		}
+
+		// https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData
+		// https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/platform
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/platform
+		// https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/getHighEntropyValues
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/getHighEntropyValues
+		if (window.navigator.userAgentData) {
+			let uad = window.navigator.userAgentData;
+			// console.log(uad);
+
+			// Edge
+			// 	userAgentData:{"brands":[{"brand":"Chromium","version":"140"},{"brand":"Not=A?Brand","version":"24"},{"brand":"Microsoft Edge","version":"140"}],"mobile":false,"platform":"Windows"}
+			// 
+			// Google
+			// 	userAgentData:{"brands":[{"brand":"Chromium","version":"140"},{"brand":"Not=A?Brand","version":"24"},{"brand":"Google Chrome","version":"140"}],"mobile":false,"platform":"Windows"}
+				
+			// console.log('userAgentData:' + JSON.stringify(uad));
+			
+			// console.log(uad.toJSON());
+			// console.log('userAgentData toJSON():' + JSON.stringify(uad.toJSON()));
+
+			// Uncaught (in promise) TypeError: Failed to execute 'getHighEntropyValues' on 'NavigatorUAData': 1 argument required, but only 0 present.
+			// console.log('userAgentData.getHighEntropyValues:' + JSON.stringify(uad.getHighEntropyValues()));
+			
+		}
+
+
+		this.getDeviceInfoByUserAgent();
+
+		this.getDeviceInfoByUserAgentData();
+		
+	}
+
+	getDeviceInfoByUserAgent() {
+		if (window.navigator.userAgent) {
+			let userAgentStr = navigator.userAgent;
+			
+			// Edge
+			// 	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0
+			// 
+			// Google
+			// 	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+			// 
+			// Firefox
+			// 	Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:142.0) Gecko/20100101 Firefox/142.0
+			
+			// console.log(userAgentStr);
+
+			const userAgentObj = {
+				OS_name: '', // 操作系统名称
+				OS_version: '', // 操作系统版本
+
+				device_name: '', // 设备名称
+
+				browser_name: '', // 浏览器名称
+				browser_version: '', // 浏览器版本
+			};
+
+			// 定义浏览器和设备的正则表达式
+			const browserReg = {
+				Chrome: /Chrome/,
+				Firefox: /Firefox/,
+				Opera: /Opera/,
+				Safari: /Safari/,
+				Edge: /Edge/,
+				IE: /MSIE/,
+			};
+
+			const deviceReg = {
+				Windows: /Windows NT/,
+				Mac: /Mac OS X/,
+				Linux: /Linux/,
+				iPhone: /iPhone/,
+				iPad: /iPad/,
+				Android: /Android/
+			};
+
+			// 提取操作系统和设备信息
+			for (let key in deviceReg) {
+				if (deviceReg[key].test(userAgentStr)) {
+					userAgentObj.OS_name = key;
+					if (key === 'Windows') {
+						userAgentObj.OS_version = userAgentStr.split('Windows NT ')[1].split(';')[0];
+					} else if (key === 'Mac') {
+						userAgentObj.OS_version = userAgentStr.split('Mac OS X ')[1].split(')')[0];
+					} else if (key === 'Linux') {
+						userAgentObj.OS_version = userAgentStr.split('Linux ')[1].split(')')[0];
+					} else if (key === 'iPhone') {
+						userAgentObj.OS_version = userAgentStr.split('iPhone OS ')[1].split(' ')[0];
+					} else if (key === 'iPad') {
+						userAgentObj.OS_version = userAgentStr.split('iPad; CPU OS ')[1].split(' ')[0];
+					} else if (key === 'Android') {
+						userAgentObj.OS_version = userAgentStr.split('Android ')[1].split(';')[0];
+						userAgentObj.device_name = userAgentStr.split('(Linux; Android ')[1].split('; ')[1].split(' Build')[0];
+					}
+				}
+			}
+
+			// 提取浏览器信息
+			Object.entries(browserReg).forEach(([key, value]) => {
+				// console.log(key, value);
+				// console.log(`key: ${key}, value: ${value}`);
+
+				if (browserReg[key].test(userAgentStr)) {
+					userAgentObj.browser_name = key;
+					if (key === 'Chrome') {
+						userAgentObj.browser_version = userAgentStr.split('Chrome/')[1].split(' ')[0];
+					} else if (key === 'Firefox') {
+						userAgentObj.browser_version = userAgentStr.split('Firefox/')[1];
+					} else if (key === 'Opera') {
+						// userAgentObj.browser_version = userAgentStr.split('Version/')[1];
+					} else if (key === 'Safari') {
+						// userAgentObj.browser_version = userAgentStr.split('Version/')[1].split(' ')[0];
+					} else if (key === 'Edge') {
+						userAgentObj.browser_version = userAgentStr.split('Edg/')[1].split(' ')[0];
+					} else if (key === 'IE') {
+						userAgentObj.browser_version = userAgentStr.split('MSIE ')[1].split(' ')[0];
+					} else {
+						return "Unknown browser"; // 其他浏览器...（可根据自己需要确定是否新增其他浏览器的判断）
+					}
+				}
+			});
+
+			return userAgentObj;
+		}
+	}
+	getDeviceInfoByUserAgentData() {
+		// https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData
+		
+		
+		if (navigator.userAgentData) {
+
+			/*
+				https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/platform
+				https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/platform
+		
+				Instance properties - 实例属性
+
+					NavigatorUAData: brands property
+						The brands read-only property of the NavigatorUAData interface returns an array of brand information.
+						NavigatorUAData 接口的 brands 只读属性返回一个包含品牌信息的数组。
+						
+					NavigatorUAData: mobile property
+						The mobile read-only property of the NavigatorUAData interface returns a value indicating whether the device is a mobile device.
+						NavigatorUAData 接口的 mobile 只读属性返回一个值，指示设备是否是移动设备。
+
+					NavigatorUAData: platform property
+						The platform read-only property of the NavigatorUAData interface returns the platform brand information.
+						NavigatorUAData 接口的 platform 只读属性返回平台的品牌信息。
+			*/
+			console.log(navigator.userAgentData.brands);
+			console.log(navigator.userAgentData.mobile);
+			console.log(navigator.userAgentData.platform);
+
+			/*
+				https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/getHighEntropyValues
+				https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/getHighEntropyValues
+				
+				Instance methods - 实例方法
+
+					NavigatorUAData: getHighEntropyValues() method
+						The getHighEntropyValues() method of the NavigatorUAData interface is a Promise that resolves with a dictionary object containing the high entropy values the user-agent returns.
+						NavigatorUAData 接口的 getHighEntropyValues() 方法是一个 Promise，它使用包含用户的高熵值的字典对象进行解析代理返回。
+
+					NavigatorUAData: toJSON() method
+						The toJSON() method of the NavigatorUAData interface is a serializer that returns a JSON representation of the low entropy properties of the NavigatorUAData object.
+						NavigatorUAData 接口的 toJSON() 方法是一个序列化器，它返回 NavigatorUAData 对象的低熵属性的 JSON 表示形式。
+
+			*/
+			navigator.userAgentData.getHighEntropyValues(
+				[
+					// brands
+					// 返回包含 brand 和 version 属性的对象数组，指定浏览器品牌及其版本（与 NavigatorUAData.brands 提供的信息相同）。
+					// 请注意，此信息可以在 Sec - CH - UA 标头中发送到服务器（一个低熵客户端提示）。
+					"brands",
+					
+					// mobile
+					// 如果用户代理在移动设备上运行，则返回 true（与 NavigatorUAData.mobile 提供的信息相同）。
+					// 请注意，此信息可以在 Sec - CH - UA - Mobile 标头中发送到服务器（一个低熵客户端提示）。
+					"mobile",
+
+					// platform
+					// 返回一个描述用户代理的运行平台的字符串，例如 "Windows"（与 NavigatorUAData.platform 提供的信息相同）。
+					// 请注意，此信息可以在 Sec-CH-UA-Platform 标头中发送到服务器（一个低熵客户端提示）。
+					"platform",
+
+					// architecture
+					// 一个包含平台架构的字符串。例如，"x86"。请注意，当服务器在 Accept-CH 标头中显式请求该信息后，可以在 Sec-CH-UA-Arch 标头中将该信息发送到服务器。
+					"architecture",
+
+					// bitness
+					// 一个包含平台架构位数的字符串。例如，"32" 或 "64"。请注意，如果服务器在 Accept-CH 标头中明确请求该信息，则可以在 Sec-CH-UA-Bitness 标头中将该信息发送到服务器。
+					"bitness",
+					
+					// formFactor
+					// 一个包含设备外形规格的字符串。例如，"Tablet" 或 "VR"。请注意，如果服务器在 Accept-CH 中明确请求该信息，则可以在 Sec-CH-UA-Form-Factors 标头中将该信息发送到服务器。
+					"formFactor",
+
+					// fullVersionList
+					// 一个具有 "brand" 和 "version" 属性的对象数组，分别表示浏览器名称和完整版本。
+					// 例如，{"brand": "Google Chrome", "version": "103.0.5060.134"}, {"brand": "Chromium", "version": "103.0.5060.134"}。
+					// 请注意，一个对象可能故意包含无效信息，以防止网站依赖固定的浏览器列表。
+					// 请注意，如果服务器在 Accept-CH 中明确请求该信息，则可以在 Sec-CH-UA-Full-Version-List 标头中将该信息发送到服务器。
+					"fullVersionList",
+
+					// model
+					// 一个包含移动设备型号的字符串。例如，"Pixel 2XL"。
+					// 如果设备不是移动设备或者设备型号未知，则 model 将为 ""。
+					// 请注意，如果服务器在 Accept-CH 标头中明确请求该信息，则可以在 Sec-CH-UA-Model 标头中将该信息发送到服务器。
+					"model",
+
+					// platformVersion
+					// 一个包含平台版本的字符串。平台名称本身始终可通过低熵提示 platform 提供。例如，"10.0"。
+					// 请注意，如果服务器在 Accept-CH 中明确请求该信息，则可以在 Sec-CH-UA-Platform-Version 标头中将该信息发送到服务器。
+					"platformVersion",
+
+					// uaFullVersion
+					// 一个包含完整浏览器版本的字符串。例如，"103.0.5060.134"。已弃用，请使用 fullVersionList 替代。
+					// 请注意，如果服务器在 Accept - CH 中明确请求该信息，则可以在 Sec - CH - UA - Full - Version 标头中将该信息发送到服务器。
+					"uaFullVersion",
+
+					// wow64
+					// 一个布尔值，指示用户代理的二进制文件是否在 64 位 Windows 上以 32 位模式运行。
+					// 请注意，如果服务器在 Accept-CH 标头中明确请求该信息，则可以在 Sec-CH-UA-WoW64 标头中将该信息发送到服务器。
+
+				]
+			).then(
+				// (values) => { console.log(values) }
+				// values => { console.log(values) }
+				// values => console.log(values)
+
+				values => {
+					console.log(`平台: ${values.platform}`);
+					console.log(`平台版本: ${values.platformVersion}`);
+					console.log(`架构: ${values.architecture}`);
+					console.log(`设备型号: ${values.model}`);
+					console.log(`完整版本: ${values.uaFullVersion}`);
+				}
+			);
+
+			// console.log(navigator.userAgentData.toJSON());
+
+		} else {
+			console.log("当前浏览器不支持 navigator.userAgentData");
+		}
+	}
+
+
+	/**
+	 * 校验是否引入了 第三方 库; 如 jQuery
+	 */
+	verifyImportOtherPackages() {
+
+	}
+
+	/**
+	 * 动态加载与异步加载 JavaScript 详解
+	 */
+	loadScript() {
 
 		/* 1、获取当前 CommonUI.js 的文件路径 */
 		// 1.1、获取当前正在执行的 script 标签
@@ -466,7 +762,7 @@ new CommonUI({b_enable_debug: false,});
 		const pathPrefix = currentScriptSrcAttributeValue.substring(0, strIndex);
 		// console.log(`pathPrefix:${pathPrefix}`);
 
-		const jQuery_path = pathPrefix + "/lib/jquery/jquery-3.7.1.js";
+		const jQuery_path = pathPrefix + "/lib/jQuery/jquery-3.7.1.js";
 		
 		const CommonUI_Debug_path = pathPrefix + "/js/CommonUI-Debug.js";
 		const CommonUI_Common_path = pathPrefix + "/js/CommonUI-Common.js"
@@ -474,8 +770,10 @@ new CommonUI({b_enable_debug: false,});
 		
 		// const CommonUI_Admin_path = pathPrefix + "/js/CommonUI-Admin/CommonUI-Admin.js"
 		
-		const CommonUI_Module_Menus_path = pathPrefix + "/js/modules/menus.js"
-		const CommonUI_Module_Tabs_path = pathPrefix + "/js/modules/tabs.js"
+		const CommonUI_Module_Icon_path = pathPrefix + "/js/modules/icon.js"
+
+		const CommonUI_Module_Menu_path = pathPrefix + "/js/modules/menu.js"
+		const CommonUI_Module_Tab_path = pathPrefix + "/js/modules/tab.js"
 		
 		// 2、设置要加载的 js 文件路径
 
@@ -484,17 +782,15 @@ new CommonUI({b_enable_debug: false,});
 			// jQuery 已加载
 			// console.log('jQuery 已加载，版本：' + jQuery.fn.jquery);
 			
-			// 设置全局变量
-			CommonUI_Config['b_introduced_jQuery'] = true;			
-			// CommonUI_Config.b_introduced_jQuery = true;
+			this.application_base_info['b_introduced_jQuery'] = true;
+			// this.application_base_infob_introduced_jQuery = true;
 		} else {
 			// jQuery 未加载
 			// console.error('jQuery 未加载！');
 			// console.log('jQuery 未加载！');
 			
-			// 设置全局变量
-			// CommonUI_Config['b_introduced_jQuery'] = false;			
-			CommonUI_Config.b_introduced_jQuery = false;
+			// this.application_base_info['b_introduced_jQuery'] = false;
+			this.application_base_infob_introduced_jQuery = false;
 
 			// 加载 jQuery
 			let scriptElementjQuery = document.createElement("script");
@@ -512,8 +808,11 @@ new CommonUI({b_enable_debug: false,});
 			// insertBeforeFirstScriptElement();
 			
 			// 方式二：在当前 script 标签前 加载 jQuery
+			// 例如：我想把 a 元素插入到 b 元素之前，只需要执行下面语句即可。
+			// b.parentNode.insertBefore(a, b)
 			function insertBeforeCurrentScriptElement() {
-				let currentScriptElement = document.currentScript;
+				// let currentScriptElement = document.currentScript;
+				// console.log(currentScriptElement);
 				currentScriptElement.parentNode.insertBefore(scriptElementjQuery, currentScriptElement);
 			}
 			
@@ -521,7 +820,7 @@ new CommonUI({b_enable_debug: false,});
 			
 		}
 
-		if (CommonUI_Config.b_enable_debug) {
+		if (this.application_config_info.b_enable_debug) {
 			let scriptElementCommonUIDebug = document.createElement("script");
 			scriptElementCommonUIDebug.setAttribute("type", "text/javascript");
 			scriptElementCommonUIDebug.setAttribute("src", CommonUI_Debug_path);
@@ -538,13 +837,483 @@ new CommonUI({b_enable_debug: false,});
 		scriptElementCommonUIUtil.setAttribute("src", CommonUI_Util_path);
 		document.head.appendChild(scriptElementCommonUIUtil);
 
-		let scriptElementCommonUIAdmin = document.createElement("script");
-		scriptElementCommonUIAdmin.setAttribute("type", "text/javascript");
-		scriptElementCommonUIAdmin.setAttribute("src", CommonUI_Admin_path);
-		document.head.appendChild(scriptElementCommonUIAdmin);
-	}());
+		// let scriptElementCommonUIAdmin = document.createElement("script");
+		// scriptElementCommonUIAdmin.setAttribute("type", "text/javascript");
+		// scriptElementCommonUIAdmin.setAttribute("src", CommonUI_Admin_path);
+		// document.head.appendChild(scriptElementCommonUIAdmin);
+	}
+
+	
+	
+}
+
+// new CommonUI();
+// new CommonUI({});
+// new CommonUI({b_enable_debug: false,});
+
+// const _obj_CommonUI = new CommonUI();
+// const _obj_CommonUI = new CommonUI({});
+// const _obj_CommonUI = new CommonUI({b_enable_debug: false,});
+
+
+/**
+ * IIFE
+ * https://developer.mozilla.org/en-US/docs/Glossary/IIFE
+ * 
+ * An IIFE (Immediately Invoked Function Expression) is an idiom in which a JavaScript function runs as soon as it is defined. 
+ * It is also known as a self-executing anonymous function. 
+ * The name IIFE is promoted by Ben Alman in his blog.
+ * 
+ * 立即调用函数表达式（IIFE）是一种 JavaScript 函数在定义后就会立即执行的习惯用法。
+ * 它也被称为自执行匿名函数。
+ * IIFE 这个名字是由 Ben Alman 在他的博客中提出的。
+ * 
+ * 
+ * // standard IIFE
+ * (function () {
+ *   // statements…
+ * })();
+ * 
+ * // arrow function variant
+ * (() => {
+ *   // statements…
+ * })();
+ * 
+ * // async IIFE
+ * (async () => {
+ *   // statements…
+ * })();
+ * 
+ * 
+ * // 标准 IIFE
+ * (function () {
+ *   // 语句……
+ * })();
+ * 
+ * // 箭头函数变体
+ * (() => {
+ *   // 语句……
+ * })();
+ * 
+ * // 异步 IIFE
+ * (async () => {
+ *   // 语句……
+ * })();
+ * 
+ */
+(function (window) {
+	'use strict';
+	
+	/**
+	 * 查看部署环境 
+	 */
+	let _fn_get_run_environment = (function () {
+		// console.log('立即执行函数');
+		// do something immediately
+	})();
+
+	/**
+	 * 获取设备信息
+	 */
+	let _fn_get_device_info= (function (window) {
+		// console.log('立即执行函数');
+		// do something immediately
+	})(window);
+
+	/**
+	 * 加载 script 脚本 
+	 */
+	let _fn_load_script = (() => {
+		// console.log('立即执行箭头函数');
+		// do something immediately
+	})();
+	
+	/**
+	 * 初始化变量
+	 */
+	let _fn_init_variables = ((window) => {
+		// console.log('立即执行箭头函数');
+		// do something immediately
+	})(window);
+
+
+	/* ======================================================================================= */
+	/* ======================================================================================= */
+	
+	
+	// 加载 script 脚本
+	let _fn_loadScriptElement = (() => {
+
+		// 加载 script 脚本 -> 方式一
+		function loadScriptElement_Method_1(src) {
+			let script = document.createElement('script');
+			script.setAttribute('type', 'text/javascript');
+			// script.setAttribute('src', '../js/CommonUI-Common.js');
+			script.setAttribute('src', src);
+			document.head.appendChild(script);
+		}
+
+		// 加载 script 脚本 -> 方式二
+		function loadScriptElement_Method_2(src) {
+			var script = document.createElement('script');
+			script.type = 'text/javascript';
+			// script.src = '../js/CommonUI-Common.js';
+			script.src = src;
+			// script.async = true;
+			// script.defer = true;
+			script.onload = function () {
+				console.log('Script loaded successfully!');
+			};
+			script.onerror = () => {
+				console.log(`Script loaded failure!`);
+			};
+			document.head.appendChild(script);
+		}
+
+
+		// /**
+		//  * Attaches callbacks for the resolution and/or rejection of the Promise.
+		//  * @param onfulfilled The callback to execute when the Promise is resolved.
+		//  * @param onrejected The callback to execute when the Promise is rejected.
+		//  * @returns A Promise for the completion of which ever callback is executed.
+		//  */
+		// then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+		// 
+		// /**
+		//  * Attaches a callback for only the rejection of the Promise.
+		//  * @param onrejected The callback to execute when the Promise is rejected.
+		//  * @returns A Promise for the completion of the callback.
+		//  */
+		// catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+
+		// 加载 script 脚本 -> Promise
+		function loadScriptElement_Method_3_Promise(src) {
+			new Promise(
+				(resolve, reject) => {
+					const script = document.createElement('script');
+
+					script.type = 'text/javascript';
+					// script.type = 'module';
+					script.src = src;
+					// script.async = true; // 可选：异步加载，不阻塞页面
+					// script.defer = true;
+
+					script.onload = function () {
+						console.log(`${src} 加载完成`);
+						// resolve(`${src} 加载完成`);
+						resolve(script);
+					};
+
+					script.onerror = () => {
+						reject(new Error(`加载 ${src} 失败`));
+					};
+
+					document.head.appendChild(script);
+				}
+			).then(
+				(value) => {
+					// b.js 已加载完成，可以安全调用 b.js 中定义的函数或变量
+					console.log(`开始执行依赖 ${src} 的代码`);
+					console.log(`开始执行依赖 ${script.src} 的代码`);
+					// 比如调用 b.js 中的函数：
+					// someFunctionFromB();
+				},
+				(reason) => {
+					console.log(`开始执行依赖 ${src} 的代码`);
+				}
+			).catch(
+				reason => {
+					console.error(reason);
+				}
+			);
+		}
+		
+		// 加载 script 脚本 -> Promise
+		function loadScriptElement_Method_3_1_Promise(src) {
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+
+					script.type = 'text/javascript';
+					// script.type = 'module';
+					script.src = src;
+					// script.async = true; // 可选：异步加载，不阻塞页面
+					// script.defer = true;
+
+					script.onload = () => resolve(script);
+					script.onerror = () => reject(new Error(`Script load error: ${src}`));
+					document.head.appendChild(script);
+				});
+			}
+			
+			// 使用示例：
+			loadScript('b.js')
+			.then(() => {
+				// b.js 已加载完成，可以安全调用 b.js 中定义的函数或变量
+				console.log('开始执行依赖 b.js 的代码');
+				// 比如调用 b.js 中的函数：
+				// someFunctionFromB();
+			})
+			.catch(err => {
+				console.error(err);
+			});
+		}
+
+		// 加载 script 脚本 -> Promise
+		function loadScriptElement_Method_3_2_Promise_load_multiple_files() {
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+
+					script.type = 'text/javascript';
+					// script.type = 'module';
+					script.src = src;
+					// script.async = true; // 可选：异步加载，不阻塞页面
+					// script.defer = true;
+
+					script.onload = () => resolve(script);
+					script.onerror = () => reject(new Error(`Script load error: ${src}`));
+					document.head.appendChild(script);
+				});
+			}
+
+			// 顺序加载多个脚本
+			loadScript('b1.js')
+			.then(() => loadScript('b2.js'))
+			.then(() => loadScript('b3.js'))
+			.then(() => {
+				console.log('所有脚本加载完成');
+				// 执行你的逻辑
+			})
+			.catch(console.error);
+		}
+		
+		// 加载 script 脚本 -> Promise: 并行执行（所有任务同时开始）
+		// ✅ 优点：快
+		// ❌ 缺点：如果一个失败，整个 Promise.all 会 reject（除非用 Promise.allSettled） 
+		function loadScriptElement_Method_3_3_Promise_load_multiple_files() {
+			const urls = ['a.js', 'b.js', 'c.js'];
+
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+					script.src = src;
+					script.onload = () => resolve(src);
+					script.onerror = () => reject(new Error(`Failed to load ${src}`));
+					document.head.appendChild(script);
+				});
+			}
+
+			// 并行加载所有脚本
+			Promise.all(urls.map(url => loadScript(url)))
+			.then(results => {
+				console.log('所有脚本加载完成:', results); // ['a.js', 'b.js', 'c.js']
+				// 继续执行后续逻辑
+			})
+			.catch(err => {
+				console.error('某个脚本加载失败:', err);
+			});
+		}
+
+		// 加载 script 脚本 -> Promise: 串行执行（一个接一个）
+		// 使用 async/await + for...of：
+		// ✅ 适合有依赖关系的任务（比如 b.js 依赖 a.js） 
+		function loadScriptElement_Method_3_4_Promise_load_multiple_files() {
+			async function loadScriptsInOrder(urls) {
+				const results = [];
+				for (const url of urls) {
+					try {
+						const result = await loadScript(url);
+						results.push(result);
+						console.log(`${url} 加载完成`);
+					} catch (err) {
+						console.error(`${url} 加载失败:`, err);
+						// 可选择继续 or 中断
+						// throw err; // 中断
+					}
+				}
+				return results;
+			}
+
+			// 使用
+			loadScriptsInOrder(['a.js', 'b.js', 'c.js'])
+			.then(() => {
+				console.log('所有脚本按顺序加载完成');
+			});
+		}
+
+		// 加载 script 脚本 -> async/await
+		function loadScriptElement_Method_4_async_await(src) {
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+					script.src = src;
+					script.onload = () => resolve(script);
+					script.onerror = () => reject(new Error(`Script load error: ${src}`));
+					document.head.appendChild(script);
+				});
+			}
+
+			async function load() {
+				try {
+					let b1_script = await loadScript('b1.js');
+					await loadScript('b2.js');
+					await loadScript('b3.js');
+					console.log('全部加载完成');
+					// 执行后续逻辑
+				} catch (err) {
+					console.error(err);
+				}
+			}
+
+			load();
+		}
+
+
+		// 加载 script 脚本 -> 在第一个 script 标签前 加载
+		let loadBeforeFirstScriptElement = (scriptElement) => {
+			let scriptElementArray = document.scripts;
+			// console.log(scriptElementArray.length);
+			if (scriptElementArray && scriptElementArray.length > 0) {
+				scriptElementArray[0].parentNode.insertBefore(scriptElement, scriptElementArray[0]);
+			}
+		}
+
+		// 加载 script 脚本 -> 在当前 script 标签前 加载
+		let loadBeforeCurrentScriptElement = scriptElement => {
+			let currentScriptElement = document.currentScript;
+			// console.log(currentScriptElement);
+			currentScriptElement.parentNode.insertBefore(scriptElement, currentScriptElement);
+		}
+
+
+		/* 1、获取当前 CommonUI.js 的文件路径 */
+		// 1.1、获取当前正在执行的 script 标签
+		const currentScriptElement = document.currentScript;
+
+		// 1.2、用 getAttribute() 获取原始值
+		// 获取原始 src 属性值（未解析）
+		const currentScriptSrcAttributeValue = currentScriptElement.getAttribute('src');
+		// 输出当前脚本的完整路径
+		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+		console.log(`当前 CommonUI.js 的文件路径:${currentScriptSrcAttributeValue}`); 
+
+		// 1.3、
+		const currentScriptPath = currentScriptElement.src;
+		// 输出当前脚本的完整路径
+		// 当前 CommonUI.js 的文件路径:file:///D:/Develop/My%20Repositories/Github/CommonUI/js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:http://127.0.0.1:5500/js/CommonUI.js
+		// 当前 CommonUI.js 的文件路径:http://localhost:5500/js/CommonUI.js
+		console.log(`当前 CommonUI.js 的文件路径:${currentScriptPath}`); 
+
+
+		const strIndex = currentScriptSrcAttributeValue.indexOf("/js/CommonUI.js");
+		// strIndex: 2
+		console.log(`strIndex:${strIndex}`); 
+		const pathPrefix = currentScriptSrcAttributeValue.substring(0, strIndex);
+		// pathPrefix:..
+		console.log(`pathPrefix:${pathPrefix}`);
+
+		
+		const CommonUI_Debug_path = pathPrefix + "/js/CommonUI-Debug.js";
+		const CommonUI_Common_path = pathPrefix + "/js/CommonUI-Common.js"
+		const CommonUI_Util_path = pathPrefix + "/js/CommonUI-Util.js"
+		
+		
+		// 2、设置要加载的 js 文件路径
+
+		let scriptElementCommonUICommon = document.createElement("script");
+		scriptElementCommonUICommon.setAttribute("type", "text/javascript");
+		// scriptElementCommonUICommon.setAttribute("src", '../js/CommonUI-Common.js');
+		scriptElementCommonUICommon.setAttribute("src", CommonUI_Common_path);
+
+		loadBeforeFirstScriptElement(scriptElementCommonUICommon);
+		
+		var scriptElementCommonUIUtil = document.createElement('script');
+		scriptElementCommonUIUtil.type = 'text/javascript';
+		// scriptElementCommonUIUtil.src = '../js/CommonUI-Util.js';
+		scriptElementCommonUIUtil.src = CommonUI_Util_path;
+		// scriptElementCommonUIUtil.async = true;
+		// scriptElementCommonUIUtil.defer = true;
+		scriptElementCommonUIUtil.onload = function () {
+			console.log('/js/CommonUI-Util.js Script loaded successfully!!!');
+		};
+		scriptElementCommonUIUtil.onerror = function () {
+			console.log('/js/CommonUI-Util.js Script loaded failure!!!');
+		};
+
+		loadBeforeCurrentScriptElement(scriptElementCommonUIUtil);
+		
+	})();
+
+
+	
+	// new CommonUI();
+	// new CommonUI({});
+	// new CommonUI({b_enable_debug: false,});
+
+	// const _obj_CommonUI = new CommonUI();
+	// const _obj_CommonUI = new CommonUI({});
+	const _obj_CommonUI = new CommonUI({b_enable_debug: false,});
 	
 })(window);
+
+
+/** 1、判断浏览器内核及版本 */
+console.log('1、判断浏览器内核及版本');
+const browser = {
+	versions: function () {
+		const u = navigator.userAgent;
+		return {
+			trident: u.indexOf('Trident') > -1, //IE内核
+			presto: u.indexOf('Presto') > -1, //opera内核
+			webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+			gecko: u.indexOf('Firefox') > -1, //火狐内核Gecko
+
+			mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+			ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios
+			android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android
+			iPhone: u.indexOf('iPhone') > -1, //iPhone
+			iPad: u.indexOf('iPad') > -1, //iPad
+			webApp: u.indexOf('Safari') > -1 //Safari
+		};
+	}()
+};
+
+if (browser.versions.mobile || browser.versions.ios || browser.versions.android || browser.versions.iPhone || browser.versions.iPad) {
+	alert('移动端');
+}
+
+
+/** 2、判断是否支持主题色 */
+console.log('2、判断是否支持主题色');
+/* 判断是否支持主题色 */
+if (window.matchMedia('(prefers-color-scheme)').media === 'not all') {
+	console.log('Browser doesn\'t support dark mode');
+}
+/* 判断是否处于浅色模式 */
+if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+	console.log('light');
+}
+/* 判断是否处于深色模式 */
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+	console.log('dark');
+}
+
+
+/** 3、JavaScript 检测浏览器是否支持 CSS 变量 */
+console.log('3、JavaScript 检测浏览器是否支持 CSS 变量');
+const isSupported = window.CSS && window.CSS.supports && window.CSS.supports('--test', 0);
+if (isSupported) {
+	/* supported */
+	console.log('supported');
+} else {
+	/* not supported */
+	console.log('not supported');
+
+}
 
 
 

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>元素的显示与隐藏过渡动画</title>
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+			.wrap {
+				margin: 0; 
+				padding: 10px; 
+				width: 300px; 
+				height: 300px; 
+
+				border: 10px solid red; 
+
+				box-sizing: border-box; 
+			}
+
+			/* ----------- */
+
+			.test-010-010-010 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+			}
+			.test-010-010-010 {
+				display: block;
+			}
+			.test-010-010-010.hide {
+				display: none;
+			}
+
+			/* ----------- */
+
+			.test-010-010-020 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+			}
+			.test-010-010-020 {
+				visibility: visible;
+			}
+			.test-010-010-020.hide {
+				visibility: hidden;
+			}
+
+			/* ----------- */
+			
+			.test-010-010-030 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+			}
+			.test-010-010-030 {
+				overflow: hidden;
+			}
+			.test-010-010-030.hide {
+				width: 0;
+				height: 0;
+			}
+
+			/* ----------- */
+
+			/* 
+				Cyan		青色			#00FFFF		0,1,1 
+				Yellow		纯黄			#FFFF00		1,1,0 
+				Magenta		洋红/玫瑰红	#FF00FF		1,0,1 
+			*/
+			.test-010-010-040 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+			}
+			.test-010-010-040 {
+				transition: 1s;
+				transform: scaleY(1);
+			}
+			.test-010-010-040.hide {
+				transform: scaleY(0);
+			}
+
+			/* ----------- */
+			
+			.test-010-010-050 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+
+				overflow: auto;
+			}
+			.test-010-010-050 {
+				transition: transform 1s;
+				transform: scaleY(1);
+			}
+			/*
+				使用 transform-origin 改变缩放基准点
+
+				为了改变缩放的基准点，可以使用 transform-origin 属性。
+				该属性允许你指定缩放的原点，相对于元素的左上角。
+				transform-origin 接受两个参数，第一个参数表示水平方向的距离，第二个参数表示垂直方向的距离，单位为像素（px）。
+			*/
+			.test-010-010-050.hide {
+				transform: scaleY(0);
+				transform-origin: top left; /* 缩放基准点为左上角 */
+			}
+
+			/* ----------- */
+			
+			.test-010-010-060 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+
+				overflow: auto;
+			}
+			.test-010-010-060 {
+				transition: transform 1s;
+
+				transform: scaleY(1);
+				transform-origin: top left; /* 缩放基准点为左上角 */
+			}
+			/*
+				使用 transform-origin 改变缩放基准点
+
+				为了改变缩放的基准点，可以使用 transform-origin 属性。
+				该属性允许你指定缩放的原点，相对于元素的左上角。
+				transform-origin 接受两个参数，第一个参数表示水平方向的距离，第二个参数表示垂直方向的距离，单位为像素（px）。
+			*/
+			.test-010-010-060.hide {
+				transform: scaleY(0);
+				transform-origin: top left; /* 缩放基准点为左上角 */
+			}
+
+
+		</style>
+
+		<script>
+			function show_or_hide(className) {
+				let element = document.querySelector(className);
+				if (element) {
+					element.classList.toggle('hide');
+				}
+				
+			}
+
+		</script>
+		
+	</head>
+	<body>
+		<h1>元素的显示与隐藏过渡动画</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>display</h2>
+
+		<button onclick="show_or_hide('.test-010-010-010')">显示隐藏</button>
+		
+		<div class="wrap">
+			<div class="test-010-010-010">
+				display: none -> block;
+			</div>
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>visibility</h2>
+
+		<button onclick="show_or_hide('.test-010-010-020')">显示隐藏</button>
+		
+		<div class="wrap">
+			<div class="test-010-010-020">
+				visibility: hidden -> visible;
+			</div>
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>overflow + height</h2>
+
+		<button onclick="show_or_hide('.test-010-010-030')">显示隐藏</button>
+		
+		<div class="wrap">
+			<div class="test-010-010-030">
+				height: 0 -> auto; 
+			</div>
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>transform: scaleY(1); -> scaleY(0);</h2>
+
+		<button onclick="show_or_hide('.test-010-010-040')">显示隐藏</button>
+		
+		<div class="wrap">
+			<div class="test-010-010-040">
+				transform: scaleY(1); -> scaleY(0); 
+
+				
+			</div>
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>transform: scaleY(1); -> scaleY(0);</h2>
+
+		<button onclick="show_or_hide('.test-010-010-050')">显示隐藏</button>
+		
+		<div class="wrap">
+			<div class="test-010-010-050">
+				transform: scaleY(1); -> scaleY(0); 
+
+				使用 transform-origin 改变缩放基准点<br/>
+
+				<br/>
+
+				为了改变缩放的基准点，可以使用 transform-origin 属性。<br/>
+				该属性允许你指定缩放的原点，相对于元素的左上角。<br/>
+				transform-origin 接受两个参数，第一个参数表示水平方向的距离，第二个参数表示垂直方向的距离，单位为像素（px）。
+			</div>
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>transform: scaleY(1); -> scaleY(0);</h2>
+
+		<button onclick="show_or_hide('.test-010-010-060')">显示隐藏</button>
+		
+		<div class="wrap">
+			<div class="test-010-010-060">
+				transform: scaleY(1); -> scaleY(0); 
+
+				使用 transform-origin 改变缩放基准点<br/>
+
+				<br/>
+
+				为了改变缩放的基准点，可以使用 transform-origin 属性。<br/>
+				该属性允许你指定缩放的原点，相对于元素的左上角。<br/>
+				transform-origin 接受两个参数，第一个参数表示水平方向的距离，第二个参数表示垂直方向的距离，单位为像素（px）。
+			</div>
+		</div>
+		
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

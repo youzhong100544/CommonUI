@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>代码美化-SyntaxHighlighter</title>
+
+		<!-- Start - jQuery -->
+
+		<!-- <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.js"></script> -->
+
+		<!-- End - jQuery -->
+
+
+		<!-- Start - SyntaxHighlighter -->
+
+		<!-- shCore.css + shThemeDefault.css = shCoreDefault.css -->
+		<!-- <link href="https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.css" rel="stylesheet"> -->
+		<!-- <link href="https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeDefault.css" rel="stylesheet"> -->
+		<link href="https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCoreDefault.css" rel="stylesheet">
+		
+		<script src="https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shAutoloader.js"></script>
+		
+		<script src="https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushCpp.js"></script>
+		
+
+		<script>
+			// SyntaxHighlighter.config.bloggerMode = true;
+			// SyntaxHighlighter.highlight();
+			// SyntaxHighlighter.all();
+		</script>
+
+		<script class="javascript">
+			
+			function path() {
+				var args = arguments, result = [];
+				for (var i = 0; i < args.length; i++) {
+					// result.push(args[i].replace('$', '/static/syntaxhighlighter/Scripts/'));
+					// result.push(args[i].replace('$', 'https://cdn.bootcdn.net/ajax/libs/SyntaxHighlighter/3.0.83/scripts/'));
+					result.push(args[i].replace('$', '../lib/SyntaxHighlighter/syntaxhighlighter-3.0.83/scripts/'));
+				}
+				return result;
+			}
+
+			// $ (function(){/*...*/}); 是 $(document).ready(function(){/*...*/})的简写形式，是在DOM加载完成后执行的回调函数，并且只会执行一次。
+		
+			window.addEventListener('load', function () {
+
+				SyntaxHighlighter.autoloader.apply(null, path(
+						'applescript            $shBrushAppleScript.js',
+						'actionscript3 as3      $shBrushAS3.js',
+						'bash shell             $shBrushBash.js',
+						'coldfusion cf          $shBrushColdFusion.js',
+						'cpp c                  $shBrushCpp.js',
+						'c# c-sharp csharp      $shBrushCSharp.js',
+						'css                    $shBrushCss.js',
+						'delphi pascal          $shBrushDelphi.js',
+						'diff patch pas         $shBrushDiff.js',
+						'erl erlang             $shBrushErlang.js',
+						'groovy                 $shBrushGroovy.js',
+						'java                   $shBrushJava.js',
+						'jfx javafx             $shBrushJavaFX.js',
+						'js jscript javascript  $shBrushJScript.js',
+						'objc obj-c             $shBrushObjC.js',
+						'perl pl                $shBrushPerl.js',
+						'php                    $shBrushPhp.js',
+						'text plain             $shBrushPlain.js',
+						'py python              $shBrushPython.js',
+						'ruby rails ror rb      $shBrushRuby.js',
+						'sass scss              $shBrushSass.js',
+						'scala                  $shBrushScala.js',
+						'sql                    $shBrushSql.js',
+						'vb vbnet               $shBrushVb.js',
+						'xml xhtml xslt html    $shBrushXml.js'
+				));
+
+				SyntaxHighlighter.config.bloggerMode = true;
+
+				// /**
+				//  * Performs various string fixes based on configuration.
+				//  */
+				// function fixInputString(str)
+				// {
+				// 	var br = /<br\s*\/?>|&lt;br\s*\/?&gt;/gi;
+				// 	
+				// 	if (sh.config.bloggerMode == true)
+				// 		str = str.replace(br, '\n');
+
+				// 	if (sh.config.stripBrs == true)
+				// 		str = str.replace(br, '');
+				// 		
+				// 	return str;
+				// };
+				SyntaxHighlighter.config.stripBrs = true;
+
+				// 是否显示代码行数
+				SyntaxHighlighter.defaults['gutter'] = true;
+
+				SyntaxHighlighter.defaults['toolbar'] = false;
+				SyntaxHighlighter.defaults['auto-links'] = false;
+				SyntaxHighlighter.defaults['quick-code'] = false;
+
+				SyntaxHighlighter.highlight();
+
+				SyntaxHighlighter.all();
+			})
+		</script>
+		<!-- End - SyntaxHighlighter -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+
+		<script>
+			
+			(function (window) {
+				
+			})(window);
+			
+		</script>
+		
+	</head>
+	<body>
+
+		<h1>代码美化-SyntaxHighlighter</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础案例</h2>
+
+		<pre class="brush: js;">
+			function foo()
+			{
+				if (counter <= 10)
+					return;
+				// it works!
+			}
+		</pre>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<pre class="brush: cpp;">
+			#include <iostream>
+
+			int main() {
+				std::cout << "Hello, World!" << std::endl;
+				return 0;
+			}
+		</pre>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础知识</h2>
+
+		<h3>配置</h3>
+
+		<p>
+			1. SyntaxHighlighter解析的默认标签，默认为pre <br/>
+
+			代码如下: <br/>
+
+			SyntaxHighlighter.config.tagName="div"; <br/>
+		</p>
+
+		<p>
+			2. 去除HTML换行标记<br/>
+
+        	如果您的软件会在每行末尾添加< br /> 标记，此选项允许您忽略这些标记。<br/>
+
+				shCore.js中实现代码为：<br/>
+
+			代码如下:<br/>
+
+			
+
+			SyntaxHighlighter.config.stripBrs=true;<br/>
+		</p>
+
+		<p>
+			3. 不显示工具条<br/>
+
+			代码如下:<br/>
+
+			SyntaxHighlighter.defaults['toolbar'] = false;<br/>
+		</p>
+		
+
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

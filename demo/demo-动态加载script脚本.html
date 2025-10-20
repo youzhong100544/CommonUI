@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title> 动态加载 script 脚本 </title>
+
+		<!-- Start - Prism -->
+		
+		<link href="../lib/Prism/prism-1.30.0/themes/prism.css" rel="stylesheet">
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-coy.css" rel="stylesheet"> -->
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		
+
+		<script src="../lib/Prism/prism-1.30.0/prism.js"></script>
+		
+		<script src="../lib/Prism/prism-1.30.0/plugins/autoloader/prism-autoloader.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.js"></script>
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.js"></script>
+
+		<!-- 在代码块中显示代码块对应语言的名称；需要放在 plugins/toolbar/prism-toolbar.js 下面 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-language/prism-show-language.js"></script>
+		
+		<!-- 添加一个按钮，可以在单击时将代码块内容复制到剪贴板 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.js"></script>
+
+		<!-- 显示隐藏字符，例如制表符和换行符 -->
+		<link href="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.js"></script>
+
+		<!-- End - Prism -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+
+		<script>
+
+			(function (window) {
+				
+			})(window);
+			
+
+		</script>
+
+		
+	</head>
+	<body>
+		
+		<h1>动态加载 script 脚本</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础知识</h2>
+		
+		<pre class="line-numbers"><code class="language-javascript">
+			function loadScriptElement(src) {
+				let script = document.createElement('script');
+				script.setAttribute('type', 'text/javascript');
+				// script.setAttribute('src', './js/test.js');
+				script.setAttribute('src', src);
+				document.head.appendChild(script);
+			}
+		</code></pre>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "500"><code class="language-javascript">
+			function loadScriptElement(src) {
+				var script = document.createElement('script');
+				script.type = 'text/javascript';
+				// script.src = './js/test.js';
+				script.src = src;
+				// script.async = true;
+				// script.defer = true;
+				script.onload = function () {
+					console.log('Script loaded successfully!');
+				};
+				script.onerror = () => {
+					console.log(`Script loaded failure!`);
+				};
+				document.head.appendChild(script);
+			}
+		</code></pre>
+
+		
+		<h2>应用</h2>
+
+		<h3>在 a.js 中动态添加 b.js 脚本文件，并等待它加载完成后再继续执行后续代码</h3>
+
+		<h4>🚫 错误做法（不要这样写）：</h4>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			// ./js/a.js
+			// ❌ 不等待加载，b.js 可能还没执行
+			const script = document.createElement('script');
+			script.type = 'text/javascript';
+			script.src = '/js/b.js';
+			document.head.appendChild(script);
+
+			someFunctionFromB(); // ⛔ 可能报错：not defined
+		</code></pre>
+
+		<h4>方式一</h4>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			// ./js/a.js
+			function loadScriptElement() {
+
+				const script = document.createElement('script');
+
+				script.type = 'text/javascript';
+				// script.type = 'module';
+				script.src = './js/b.js';
+				// script.async = true; // 可选：异步加载，不阻塞页面
+				// script.defer = true;
+
+				script.onload = function() {
+					console.log('b.js 加载完成');
+
+					// 👇 在这里写依赖 b.js 的代码
+					// someFunctionFromB();
+				};
+
+				script.onerror = function() {
+					console.error('b.js 加载失败');
+				};
+
+				document.head.appendChild(script);
+			}
+		</code></pre>
+
+		<h4>方式二</h4>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript">
+			// ./js/a.js
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+					
+					script.type = 'text/javascript';
+					// script.type = 'module';
+					script.src = src;
+					// script.src = './js/b.js';
+					// script.async = true; // 可选：异步加载，不阻塞页面
+					// script.defer = true;
+
+					script.onload = () => {
+						console.log(`${src} 加载完成`);
+						resolve(script);
+					};
+
+					script.onerror = () => {
+						reject(new Error(`加载 ${src} 失败`));
+					};
+
+					document.head.appendChild(script);
+				});
+			}
+
+			// 使用示例：
+			loadScript('./js/b.js')
+			.then(() => {
+				// ✅ b.js 已加载完成，可以安全调用 b.js 中定义的函数或变量
+				console.log('开始执行依赖 b.js 的代码');
+
+				// 比如调用 b.js 中的函数：
+				// someFunctionFromB();
+			})
+			.catch(err => {
+				console.error(err);
+			});
+		</code></pre>
+
+		<h4>注意事项：</h4>
+
+		<ol>
+			<li>b.js 中的代码必须是“可被后续访问”的</li>
+			<ul>
+				<li>例如：在 b.js 中定义了全局函数或变量：</li>
+				<pre class="line-numbers"><code class="language-javascript">
+					// b.js<br/>
+					function someFunctionFromB() {<br/>
+						console.log('Function from b.js');<br/>
+					}<br/>
+				</code></pre>
+
+				<li>或者使用模块导出（但动态 script 标签不支持 ES Module 语法 export，除非用 type="module"，见下文）。</li>
+			</ul>
+
+			<li>如果 b.js 是 ES Module，需要加 type="module"</li>
+			<pre class="line-numbers"><code class="language-javascript">
+				script.type = 'module';
+			</code></pre>
+			<p>注意：模块脚本默认是 defer 的，且不能使用 document.write。 </p>
+
+			<li>不要用 document.write 或 innerHTML += '&lt;script&gt;'</li>
+			<ul>
+				<li>这种方式不可靠，且可能阻塞或破坏页面结构。</li>
+			</ul>
+		</ol>
+
+
+		<h4>高级封装：加载多个脚本并顺序执行</h4>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript">
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+					script.src = src;
+					script.onload = () => resolve(script);
+					script.onerror = () => reject(new Error(`Script load error: ${src}`));
+					document.head.appendChild(script);
+				});
+			}
+
+			// 顺序加载多个脚本
+			loadScript('b1.js')
+			.then(() => loadScript('b2.js'))
+			.then(() => loadScript('b3.js'))
+			.then(() => {
+				console.log('所有脚本加载完成');
+				// 执行你的逻辑
+			})
+			.catch(console.error);
+		</code></pre>
+
+		<h4>高级封装：加载多个脚本并顺序执行 - async/await</h4>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript">
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+					script.src = src;
+					script.onload = () => resolve(script);
+					script.onerror = () => reject(new Error(`Script load error: ${src}`));
+					document.head.appendChild(script);
+				});
+			}
+
+			async function init() {
+				try {
+					await loadScript('b1.js');
+					await loadScript('b2.js');
+					await loadScript('b3.js');
+					console.log('全部加载完成');
+					// 执行后续逻辑
+				} catch (err) {
+					console.error(err);
+				}
+			}
+
+			init();
+		</code></pre>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

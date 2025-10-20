@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>在线编辑器 - Code Mirror 5 local</title>
+
+		<!-- Start - Code Mirror -->
+		
+		<!-- 引入 CodeMirror -->
+		<link href="../lib/Code Mirror/codemirror-5.65.20/lib/codemirror.css" rel="stylesheet">
+		<script src="../lib/Code Mirror/codemirror-5.65.20/lib/codemirror.js"></script>
+
+		<!-- 引入主题 -->
+		<link href="../lib/Code Mirror/codemirror-5.65.20/theme/3024-day.css" rel="stylesheet">
+		<link href="../lib/Code Mirror/codemirror-5.65.20/theme/3024-night.css" rel="stylesheet">
+		<link href="../lib/Code Mirror/codemirror-5.65.20/theme/dracula.css" rel="stylesheet">
+
+		<!-- 引入语言模式 -->
+		<script src="../lib/Code Mirror/codemirror-5.65.20/mode/htmlmixed/htmlmixed.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/mode/css/css.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/mode/javascript/javascript.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/mode/xml/xml.js"></script>
+
+		<link rel="stylesheet" href="../lib/Code Mirror/codemirror-5.65.20/addon/hint/show-hint.css">
+		<script src="../lib/Code Mirror/codemirror-5.65.20/addon/hint/show-hint.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/addon/hint/html-hint.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/addon/hint/css-hint.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/addon/hint/javascript-hint.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/addon/hint/xml-hint.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/addon/hint/sql-hint.js"></script>
+		<script src="../lib/Code Mirror/codemirror-5.65.20/addon/hint/anyword-hint.js"></script>
+		<!-- End - Code Mirror -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+
+		<script>
+			
+			(function (window) {
+				
+			})(window);
+			
+		</script>
+		
+	</head>
+	<body>
+
+		<h1>在线编辑器 - Code Mirror 5 local</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础案例</h2>
+
+		<div id="CodeMirror" style="border: 1px black solid;">
+			<!-- alert('Hello, Code Mirror!'); -->
+		</div>
+
+		<script>
+			var editor = CodeMirror(document.getElementById('CodeMirror'));
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<div id="CodeMirror_1" style="border: 1px black solid;">
+			<!-- alert('Hello, Code Mirror!'); -->
+		</div>
+
+		<script>
+			var editor = CodeMirror(document.getElementById('CodeMirror_1'), {
+				value: "function myScript(){\n\t return 100;}\n",
+				lineNumbers: true,        // 显示行号
+				tabSize: 4,               // Tab 键缩进大小
+			});
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<textarea id="code_1"></textarea>
+
+		<script>
+			var editor = CodeMirror.fromTextArea(document.getElementById('code_1'), {
+				lineNumbers: true,       // 显示行号
+				tabSize: 40,              // Tab 键缩进大小
+			});
+		</script>
+
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h3>HTML</h3>
+
+		<div id="test_html" style="border: 1px black solid;">
+		</div>
+
+		<script>
+			var editor = CodeMirror(document.getElementById('test_html'), {
+				value: "function myScript(){\n\t return 100;}\n",
+				mode: "text/html",
+				lineNumbers: true,        // 显示行号
+				tabSize: 4,               // Tab 键缩进大小
+			});
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h3>CSS</h3>
+
+		<div id="test_css" style="border: 1px black solid;">
+		</div>
+
+		<script>
+			var editor = CodeMirror(document.getElementById('test_css'), {
+				value: "* {\n\tmargin: 0; \n\tpadding: 0; \n}\n",
+				modle: 'css',             // 设置语言模式
+				lineNumbers: true,        // 显示行号
+				tabSize: 4,               // Tab 键缩进大小
+			});
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h3>JavaScript</h3>
+
+		<div id="test_javascript"></div>
+
+		<script>
+			var editor = CodeMirror(document.getElementById('test_javascript'), {
+				value: "function myScript(){\n\treturn 100; \n}\n",
+				mode: 'text/javascript', // 设置语言模式
+				// theme: 'default',        // 设置主题样式，需确保已引入相应主题的CSS
+				theme: 'dracula',
+				tabsize: 4,              // Tab 键缩进大小
+				lineNumbers: true,       // 显示行号
+				styleActiveLine: true,   // 高亮当前行
+				indentUnit: 4,           // 缩进单位大小
+				smartIndent: true,       // 智能缩进
+				autoCloseBrackets: true, // 自动补全括号
+				// ... 更多配置项
+			});
+
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h3>XML</h3>
+
+		<textarea id="test_xml" style="border: 1px black solid;"></textarea>
+
+		<script>
+			var dummy = {
+				attrs: {
+					color: ["red", "green", "blue", "purple", "white", "black", "yellow"],
+					size: ["large", "medium", "small"],
+					description: null
+				},
+				children: []
+			};
+
+			var tags = {
+				"!top": ["top"],
+				"!attrs": {
+					id: null,
+					class: ["A", "B", "C"]
+				},
+				top: {
+					attrs: {
+						lang: ["en", "de", "fr", "nl"],
+						freeform: null
+					},
+					children: ["animal", "plant"]
+				},
+				animal: {
+					attrs: {
+						name: null,
+						isduck: ["yes", "no"]
+					},
+					children: ["wings", "feet", "body", "head", "tail"]
+				},
+				plant: {
+					attrs: {name: null},
+					children: ["leaves", "stem", "flowers"]
+				},
+				wings: dummy, feet: dummy, body: dummy, head: dummy, tail: dummy,
+				leaves: dummy, stem: dummy, flowers: dummy
+			};
+
+			function completeAfter(cm, pred) {
+				var cur = cm.getCursor();
+				if (!pred || pred()) setTimeout(function() {
+					if (!cm.state.completionActive)
+						cm.showHint({completeSingle: false});
+				}, 100);
+				return CodeMirror.Pass;
+			}
+
+			function completeIfAfterLt(cm) {
+				return completeAfter(cm, function() {
+					var cur = cm.getCursor();
+					return cm.getRange(CodeMirror.Pos(cur.line, cur.ch - 1), cur) == "<";
+				});
+			}
+
+			function completeIfInTag(cm) {
+				return completeAfter(cm, function() {
+					var tok = cm.getTokenAt(cm.getCursor());
+					if (tok.type == "string" && (!/['"]/.test(tok.string.charAt(tok.string.length - 1)) || tok.string.length == 1)) return false;
+					var inner = CodeMirror.innerMode(cm.getMode(), tok.state).state;
+					return inner.tagName;
+				});
+			}
+
+			var editor = CodeMirror.fromTextArea(document.getElementById("test_xml"), {
+				mode: "xml",
+				lineNumbers: true,
+				extraKeys: {
+					"'<'": completeAfter,
+					"'/'": completeIfAfterLt,
+					"' '": completeIfInTag,
+					"'='": completeIfInTag,
+					"Ctrl-Space": "autocomplete"
+				},
+				hintOptions: {schemaInfo: tags}
+			});
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+		
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

@@ -7,18 +7,18 @@
  */
 
 
-/* 标签页 */
+/* 图标 */
 
-
-class CommonUITabs { 
+/** 
+ * 图标
+ */
+class CommonUIIcon { 
 	constructor(className) {
-		console.log("CommonUITabs 构造函数");
+		console.log("CommonUIIcon 构造函数");
 		this.className = className;
 	}
 
-	dropdownSubmenu() {
-
-	}
+	
 }
 
 

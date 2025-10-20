@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>元素的显示与隐藏</title>
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+			.wrap {
+				margin: 0; 
+				padding: 10px; 
+				width: 300px; 
+				height: 300px; 
+
+				border: 10px solid red; 
+
+				box-sizing: border-box; 
+			}
+
+			/* -----------*/
+
+			.test-010-010-010 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid red;
+				
+				background: white;
+				color: black;
+			}
+			.test-010-010-010 {
+				display: block;
+			}
+			.test-010-010-010.hide {
+				display: none;
+			}
+
+			/* -----------*/
+
+			.test-010-010-020 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid red;
+				
+				background: white;
+				color: black;
+			}
+			.test-010-010-020 {
+				visibility: visible;
+			}
+			.test-010-010-020.hide {
+				visibility: hidden;
+			}
+
+			/* -----------*/
+			
+			.test-010-010-030 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid red;
+				
+				background: white;
+				color: black;
+			}
+			.test-010-010-030 {
+				overflow: hidden;
+			}
+			.test-010-010-030.hide {
+				width: 0;
+				height: 0;
+			}
+
+
+		</style>
+
+		<script>
+			function show_or_hide(className) {
+				let element = document.querySelector(className);
+				if (element) {
+					element.classList.toggle('hide');
+				}
+				
+			}
+
+		</script>
+		
+	</head>
+	<body>
+		<h1>元素的显示与隐藏</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>display</h2>
+
+		<button onclick="show_or_hide('.test-010-010-010')">显示隐藏</button>
+		
+		<div class="test-010-010-010">
+			display: none -> block;
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>visibility</h2>
+
+		<button onclick="show_or_hide('.test-010-010-020')">显示隐藏</button>
+		
+		<div class="test-010-010-020">
+			visibility: hidden -> visible;
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>overflow + height</h2>
+
+		<button onclick="show_or_hide('.test-010-010-030')">显示隐藏</button>
+		
+		<div class="test-010-010-030">
+			height: 0 -> auto; 
+		</div>
+
+		
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

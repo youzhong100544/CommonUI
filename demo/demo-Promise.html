@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Promise</title>
+
+		<!-- Start - Prism -->
+		
+		<link href="../lib/Prism/prism-1.30.0/themes/prism.css" rel="stylesheet">
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-coy.css" rel="stylesheet"> -->
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		
+
+		<script src="../lib/Prism/prism-1.30.0/prism.js"></script>
+		
+		<script src="../lib/Prism/prism-1.30.0/plugins/autoloader/prism-autoloader.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.js"></script>
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.js"></script>
+
+		<!-- 在代码块中显示代码块对应语言的名称；需要放在 plugins/toolbar/prism-toolbar.js 下面 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-language/prism-show-language.js"></script>
+		
+		<!-- 添加一个按钮，可以在单击时将代码块内容复制到剪贴板 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.js"></script>
+
+		<!-- 显示隐藏字符，例如制表符和换行符 -->
+		<link href="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.js"></script>
+
+		<!-- End - Prism -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+
+		</script>
+		
+	</head>
+	<body>
+		<h1>Promise</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础知识</h2>
+
+		<pre class="line-numbers"><code class="language-javascript"><!--
+/**
+ * Creates a new Promise.
+ * @param executor A callback used to initialize the promise. This callback is passed two arguments:
+ * a resolve callback used to resolve the promise with a value or the result of another promise,
+ * and a reject callback used to reject the promise with a provided reason or error.
+ */
+new <T>(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T>;
+		--></code></pre>
+
+		<pre class="line-numbers"><code class="language-javascript"><!--
+/**
+ * Represents the completion of an asynchronous operation
+ */
+interface Promise<T> {
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
+
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
+}
+		--></code></pre>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		<h2>测试</h2>
+
+		<h3>在 JavaScript 中，当一个 Promise 同时有 .then() 和 .catch()，并且该 Promise 被 reject（拒绝） 时，会走 .catch() 方法。</h3>
+		
+		<p>
+			在 JavaScript 中，当一个 Promise 同时有 .then() 和 .catch()，并且该 Promise 被 reject（拒绝） 时，会走 .catch() 方法。<br/>
+
+			⚠️ 重要：如果 .then() 的第二个参数处理了错误，.catch() 就不会执行<br/>
+		</p>
+
+		<script>
+			Promise.reject('出错了')
+			.then(() => {
+				console.log('then 成功');
+			})
+			.catch(err => {
+				// ✅ 执行这里
+				console.log('catch 捕获:', err); 
+			});
+		</script>
+
+		<script>
+			Promise.reject('错误')
+			.then(
+				() => console.log('成功'),
+				// ✅ 执行这里
+				(err) => console.log('then 中处理错误:', err) 
+			)
+			.catch(err => {
+				// ❌ 不执行！
+				console.log('catch:', err); 
+			});
+		</script>
+		
+		<script>
+			new Promise((resolve, reject) => {
+				// resolve(11);
+				reject(22);
+			}).then(
+				(value) => {
+					console.log(`then -> resolve:${value}`);
+					// 继续执行后续逻辑
+				},
+				(reason) => {
+					console.error(`then -> reject:${reason}`);
+				}
+			).catch(reason => {
+				console.error(`catch:${reason}`);
+			});
+
+		</script>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>应用</h2>
+
+		<h3>使用 Promise 遍历数组并动态添加任务执行</h3>
+
+		<p>
+			在 JavaScript 中，使用 Promise 遍历数组并动态添加任务执行 是一个常见需求，比如：
+			<ul>
+				<li>依次执行多个异步操作（串行）</li>
+				<li>并行执行多个异步操作（并发）</li>
+				<li>动态根据条件添加新任务</li>
+			</ul>
+		</p>
+
+		<h4>🚫 常见错误</h4>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			// ❌ 错误：forEach 不能 await
+			urls.forEach(async url => {
+				await loadScript(url); // 实际是并行执行！
+			});
+		</code></pre>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			// ❌ 错误：map + await 不等于串行
+			const promises = urls.map(url => loadScript(url));
+			await promises; // 还是并行
+		</code></pre>
+
+		<p> 正确串行必须用 for...of 或 reduce </p>
+
+		<br/>
+		<hr/>
+		<br/>
+
+
+		<h4>✅ 场景 1：并行执行（所有任务同时开始）</h4>
+
+		<p>使用 Promise.all()：</p>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			const urls = ['a.js', 'b.js', 'c.js'];
+
+			function loadScript(src) {
+				return new Promise((resolve, reject) => {
+					const script = document.createElement('script');
+					script.src = src;
+					script.onload = () => resolve(src);
+					script.onerror = () => reject(new Error(`Failed to load ${src}`));
+					document.head.appendChild(script);
+				});
+			}
+
+			// 并行加载所有脚本
+			Promise.all(urls.map(url => loadScript(url)))
+			.then(results => {
+				console.log('所有脚本加载完成:', results); // ['a.js', 'b.js', 'c.js']
+				// 继续执行后续逻辑
+			})
+			.catch(err => {
+				console.error('某个脚本加载失败:', err);
+			});
+		</code></pre>
+
+		<p>
+			✅ 优点：快<br/>
+			❌ 缺点：如果一个失败，整个 Promise.all 会 reject（除非用 Promise.allSettled） <br/>
+		</p>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h4>✅ 场景 2：串行执行（一个接一个）</h4>
+
+		<p>使用 async/await + for...of：</p>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			async function loadScriptsInOrder(urls) {
+				const results = [];
+				for (const url of urls) {
+					try {
+						const result = await loadScript(url);
+						results.push(result);
+						console.log(`${url} 加载完成`);
+					} catch (err) {
+						console.error(`${url} 加载失败:`, err);
+						// 可选择继续 or 中断
+						// throw err; // 中断
+					}
+				}
+				return results;
+			}
+
+			// 使用
+			loadScriptsInOrder(['a.js', 'b.js', 'c.js'])
+			.then(() => {
+				console.log('所有脚本按顺序加载完成');
+			});
+		</code></pre>
+
+		<p>
+			✅ 适合有依赖关系的任务（比如 b.js 依赖 a.js） <br/>
+		</p>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h4>✅ 场景 3：动态添加任务（在执行过程中追加）</h4>
+
+		<p>这是你问题中的关键：“动态添加任务”</p>
+
+		<p>方法：使用一个“任务队列” + async 函数</p>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			let taskQueue = ['a.js', 'b.js']; // 初始任务
+			const executed = new Set();
+
+			async function runTasks() {
+				while (taskQueue.length > 0) {
+					const current = taskQueue.shift(); // 取出第一个任务
+					
+					if (executed.has(current)) continue; // 避免重复执行
+					executed.add(current);
+
+					try {
+						await loadScript(current);
+						console.log(`${current} 执行完成`);
+
+						// ✨ 动态添加新任务！
+						if (current === 'b.js') {
+							taskQueue.push('c.js', 'd.js'); // 动态追加
+						}
+					} catch (err) {
+						console.error(`任务 ${current} 失败:`, err);
+					}
+				}
+				console.log('所有任务（包括动态添加的）执行完毕');
+			}
+
+			// 启动
+			runTasks();
+		</code></pre>
+
+		<p>
+			✅ 这种方式支持在执行过程中动态扩展任务列表，非常灵活。 <br/>
+		</p>
+
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h4>✅ 场景 5：带节流的并发执行（限制同时执行数量）</h4>
+
+		<p>比如：最多同时加载 2 个脚本</p>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			async function loadWithConcurrencyLimit(tasks, limit = 2) {
+				const executing = [];
+
+				for (const task of tasks) {
+					const promise = loadScript(task).finally(() => {
+						const index = executing.indexOf(promise);
+						executing.splice(index, 1);
+					});
+					executing.push(promise);
+
+					if (executing.length >= limit) {
+						await Promise.race(executing); // 等待任意一个完成
+					}
+				}
+
+				await Promise.all(executing); // 等待剩余任务完成
+			}
+
+			// 使用
+			loadWithConcurrencyLimit(['a.js', 'b.js', 'c.js', 'd.js'], 2);
+		</code></pre>
+
+		<p>
+			<br/>
+		</p>
+
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h4></h4>
+
+		<p></p>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			
+		</code></pre>
+
+		<p>
+			<br/>
+		</p>
+
+
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

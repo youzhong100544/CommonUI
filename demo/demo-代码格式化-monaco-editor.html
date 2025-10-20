@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>代码格式化 - Monaco Editor</title>
+
+		<!-- Start - Monaco Editor -->
+		
+		<script src="https://cdn.bootcdn.net/ajax/libs/monaco-editor/0.52.2/min/vs/loader.js"></script>
+		
+		<!-- End - Monaco Editor -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+
+		<script>
+			
+			(function (window) {
+				
+			})(window);
+			
+		</script>
+		
+	</head>
+	<body>
+
+		<h1>代码格式化 - Monaco Editor</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础案例</h2>
+
+		<div id="container" style="width:800px;height:600px;border:1px solid #ccc;"></div>
+ 
+		<script>
+			require.config({ paths: { 'vs': 'https://cdn.bootcdn.net/ajax/libs/monaco-editor/0.52.2/min/vs' }});
+			
+			require(['vs/editor/editor.main'], function() {
+				// 初始化编辑器
+				const editor = monaco.editor.create(document.getElementById('container'), {
+					value: `function formatMe() {
+	console.log("需要格式化的代码");
+	if(true)console.log("格式不统一");
+}`,
+					language: 'javascript',
+					theme: 'vs',
+					fontSize: 14
+				});
+	
+				// 添加格式化按钮事件
+				document.getElementById('formatBtn').addEventListener('click', () => {
+					editor.getAction('editor.action.formatDocument').run();
+				});
+			});
+		</script>
+		
+		<button id="formatBtn" style="margin-top:10px;padding:8px 16px;">格式化文档</button>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

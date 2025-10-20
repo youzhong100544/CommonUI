@@ -24,7 +24,8 @@ let _CommonUI_Util = {
 		 */
 		isString: function (o) {
 			// console.log(Object.prototype);
-			return Object.prototype.toString.call(o).slice(8, -1) === 'String';
+			return Object.prototype.toString.call(data) === '[object String]';
+			// return Object.prototype.toString.call(o).slice(8, -1) === 'String';
 		},
 
 		/**
@@ -84,8 +85,6 @@ let _CommonUI_Util = {
 		isSet: function (o) { //是否Set对象
 			return Object.prototype.toString.call(o).slice(8, -1) === 'Set';
 		},
-		
-		
 		
 		isFalse: function (o) {
 			if (!o || o === 'null' || o === 'undefined' || o === 'false' || o === 'NaN') {
@@ -394,56 +393,116 @@ let _CommonUI_Util = {
 		}
 	},
 
+	/**
+	 * 获取数据
+	 * 
+	 * synchronous     adj. 同步的；同时的
+	 * asynchronous    adj. [电] 异步的；不同时的；不同期的
+	 */
+	getData: {
 
-	/* Start - fetch 函数 异步获取数据 */
-	// 1、封装 fetch 函数
-	/*
-	async function getDataByFetchAPI(url, options = {}) {
-		try {
-			const response = await fetch(url, options);
-			
-			if (!response.ok) {
-				throw new Error(`HTTP error! status: ${response.status}`);
-			}
-			
-			// 根据响应内容类型自动解析 
-			// const contentType = response.headers.get('content-type');
-			// if (contentType && contentType.includes('application/json')) {
-			// 	return await response.json();
-			// }
-			// return await response.text();
-			return await response.json();
-		} catch (error) {
-			console.error('Fetch error:', error);
-			throw error; // 重新抛出错误以便调用者处理
-		}
-	}
-	*/
-	// 2、使用封装的函数
-	/*
-	async function test_getDataByFetchAPI() {
-		try {
-			// 等待fetch完成
-			const data = await getDataByFetchAPI('https://api.example.com/data');
-			
-			// 拿到结果后继续执行
-			console.log('获取的数据:', data);
-			processData(data);
-			
-		} catch (error) {
-			console.error('处理数据出错:', error);
-		}
-	}
+		/**
+		 * 同步获取数据
+		 */
+		synchronousGetData: function () {
 
-	test_getDataByFetchAPI();
-	*/
-	/* End - fetch 函数 异步获取数据 */
-	
-	getdata: {
+		},
+
+		// lib.dom.d.ts
+
+		// /**
+		//  * The XMLHttpRequest method **`open()`** initializes a newly-created request, or re-initializes an existing one.
+		//  *
+		//  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest/open)
+		//  */
+		// open(method: string, url: string | URL): void;
+		// open(method: string, url: string | URL, async: boolean, username?: string | null, password?: string | null): void;
+		
+		// /**
+		//  * The XMLHttpRequest method **`send()`** sends the request to the server.
+		//  *
+		//  * [MDN Reference](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest/send)
+		//  */
+		// send(body?: Document | XMLHttpRequestBodyInit | null): void;
+		
+		// XMLHttpRequest.open() 初始化请求参数
+		// XMLHttpRequest.send() 发送网络请求
+		// XMLHttpRequest.onload() 监听请求结果
+		// XMLHttpRequest.responseType 对响应结果进行声明，来对结果自动进行处理(text,json,blob,document)
+		// XMLHttpRequest.onerror() 请求中断等错误发生时的处理
+		// XMLHttpRequest.status 为HTTP状态码 如 404/422/403等，当为200时为正确响应
+		// XMLHttpRequest.statusText HTTP状态码内容，200时为ok,404 为Not Found
+		// XMLHttpRequest.response 服务器端响应的内容
+
+		/**
+		 * 
+		 * @param {string} method 
+		 * 					指定HTTP请求的方法，如"GET"、"POST"等。
+		 * 					这个方法不区分大小写，但通常使用大写字母。
+		 * @param {string | URL} url 
+		 * 					请求发送到的URL。
+		 * 					这个URL是相对于执行代码的当前页面的（也可以使用绝对路径）。
+		 * 					重要的是，出于安全考虑，只能向同一个域中使用相同端口和协议的URL发送请求。
+		 * @param {object} options 
+		 * @returns 
+		 */
+		synchronousGetDataByXMLHttpRequest: function (method = 'GET', url = '../data/menus.json', options = {}) {
+			const xhr = new XMLHttpRequest();
+			
+			// false 表示同步
+			xhr.open(method, url, false); 
+
+			// xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+			let data = null;
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					data = JSON.parse(xhr.responseText);
+				}
+			};
+
+			// 阻塞执行，直到请求完成
+			xhr.send(); 
+
+			console.log('XMLHttpRequest 同步获取的数据:', data);
+			return data;
+		},
+
+		/**
+		 * 异步获取数据
+		 */
 		asynchronousGetData: function () {
 
 		},
 
+		asynchronousGetDataByXMLHttpRequest: function (method, url, options = {}) {
+			const xhr = new XMLHttpRequest();
+
+			// true 表示异步
+			xhr.open(
+				'GET',
+				'https://jsonplaceholder.typicode.com/posts/1',
+				true
+			); 
+
+			// xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					const data = JSON.parse(xhr.responseText);
+					console.log('XMLHttpRequest 异步获取的数据:', data);
+				}
+			};
+
+			xhr.onerror = function () {
+				console.error('请求出错');
+			};
+
+			xhr.send();
+		},
+
+		// /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/fetch) */
+		// declare function fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
 		asynchronousGetDataByFetchAPI: async function(url, options = {}) {
 			try {
 				const response = await fetch(url, options);
@@ -470,95 +529,150 @@ let _CommonUI_Util = {
 
 	},
 
-
-
-	/* Start - JavaScript 监听窗口变化 */
-
-	/*
-		JavaScript 监听窗口变化
-			在JavaScript中，可以使用resize事件来监听浏览器窗口大小的变化。
-			这个事件在窗口大小发生变化时触发，可以用来动态调整页面元素的显示。
 	
-		基本实现
-			首先，我们可以编写一个函数来获取窗口的宽度和高度：
-				const getWindowInfo = () => {
-					const windowInfo = {
-						width: window.innerWidth,
-						height: window.innerHeight
-					};
-					console.log(windowInfo);
-				};
-
-			然后，我们可以使用addEventListener方法来监听resize事件：
-				window.addEventListener('resize', getWindowInfo);
-			
-			这样，每当窗口大小发生变化时，getWindowInfo函数就会被调用，并输出当前窗口的宽度和高度。
-		
-		防抖处理
-			直接监听resize事件可能会导致函数被频繁调用，影响性能。
-			我们可以使用防抖技术来优化这一点。
-			防抖的原理是无论窗口大小如何变化，只在变化停止后的指定时间内执行一次函数。
-
-				const debounce = (fn, delay) => {
-					let timer;
-					return function() {
-						if (timer) {
-							clearTimeout(timer);
-						}
-						timer = setTimeout(() => {
-							fn();
-						}, delay);
-					};
-				};
-
-				const debounceGetWindowInfo = debounce(getWindowInfo, 500);
-
-				window.addEventListener('resize', debounceGetWindowInfo);
-			
-			在这个例子中，debounceGetWindowInfo函数只会在窗口停止变化的500毫秒后触发一次。
-	*/
-
-	/*
-	const getWindowInfo = () => {
-		const windowInfo = {
-			width: window.innerWidth,
-			height: window.innerHeight
-		};
-		console.log(windowInfo);
-	};
-
-	window.addEventListener('resize', getWindowInfo);
-	*/
-
-
-	/*
-	const getWindowInfo = () => {
-		const windowInfo = {
-			width: window.innerWidth,
-			height: window.innerHeight
-		};
-		console.log(windowInfo);
-	};
-
-	const debounce = (fn, delay) => {
-		let timer;
-		return function() {
-			if (timer) {
-				clearTimeout(timer);
-			}
-			timer = setTimeout(() => {
-				fn();
-			}, delay);
-		};
-	};
-	*/
+	/**
+	 * 死循环指定的时间
+	 * @param {number} duration 指定循环时间(单位: 毫秒)
+	 */
+	delay: function (duration) {
+		var start = Date.now();
+		while (Date.now() - start < duration) {}
+	},
 	
-	/*
-	const debounceGetWindowInfo = debounce(getWindowInfo, 500);
-
-	window.addEventListener('resize', debounceGetWindowInfo);
-	*/
-
-	/* End - JavaScript 监听窗口变化 */
 
 };
+
+
+/* Start - fetch 函数 异步获取数据 */
+// 1、封装 fetch 函数
+/*
+async function getDataByFetchAPI(url, options = {}) {
+	try {
+		const response = await fetch(url, options);
+		
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+		
+		// 根据响应内容类型自动解析 
+		// const contentType = response.headers.get('content-type');
+		// if (contentType && contentType.includes('application/json')) {
+		// 	return await response.json();
+		// }
+		// return await response.text();
+		return await response.json();
+	} catch (error) {
+		console.error('Fetch error:', error);
+		throw error; // 重新抛出错误以便调用者处理
+	}
+}
+*/
+// 2、使用封装的函数
+/*
+async function test_getDataByFetchAPI() {
+	try {
+		// 等待fetch完成
+		const data = await getDataByFetchAPI('https://api.example.com/data');
+		
+		// 拿到结果后继续执行
+		console.log('获取的数据:', data);
+		processData(data);
+		
+	} catch (error) {
+		console.error('处理数据出错:', error);
+	}
+}
+
+test_getDataByFetchAPI();
+*/
+/* End - fetch 函数 异步获取数据 */
+
+
+/* Start - JavaScript 监听窗口变化 */
+
+/*
+	JavaScript 监听窗口变化
+		在JavaScript中，可以使用resize事件来监听浏览器窗口大小的变化。
+		这个事件在窗口大小发生变化时触发，可以用来动态调整页面元素的显示。
+
+	基本实现
+		首先，我们可以编写一个函数来获取窗口的宽度和高度：
+			const getWindowInfo = () => {
+				const windowInfo = {
+					width: window.innerWidth,
+					height: window.innerHeight
+				};
+				console.log(windowInfo);
+			};
+
+		然后，我们可以使用addEventListener方法来监听resize事件：
+			window.addEventListener('resize', getWindowInfo);
+		
+		这样，每当窗口大小发生变化时，getWindowInfo函数就会被调用，并输出当前窗口的宽度和高度。
+	
+	防抖处理
+		直接监听resize事件可能会导致函数被频繁调用，影响性能。
+		我们可以使用防抖技术来优化这一点。
+		防抖的原理是无论窗口大小如何变化，只在变化停止后的指定时间内执行一次函数。
+
+			const debounce = (fn, delay) => {
+				let timer;
+				return function() {
+					if (timer) {
+						clearTimeout(timer);
+					}
+					timer = setTimeout(() => {
+						fn();
+					}, delay);
+				};
+			};
+
+			const debounceGetWindowInfo = debounce(getWindowInfo, 500);
+
+			window.addEventListener('resize', debounceGetWindowInfo);
+		
+		在这个例子中，debounceGetWindowInfo函数只会在窗口停止变化的500毫秒后触发一次。
+*/
+
+/*
+const getWindowInfo = () => {
+	const windowInfo = {
+		width: window.innerWidth,
+		height: window.innerHeight
+	};
+	console.log(windowInfo);
+};
+
+window.addEventListener('resize', getWindowInfo);
+*/
+
+
+/*
+const getWindowInfo = () => {
+	const windowInfo = {
+		width: window.innerWidth,
+		height: window.innerHeight
+	};
+	console.log(windowInfo);
+};
+
+const debounce = (fn, delay) => {
+	let timer;
+	return function() {
+		if (timer) {
+			clearTimeout(timer);
+		}
+		timer = setTimeout(() => {
+			fn();
+		}, delay);
+	};
+};
+*/
+
+/*
+const debounceGetWindowInfo = debounce(getWindowInfo, 500);
+
+window.addEventListener('resize', debounceGetWindowInfo);
+*/
+
+/* End - JavaScript 监听窗口变化 */

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>测试-jQuery-slideToggle方法</title>
+
+		<script type="text/javascript" src="../lib/jquery/jquery-3.7.1.js"></script>
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+			.wrap {
+				margin: 0; 
+				padding: 10px; 
+				width: 300px; 
+				height: 300px; 
+
+				border: 10px solid red; 
+
+				box-sizing: border-box; 
+			}
+
+			/* -----------*/
+
+			#test-010-010-010 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+
+				/* box-sizing: border-box; */
+				/* border: 10px solid red; */
+				
+				background: blue;
+				color: black;
+			}
+
+			#test-010-010-020 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+
+				box-sizing: border-box; 
+				/* border: 10px solid red; */
+				
+				background: blue;
+				color: black;
+			}
+			
+			/* -----------*/
+
+			#test-010-020-010 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+
+				/* box-sizing: border-box; */
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+			}
+
+			#test-010-020-020 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+
+				box-sizing: border-box; 
+				border: 10px solid blue;
+				
+				background: green;
+				color: black;
+			}
+
+			/* -----------*/
+
+			#test-010-030-010 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: content-box; 
+				border: 10px solid red;
+				
+				background: white;
+				color: black;
+			}
+			
+
+			#test-010-030-020 {
+				margin: 0; 
+				padding: 0; 
+				width: 200px; 
+				height: 150px; 
+				box-sizing: border-box; 
+				border: 10px solid red;
+				
+				background: white;
+				color: black;
+			}
+			
+
+			
+
+		</style>
+
+		<script>
+
+			/*
+				语法
+					$(selector).slideToggle(speed, easing, callback);
+
+				● selector：需要添加动画效果的元素选择器。
+				● speed（可选）：切换的速度，可以是 “slow”、”fast” 或者具体的毫秒数值，默认值为 “normal”。
+				● easing（可选）：切换的缓动效果，可以使用 jQuery 中的缓动函数，如“swing”或“linear”，默认为“swing”。
+				● callback（可选）：动画完成后的回调函数。
+			*/
+
+			function show_or_hide(idName) {
+				// $("#content").slideToggle();
+				// $("#content").slideToggle("normal");
+				// $("#content").slideToggle("slow");
+				// $("#content").slideToggle("fast");
+				$(idName).slideToggle("slow");
+			}
+
+		</script>
+		
+	</head>
+	<body>
+		<h1>测试-jQuery-slideToggle方法</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<button onclick="show_or_hide('#test-010-010-010')">显示隐藏</button>
+
+		<br/>
+		<br/>
+		
+		<div class="wrap">
+			<div id="test-010-010-010">
+				slideToggle();
+			</div>
+		</div>
+		
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<button onclick="show_or_hide('#test-010-010-020')">显示隐藏</button>
+
+		<br/>
+		<br/>
+
+		<div class="wrap">
+			<div id="test-010-010-020">
+				slideToggle();
+			</div>
+		</div>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<button onclick="show_or_hide('#test-010-020-010')">显示隐藏</button>
+
+		<br/>
+		<br/>
+
+		<div class="wrap">
+			<div id="test-010-020-010">
+				slideToggle();
+			</div>
+		</div>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<button onclick="show_or_hide('#test-010-020-020')">显示隐藏</button>
+
+		<br/>
+		<br/>
+
+		<div class="wrap">
+			<div id="test-010-020-020">
+				slideToggle();
+			</div>
+		</div>
+
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+		jQuery 的 slideToggle() 在处理带有边框（border）的 div 时确实存在一个常见问题：<br/>
+		动画结束后，元素的高度会“少算”边框宽度，导致布局轻微跳动或不准确。 <br/>
+
+		<br/>
+
+		<button onclick="show_or_hide('#test-010-030-010')">显示隐藏</button>
+		
+		<br/>
+		<br/>
+
+		<div id="test-010-030-010">
+			box-sizing: content-box; 
+		</div>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<button onclick="show_or_hide('#test-010-030-020')">显示隐藏</button>
+		
+		<br/>
+		<br/>
+		
+		<div id="test-010-030-020">
+			box-sizing: border-box; 
+		</div>
+		
+		
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

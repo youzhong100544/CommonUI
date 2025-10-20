@@ -1,0 +1,365 @@
+@charset "UTF-8";
+
+
+/* ################################################################################################################# */
+/* # Start - 菜单 # */
+/* ################################################################################################################# */
+
+/*
+	transition
+	https://developer.mozilla.org/en-US/docs/Web/CSS/transition
+	https://developer.mozilla.org/zh-CN/docs/Web/CSS/transition
+*/
+
+/*
+	相关知识、说明：
+
+		CSS 选择器
+			:link       a:link      选择所有未访问链接
+			:visited    a:visited   选择所有访问过的链接
+			:active     a:active    选择活动链接
+			:hover      a:hover     选择鼠标在链接上面时
+
+		<ul> 和 <li> 标签的显示属性解析
+			默认显示特性
+				<ul> 无序列表
+					● 默认 display 值：block (块级元素)
+					● 典型表现：
+						□ 独占一行
+						□ 可以设置宽度、高度、内外边距
+						□ 默认带有 padding-left (通常是 40px) 和 list-style-type: disc (项目符号)
+
+				<li> 列表项
+					● 默认 display 值：list-item (特殊显示类型)
+					● 典型表现：
+						□ 表现为块级元素特性（独占一行）
+						□ 前面带有项目符号/编号
+						□ 可以包含其他块级和内联元素
+
+		<a> 标签的显示属性解析
+			默认显示特性
+				1、默认情况下：
+					● 是 inline (内联元素)
+					● 表现为典型的行内元素特性：
+						□ 不会独占一行
+						□ 宽度由内容决定
+						□ 不能直接设置宽度/高度（除非改变显示方式）
+
+				2、特殊行为：
+					● 可以包含其他块级元素（HTML5规范允许）
+					● 即使包含块级元素，默认仍保持 display: inline
+
+		
+		html元素：块元素(display: block;)、行内块元素(display: inline-block;)、行内元素(display: inline;)
+
+		SVG
+			默认显示属性
+				● SVG元素本身：<svg> 的默认 display 属性值是 inline（内联元素）
+				● SVG内部元素：SVG内部的各种元素（如 <rect>, <circle>, <path> 等）默认都是 display: inline 的
+
+
+		SVG 标签的显示属性解析
+			SVG (<svg>) 标签的默认显示行为在不同上下文中有所不同：
+
+			默认显示特性
+				1、在HTML文档中：
+					● 默认 display 值为 inline（内联元素）
+					● 但具有特殊的 "replaced element" 特性，类似于 <img>
+				2、在独立SVG文件中：
+					● 作为根元素时没有常规的CSS display概念
+
+		ul li 的默认样式
+			list-style CSS 属性是一个简写对属性集合，包括list-style-type, list-style-image, 和 list-style-position。
+
+			CSS list-style 属性是设置list-style-type, list-style-image 和 list-style-position 的简写属性。
+
+
+		display: flex 元素的显示特性
+			当一个元素设置了 display: flex 后，它的显示行为会发生显著变化：
+
+			核心结论
+				display: flex 会创建一个块级弹性容器，具体表现为：
+
+					1、对外表现为块级元素特性：
+						● 默认宽度为100%（独占一行）
+						● 可以设置宽度、高度、内外边距等块级属性
+					2、对内创建弹性布局上下文：
+						● 子元素成为弹性项目(flex items)
+						● 子元素默认排成一行
+						● 子元素的 float、clear 和 vertical-align 将失效
+
+		transition（过渡）、transform（变换）、translate（移动）、animation（动画）
+
+			CSS transition 属性
+			
+				transition 属性是一个简写属性，用于设置四个过渡属性：
+
+					transition-property
+					transition-duration
+					transition-timing-function
+					transition-delay
+				
+				注释：请始终设置 transition-duration 属性，否则时长为 0，就不会产生过渡效果。
+
+				transition 不能在 display: none 和 display: block 之间进行过度，
+					并且也不能在 height: 0 和 height: auto 之间进行过度。
+
+					解决办法
+						使用 jQuery 的 slideToggle() 方法
+
+	相关问题：
+		1、在 CSS 中，如何让子 div 撑满 父 div？
+		2、在 CSS 中，父 div 的滚动条 是否会影响 子 div 的宽和高？
+		3、height: 0 -> auto; display: none -> block; visibility: hidden -> visible; 区别
+ */
+
+
+:root {
+	/* Start - 纵向垂直菜单 */
+
+	--CommonUI-menu-vertical-a-tag-width: 100%;
+	--CommonUI-menu-vertical-a-tag-height: 40px;
+
+	/* SVG 图标大小 */
+	/*--CommonUI-menu-icon-width: var(--CommonUI-menu-a-tag-height);*/
+	--CommonUI-menu-vertical-icon-width: 40px;
+	--CommonUI-menu-vertical-icon-height: var(--CommonUI-menu-a-tag-height);
+	--CommonUI-menu-vertical-icon-margin-left: 0;
+	--CommonUI-menu-vertical-icon-margin-right: 0;
+	
+
+	/* 文本区域大小 */
+	--CommonUI-menu-vertical-text-width: calc(var(--layout-of-sidebar-width) - var(--sidebar-svg-icon-width) - var(--sidebar-svg-submenu-toggle-width) - var(--sidebar-text-margin-left) - var(--sidebar-text-margin-right));
+	--CommonUI-menu-vertical-text-height: var(--CommonUI-menu-a-tag-height);
+	--CommonUI-menu-vertical-text-margin-left: 5px;
+	--CommonUI-menu-vertical-text-margin-right: 5px;
+
+	/* 折叠/展开 SVG 图标大小 */
+	/*--CommonUI-menu-svg-dropdown-width: var(--CommonUI-menu-a-tag-height);*/
+	--CommonUI-menu-vertical-dropdown-width: 40px;
+	--CommonUI-menu-vertical-dropdown-height: var(--CommonUI-menu-a-tag-height);
+	--CommonUI-menu-vertical-dropdown-margin-left: 0;
+	--CommonUI-menu-vertical-dropdown-margin-right: 0;
+
+	/* End - 纵向垂直菜单 */
+
+	/* =================================================================================== */
+
+	/* Start - 横向水平菜单 */
+
+	--CommonUI-menu-horizontal-a-tag-width: 100%;
+	--CommonUI-menu-horizontal-a-tag-height: 40px;
+
+	/* SVG 图标大小 */
+	/*--CommonUI-menu-icon-width: var(--CommonUI-menu-a-tag-height);*/
+	--CommonUI-menu-horizontal-icon-width: 40px;
+	--CommonUI-menu-horizontal-icon-height: var(--CommonUI-menu-a-tag-height);
+	--CommonUI-menu-horizontal-icon-margin-left: 0;
+	--CommonUI-menu-horizontal-icon-margin-right: 0;
+	
+	/* 文本区域大小 */
+	--CommonUI-menu-horizontal-text-width: calc(var(--layout-of-sidebar-width) - var(--sidebar-svg-icon-width) - var(--sidebar-svg-submenu-toggle-width) - var(--sidebar-text-margin-left) - var(--sidebar-text-margin-right));
+	--CommonUI-menu-horizontal-text-height: var(--CommonUI-menu-a-tag-height);
+	--CommonUI-menu-horizontal-text-margin-left: 5px;
+	--CommonUI-menu-horizontal-text-margin-right: 5px;
+
+	/* 折叠/展开 SVG 图标大小 */
+	/*--CommonUI-menu-svg-dropdown-width: var(--CommonUI-menu-a-tag-height);*/
+	--CommonUI-menu-horizontal-dropdown-width: 40px;
+	--CommonUI-menu-horizontal-dropdown-height: var(--CommonUI-menu-a-tag-height);
+	--CommonUI-menu-horizontal-dropdown-margin-left: 0;
+	--CommonUI-menu-horizontal-dropdown-margin-right: 0;
+
+	/* End - 横向水平菜单 */
+}
+
+
+/* Start - 菜单列表通用样式 */
+
+/* 1、去除掉 ul li 标签的默认样式 */
+div.CommonUI-menu ul, 
+div.CommonUI-menu ul li {
+	margin: 0; 
+	padding: 0; 
+}
+
+div.CommonUI-menu ul {
+	list-style: none; 
+}
+
+
+/* 2、去掉 a 标签的默认样式 */
+div.CommonUI-menu ul li a {
+	/* 去掉默认外边距 */
+	margin: 0; 
+	/* 去掉默认内边距 */
+	padding: 0; 
+}
+
+div.CommonUI-menu ul li a {
+	/* 继承父元素颜色 */
+	color: inherit; 
+	/* 去掉下划线 */
+	text-decoration: none; 
+	/* 去掉聚焦时的外边框（可选） */
+	outline: none; 
+	/* 保持手型指针（如果是按钮类） */
+	cursor: pointer; 
+	/* 可选：去掉默认过渡效果 */
+	transition: none; 
+}
+
+/* 去掉 :visited 状态的颜色变化 */
+div.CommonUI-menu ul li a:visited {
+	color: inherit;
+}
+
+/* 去掉点击时的高亮（移动端） */
+div.CommonUI-menu ul li a:active,
+div.CommonUI-menu ul li a:hover 
+{
+	color: inherit;
+	text-decoration: none;
+}
+
+/* 3、把 a 标签变成块元素 */
+div.CommonUI-menu ul li a {
+	display: block;
+}
+
+/* End - 菜单列表通用样式 */
+
+
+/* ------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------- */
+
+
+div.CommonUI-menu {
+	/* 去掉默认外边距 */
+	margin: 0; 
+	/* 去掉默认内边距 */
+	padding: 0; 
+
+	width: 100%; 
+	height: 100%; 
+
+	display: block; 
+}
+
+/* Start - 纵向垂直菜单 */
+
+div.CommonUI-menu.vertical > ul {
+	margin: 0; 
+	padding: 0; 
+
+	width: 100%; 
+	height: 100%; 
+
+	/* 调试用 */
+	/* border: 5px solid black;  */
+	/* border: 5px solid white;  */
+}
+
+div.CommonUI-menu.vertical > ul > li {
+	/* 纵向垂直菜单, li 不要设置高度; 否则会影响子菜单。可以通过设置子元素 a 标签的高度解决 */
+	/* height: 64px;  */
+
+	/* 调试用 */
+	/* border: 1px solid blue; */
+}
+
+div.CommonUI-menu.vertical > ul > li a {
+	height: 64px; 
+
+	/* 调试用 */
+	border: 1px solid green;
+}
+
+div.CommonUI-menu.vertical > ul > li ul.submenu {
+	display: none;
+}
+
+div.CommonUI-menu.vertical > ul > li ul.submenu.open {
+	display: block;
+}
+
+/* End - 纵向垂直菜单 */
+
+
+/* Start - 子菜单显示/隐藏的过渡动画 */
+div.CommonUI-menu.vertical > ul > li ul.submenu {
+	/* height: 0; */
+	/* visibility: hidden; */
+
+	display: none;
+
+	/* interpolate-size: allow-keywords; */
+
+	/* transition: 0.3s ease-in-out; */
+	/* transition: opacity 0.25s, display 0.25s; */
+	/* transition-behavior: allow-discrete;  */ /* Note: be sure to write this after the shorthand */
+	
+	transition: display 0.5s ease-in-out;
+	transition-behavior: allow-discrete;
+}
+
+div.CommonUI-menu.vertical > ul > li:hover ul.submenu {
+	display: block;
+	/* visibility: visible; */
+	/* height: auto; */
+}
+
+
+div.CommonUI-menu.vertical > ul > li ul.submenu.animation-style-1 {
+	/* transition: 0.25s; */
+	transition: transform 0.25s;
+
+	transform: scaleY(0);
+	transform-origin: top left; /* 缩放基准点为左上角 */
+}
+
+div.CommonUI-menu.vertical > ul > li:hover ul.submenu.animation-style-1 {
+	transform: scaleY(1);
+	transform-origin: top left; /* 缩放基准点为左上角 */
+}
+/* End - 子菜单显示/隐藏的过渡动画 */
+
+/* ------------------------------------------------------------------------------- */
+/* ------------------------------------------------------------------------------- */
+
+
+/* Start - 横向水平菜单 */
+
+div.CommonUI-menu.horizontal ul {
+	margin: 0; 
+	padding: 0; 
+
+	/* 调试用 */
+	/* border: 5px solid black;  */
+	/* border: 5px solid white;  */
+}
+
+div.CommonUI-menu.horizontal ul > li {
+	width: 128px; 
+	height: 64px; 
+
+	display: inline-block; 
+
+	/* 防止文字换行 */
+	white-space: nowrap; 
+
+	/* 调试用 */
+	border: 1px solid green; 
+}
+
+div.CommonUI-menu.horizontal ul > li > ul.submenu {
+	display: none;
+}
+
+/* div.CommonUI-menu.horizontal ul > li:hover > ul.submenu {
+	display: block;
+} */
+
+/* End - 横向水平菜单 */
+
+/* = End =========================================================================================================== */

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>代码美化-highlightjs</title>
+
+		<!-- Start - highlight.js -->
+
+		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"> -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.9.0/highlightjs-line-numbers.min.js"></script>
+		
+		<!-- 
+		<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/default.min.css" rel="stylesheet">
+		<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" rel="stylesheet">
+		<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+		 -->
+
+		<!-- 
+		<link href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.11.1/styles/default.css" rel="stylesheet">
+		<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.11.1/es/core.min.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.11.1/es/highlight.min.js"></script>
+		 -->
+		
+		<script>
+			hljs.highlightAll();
+		</script>
+
+		<script>
+			hljs.initLineNumbersOnLoad();
+		</script>
+
+		<!-- End - highlight.js -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+
+		<script>
+			
+			// 所有参数都resolve，此时返回值是一个数组，数组的值按照 iterable 的迭代顺序排列
+			(function (window) {
+				
+			})(window);
+			
+		</script>
+		
+	</head>
+	<body>
+
+		<h1>代码美化-highlightjs</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础知识</h2>
+		<pre><code class="language-html">
+interface PromiseConstructor {
+	/**
+	* Creates a Promise that is resolved with an array of results when all of the provided Promises
+	* resolve, or rejected when any Promise is rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	all<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]>;
+
+	/**
+	* Creates a Promise that is resolved or rejected when any of the provided Promises are resolved
+	* or rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	race<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>>;
+}
+		</code></pre>
+
+		<pre><code class="language-javascript">
+interface PromiseConstructor {
+	/**
+	* Creates a Promise that is resolved with an array of results when all of the provided Promises
+	* resolve, or rejected when any Promise is rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	all<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]>;
+
+	/**
+	* Creates a Promise that is resolved or rejected when any of the provided Promises are resolved
+	* or rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	race<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>>;
+}
+		</code></pre>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

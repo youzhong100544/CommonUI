@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>在线编辑器 - Code Mirror 5</title>
+
+		<!-- Start - Code Mirror -->
+		
+		<!-- 引入 CodeMirror -->
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/codemirror.css" rel="stylesheet">
+		<script src="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/codemirror.js"></script>
+
+		 <!-- 引入主题 -->
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/theme/ayu-dark.css" rel="stylesheet">
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/theme/ayu-dark.css" rel="stylesheet">
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/theme/base16-dark.css" rel="stylesheet">
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/theme/duotone-dark.css" rel="stylesheet">
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/theme/erlang-dark.css" rel="stylesheet">
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/theme/gruvbox-dark.css" rel="stylesheet">
+		<link href="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/theme/lesser-dark.css" rel="stylesheet">
+
+		<!-- 引入语言模式 -->
+		<script src="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/mode/css/css.js"></script>
+		<script src="https://cdn.bootcdn.net/ajax/libs/codemirror/5.65.20/mode/javascript/javascript.js"></script>
+
+		<!-- End - Code Mirror -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+
+		<script>
+			
+			(function (window) {
+				
+			})(window);
+			
+		</script>
+		
+	</head>
+	<body>
+
+		<h1>在线编辑器 - Code Mirror 5</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础案例</h2>
+
+		<textarea id="code"></textarea>
+
+		<script>
+			var editor = CodeMirror.fromTextArea(document.getElementById('code'), {
+				lineNumbers: true, // 显示行号
+			});
+		</script>
+
+
+		<br/>
+		<hr/>
+		<br/>
+
+
+		<h3>JavaScript</h3>
+
+		<textarea id="code_1"></textarea>
+
+		<script>
+			var editor = CodeMirror.fromTextArea(document.getElementById('code_1'), {
+				mode: 'text/javascript', // 设置语言模式
+				// theme: 'default',        // 设置主题样式，需确保已引入相应主题的CSS
+				// theme: 'ayu-dark',
+				theme: 'base16-dark',
+				lineNumbers: true,       // 显示行号
+				styleActiveLine: true,   // 高亮当前行
+				indentUnit: 4,           // 缩进单位大小
+				smartIndent: true,       // 智能缩进
+				autoCloseBrackets: true, // 自动补全括号
+				// ... 更多配置项
+			});
+
+		</script>
+		
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

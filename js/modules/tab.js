@@ -7,11 +7,14 @@
  */
 
 
-/** 菜单 */
+/* 标签页 */
 
-class CommonUIMenus { 
+/** 
+ * 标签页
+ */
+class CommonUITab { 
 	constructor(className) {
-		console.log("CommonUIMenus 构造函数");
+		console.log("CommonUITab 构造函数");
 		this.className = className;
 	}
 
@@ -19,6 +22,7 @@ class CommonUIMenus {
 
 	}
 }
+
 
 (function (window) {
 	'use strict';

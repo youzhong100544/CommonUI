@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Promise.all</title>
+
+		<!-- Start - Prism -->
+		
+		<link href="../lib/Prism/prism-1.30.0/themes/prism.css" rel="stylesheet">
+		<link href="../lib/Prism/prism-1.30.0/themes/prism-coy.css" rel="stylesheet">
+
+		<script src="../lib/Prism/prism-1.30.0/prism.js"></script>
+		
+		<script src="../lib/Prism/prism-1.30.0/plugins/autoloader/prism-autoloader.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-language/prism-show-language.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.js"></script>
+		
+		<!-- 添加一个按钮，可以在单击时将代码块内容复制到剪贴板 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.js"></script>
+
+		<!-- 显示隐藏字符，例如制表符和换行符 -->
+		<link href="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.js"></script>
+
+		<!-- End - Prism -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+		
+	</head>
+	<body>
+		<h1>Promise.all</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础知识</h2>
+
+		<pre class="line-numbers"><code class="language-javascript"><!--interface PromiseConstructor {
+	/**
+	 * Creates a Promise that is resolved with an array of results when all of the provided Promises
+	 * resolve, or rejected when any Promise is rejected.
+	 * @param values An iterable of Promises.
+	 * @returns A new Promise.
+	 */
+	all<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]>;
+
+	/**
+	 * Creates a Promise that is resolved or rejected when any of the provided Promises are resolved
+	 * or rejected.
+	 * @param values An iterable of Promises.
+	 * @returns A new Promise.
+	 */
+	race<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>>;
+}--></code></pre>
+
+		<p>
+			参数：<br/>
+			&emsp;接收一个可迭代（iterable）的对象（比如：Array, Map, Set都属于ES6的iterable类型）<br/>
+
+			<br/>
+
+			返回值：<br/>
+			&emsp;是一个Promise实例；可以将多个Promise实例包装成一个新的Promise实例；<br/>
+
+			<br/>
+
+			&emsp;成功：返回的是一个数组；<br/>
+
+			&emsp;&emsp;● 如果传入的可迭代对象为空，Promise.all 会同步地返回一个已完成（resolved）状态的promise。<br/>
+			&emsp;&emsp;● 如果所有传入的 promise 都变为完成状态，或者传入的可迭代对象内没有 promise，Promise.all 返回的 promise 异步地变为完成。<br/>
+			&emsp;&emsp;● 在任何情况下，Promise.all 返回的 promise 的完成状态的结果都是一个数组，它包含所有的传入迭代参数对象的值（也包括非 promise 值）<br/>
+			
+			<br/>
+
+			&emsp;失败：只要任何一个输入的 promise 的 reject 回调执行或者输入不合法的 promise 就会立即抛出错误，而不管其它 promise 是否完成，并且 reject 的是第一个抛出的错误信息；<br/>
+		</p>
+
+		<h2>用法</h2>
+
+		<h3>所有参数都resolve，此时返回值是一个数组，数组的值按照 iterable 的迭代顺序排列</h3>
+
+		<script>
+			// 所有参数都resolve，此时返回值是一个数组，数组的值按照 iterable 的迭代顺序排列
+			(function (window) {
+				const p1 = new Promise((resolve, reject) => {
+					setTimeout(() => {
+						resolve('resolve1')
+					}, 1000)
+				})
+
+				const p2 = new Promise((resolve, reject) => {
+					setTimeout(() => {
+						resolve('resolve2')
+					}, 1000)
+				})
+
+				const p3 = new Promise((resolve, reject) => {
+					setTimeout(() => {
+						resolve('resolve3')
+					}, 1000)
+				})
+
+				const allp = [p1, p2, p3];
+
+				Promise.all(allp)
+				.then((res) => {
+					console.log(res); // [resolve, resolve1, resolve2]
+				})
+			})(window);
+			
+
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h3>当参数中有reject时，此时返回值是第一个被reject的promise（p2）；</h3>
+
+		<script>
+			// 当参数中有reject时，此时返回值是第一个被reject的promise（p2）；
+			(function (window) {
+				const p1 = new Promise((resolve, reject) => {
+					setTimeout(() => {
+						resolve('resolve1')
+					}, 1000)
+				})
+
+				const p2 = new Promise((resolve, reject) => {
+					setTimeout(() => {
+						reject('rejcet2')
+					}, 1000)
+				})
+
+				const p3 = new Promise((resolve, reject) => {
+					setTimeout(() => {
+						reject('rejcet3')
+					}, 1000)
+				})
+
+				const allp = [p1, p2, p3];
+
+				Promise.all(allp)
+				.then((res) => {
+					console.log(res)
+				})
+				.catch((err) => {
+					console.log(err) // rejcet2
+				})
+			})(window);
+		</script>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

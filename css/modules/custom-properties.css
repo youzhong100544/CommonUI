@@ -3,6 +3,8 @@
 /* CSS custom properties (variables) */
 /* CSS 自定义属性 (变量) */
 :root {
+
+	/* 是否开启调试 */
 	--bEnableDebug: true;
 
 	/* 
@@ -94,4 +96,64 @@
 	*/
 	--global-line-height: 1.5;
 	--global-background-color: #fff;
+
+
+	/* =================================================================== */
+	/* =================================================================== */
+
+
+	--base-background-color: white; 
+	--base-color: black; 
+
+	/* Start - 滚动条 ##################################################################### */
+
+	/* 垂直滚动条默认宽度 */
+	--scrollbar-default-width: 12px; 
+	/* 水平滚动条默认高度 */
+	--scrollbar-default-height: 12px; 
+
+	/* S - 默认主题 ----------------------------------------- */
+
+	/* 滚动条轨道（track）的颜色 */
+	--scrollbar-track-default-background-color: #FCFCFC; 
+	
+	/* 滚动条滑块（thumb）的颜色 */
+	--scrollbar-thumb-default-background-color: #8B8B8B; 
+	--scrollbar-thumb-hover-default-background-color: #636363; 
+	
+	/* 水平和垂直滚动条交汇处的角落区域（右下角) */
+	--scrollbar-corner-default-background-color: #FCFCFC; 
+
+	/* E - 默认主题 ***************************************** */
+
+	/* S - 亮主题 ----------------------------------------- */
+
+	/* 滚动条轨道（track）的颜色 */
+	--scrollbar-track-light-background-color: #FCFCFC; 
+	
+	/* 滚动条滑块（thumb）的颜色 */
+	--scrollbar-thumb-light-background-color: #8B8B8B; 
+	--scrollbar-thumb-hover-light-background-color: #636363; 
+	
+	/* 水平和垂直滚动条交汇处的角落区域（右下角) */
+	--scrollbar-corner-light-background-color: #FCFCFC; 
+
+	/* E - 亮主题 ***************************************** */
+
+	/* S - 暗主题 ----------------------------------------- */
+
+	/* 滚动条轨道（track）的颜色 */
+	--scrollbar-track-dark-background-color: #060608; 
+	
+	/* 滚动条滑块（thumb）的颜色 */
+	--scrollbar-thumb-dark-background-color: #676769; 
+	--scrollbar-thumb-hover-dark-background-color: #FCFCFC; 
+	
+	/* 水平和垂直滚动条交汇处的角落区域（右下角) */
+	--scrollbar-corner-dark-background-color: #060608; 
+
+	/* E - 暗主题 ***************************************** */
+
+
+	/* End - 滚动条 ===================================================================== */
 }

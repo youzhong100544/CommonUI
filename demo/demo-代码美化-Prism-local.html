@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>代码美化-Prism-local</title>
+
+		<!-- Start - Prism -->
+		
+		<!-- 
+		<script>
+			// 下载的prism，默认会绑定在 window 环境中
+			
+			// 1.首先默认会调用highlightAll方法，但是我们在使用过程中，肯定是希望手动调用的
+			window.Prism = window.Prism || {};
+			window.Prism.manual = true;
+			
+			// 这样就可以开始手动调用，切忌上述代码一定要出现在 prism.js 前面，否则都执行完了。
+			// 但是这样子肯定是一点都没有用的，需要在引入 script src=“prism” 之后在调用
+			// Prism.highlightAll(false);
+
+			// ----------------------------------------------
+			// ----------------------------------------------
+			
+			高级应用：性能优化与定制
+			
+			异步加载
+
+			对于包含大量代码块的页面，可以使用Prism的异步加载功能，提升页面加载速
+			
+			Prism.highlightAll({
+				async: (data) => {
+					// 异步处理逻辑
+					return Prism.highlight(data.code, data.grammar, data.language);
+				}
+			});
+		</script>
+		 -->
+		
+		<!-- 
+			prism.css：                   默认主题
+			prism-coy.css：               适合复制代码的主题
+			prism-dark.css：              深色主题
+			prism-funky.css：             时尚风格主题
+			prism-okaidia.css：           高对比度主题
+			prism-solarizedlight.css：    Solarized亮色主题
+			prism-tomorrow.css：          Tomorrow主题
+			prism-twilight.css：          Twilight主题
+		 -->
+
+		<link href="../lib/Prism/prism-1.30.0/themes/prism.css" rel="stylesheet">
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-dark.css" rel="stylesheet"> -->
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-funky.css" rel="stylesheet"> -->
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-okaidia.css" rel="stylesheet"> -->
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-twilight.css" rel="stylesheet"> -->
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-coy.css" rel="stylesheet"> -->
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-solarizedlight.css" rel="stylesheet"> -->
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-tomorrow.css" rel="stylesheet"> -->
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		
+
+		<script src="../lib/Prism/prism-1.30.0/prism.js"></script>
+		
+		<script src="../lib/Prism/prism-1.30.0/plugins/autoloader/prism-autoloader.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.js"></script>
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.js"></script>
+
+		<!-- 在代码块中显示代码块对应语言的名称；需要放在 plugins/toolbar/prism-toolbar.js 下面 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-language/prism-show-language.js"></script>
+		
+		<!-- 添加一个按钮，可以在单击时将代码块内容复制到剪贴板 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.js"></script>
+
+		<!-- 显示隐藏字符，例如制表符和换行符 -->
+		<link href="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.js"></script>
+
+		<!-- End - Prism -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+			window.addEventListener('load', function () {
+				
+			})
+
+		</script>
+
+		<script>
+			
+			(function (window) {
+				
+			})(window);
+			
+		</script>
+		
+	</head>
+	<body>
+
+		<h1>代码美化-Prism-local</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础案例</h2>
+
+		
+		<h3>Markup</h3>
+
+		<pre class="language-markup"><code>&lt;div> 高亮 html &lt;/div></code></pre>
+
+		<pre><code class="language-markup">&lt;div&gt; 高亮 html &lt;/div&gt;</code></pre>
+
+		<pre class="language-markup line-numbers"><code>&lt;div> 高亮 html &lt;/div></code></pre>
+
+		<pre><code class="language-markup line-numbers">&lt;div&gt; 高亮 html &lt;/div&gt;</code></pre>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<pre class="language-markup line-numbers">
+			<code><!--
+<p>Example</p>
+		--></code>
+		</pre>
+
+		<pre class="language-markup line-numbers"><code><!--
+<p>Example</p>
+		--></code></pre>
+
+<pre class="language-markup line-numbers"><code><!--<p>Example</p>
+--></code></pre>
+
+		<pre>
+			<code class="language-markup line-numbers"><!--
+<html></html>
+<p>Example</p>
+<div><button>Hello</button></div>
+			--></code>
+		</pre>
+
+		<pre class="language-markup line-numbers"><code ><!--
+<html></html>
+<p>Example</p>
+<div><button>Hello</button></div>
+		--></code></pre>
+
+<pre class="language-markup line-numbers"><code ><!--<html></html>
+<p>Example</p>
+<div><button>Hello</button></div>
+--></code></pre>
+
+		<br/>
+		<hr/>
+		<br/>
+		
+		<h3>CSS</h3>
+
+<pre><code class="language-css">
+* {
+	margin: 0; 
+	padding: 0; 
+	box-sizing: border-box; 
+} </code></pre>
+
+		<div class="language-javascript line-numbers">
+<pre><code class="language-css">
+* {
+	margin: 0; 
+	padding: 0; 
+	box-sizing: border-box; 
+} </code></pre>
+		</div>
+		
+		<br/>
+		<hr/>
+		<br/>
+
+		<h3>JavaScript</h3>
+
+<pre><code class="language-javascript">
+function foo()
+{
+	if (counter <= 10)
+		return;
+	// it works!
+}</code></pre>
+
+		<div class="language-javascript line-numbers copy-to-clipboard">
+
+<pre><code>
+function foo()
+{
+	if (counter <= 10)
+		return;
+	// it works!
+}</code></pre>
+
+		</div>
+		
+		<pre class="language-javascript line-numbers"><code>let a = 12;</code></pre>
+		
+		<pre><code class="language-javascript line-numbers" data-prismjs-copy="Copy">let a = 12;</code></pre>
+
+
+		<pre><code class="language-javascript line-numbers">
+interface PromiseConstructor {
+	/**
+	* Creates a Promise that is resolved with an array of results when all of the provided Promises
+	* resolve, or rejected when any Promise is rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	all<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]>;
+
+	/**
+	* Creates a Promise that is resolved or rejected when any of the provided Promises are resolved
+	* or rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	race<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>>;
+}
+		</code></pre>
+
+		<pre><code class="language-javascript line-numbers">
+			interface PromiseConstructor {
+				/**
+				* Creates a Promise that is resolved with an array of results when all of the provided Promises
+				* resolve, or rejected when any Promise is rejected.
+				* @param values An iterable of Promises.
+				* @returns A new Promise.
+				*/
+				all<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]>;
+
+				/**
+				* Creates a Promise that is resolved or rejected when any of the provided Promises are resolved
+				* or rejected.
+				* @param values An iterable of Promises.
+				* @returns A new Promise.
+				*/
+				race<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>>;
+			}
+		</code></pre>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "500"><code class="language-markup"><!--interface PromiseConstructor {
+	/**
+	* Creates a Promise that is resolved with an array of results when all of the provided Promises
+	* resolve, or rejected when any Promise is rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	all<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>[]>;
+
+	/**
+	* Creates a Promise that is resolved or rejected when any of the provided Promises are resolved
+	* or rejected.
+	* @param values An iterable of Promises.
+	* @returns A new Promise.
+	*/
+	race<T>(values: Iterable<T | PromiseLike<T>>): Promise<Awaited<T>>;
+}--></code></pre>
+		
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>
