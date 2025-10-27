@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>IIFE(Immediately Invoked Function Expression)-立即执行函数</title>
+
+		<!-- Start - Prism -->
+		
+		<link href="../lib/Prism/prism-1.30.0/themes/prism.css" rel="stylesheet">
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-coy.css" rel="stylesheet"> -->
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		
+
+		<script src="../lib/Prism/prism-1.30.0/prism.js"></script>
+		
+		<script src="../lib/Prism/prism-1.30.0/plugins/autoloader/prism-autoloader.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.js"></script>
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.js"></script>
+
+		<!-- 在代码块中显示代码块对应语言的名称；需要放在 plugins/toolbar/prism-toolbar.js 下面 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-language/prism-show-language.js"></script>
+		
+		<!-- 添加一个按钮，可以在单击时将代码块内容复制到剪贴板 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.js"></script>
+
+		<!-- 显示隐藏字符，例如制表符和换行符 -->
+		<link href="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.js"></script>
+
+		<!-- End - Prism -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+
+		</script>
+		
+	</head>
+
+	<body>
+
+		<h1>IIFE(Immediately Invoked Function Expression)-立即执行函数</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>参考博文</h2>
+
+		<p>
+			IIFE<br/>
+			https://developer.mozilla.org/en-US/docs/Glossary/IIFE<br/>
+			https://developer.mozilla.org/zh-CN/docs/Glossary/IIFE<br/>
+		</p>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础知识</h2>
+
+		<p>
+			An IIFE (Immediately Invoked Function Expression) is an idiom in which a JavaScript function runs as soon as it is defined. <br/>
+			It is also known as a self-executing anonymous function. <br/>
+			The name IIFE is promoted by Ben Alman in his blog. <br/>
+
+			<br/>
+
+			立即调用函数表达式（IIFE）是一种 JavaScript 函数在定义后就会立即执行的习惯用法。<br/>
+			它也被称为自执行匿名函数。<br/>
+			IIFE 这个名字是由 Ben Alman 在他的博客中提出的。<br/>
+		</p>
+
+
+		<pre class="line-numbers"><code class="language-javascript"><!--
+// standard IIFE
+(function () {
+  // statements…
+})();
+
+// arrow function variant
+(() => {
+  // statements…
+})();
+
+// async IIFE
+(async () => {
+  // statements…
+})();
+		--></code></pre>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript"><!--
+// 标准 IIFE
+(function () {
+  // 语句……
+})();
+
+// 箭头函数变体
+(() => {
+  // 语句……
+})();
+
+// 异步 IIFE
+(async () => {
+  // 语句……
+})();
+		--></code></pre>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>应用</h2>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript"><!--
+/**
+ * 查看部署环境 
+ */
+let _fn_get_run_environment = (function () {
+	// console.log('立即执行函数');
+	// do something immediately
+})();
+
+/**
+ * 获取设备信息
+ */
+let _fn_get_device_info= (function (window) {
+	// console.log('立即执行函数');
+	// do something immediately
+})(window);
+
+/**
+ * 加载 script 脚本 
+ */
+let _fn_load_script = (() => {
+	// console.log('立即执行箭头函数');
+	// do something immediately
+})();
+
+/**
+ * 初始化变量
+ */
+let _fn_init_variables = ((window) => {
+	// console.log('立即执行箭头函数');
+	// do something immediately
+})(window);
+		--></code></pre>
+		
+		
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>
