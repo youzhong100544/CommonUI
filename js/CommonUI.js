@@ -941,322 +941,276 @@ class CommonUI {
 	/* ======================================================================================= */
 	
 	
-	// 加载 script 脚本
-	let _fn_loadScriptElement = (() => {
+	/* Start - 加载 script 脚本 */
 
-		// 加载 script 脚本 -> 方式一
-		function loadScriptElement_Method_1(src) {
-			let script = document.createElement('script');
-			script.setAttribute('type', 'text/javascript');
-			// script.setAttribute('src', '../js/CommonUI-Common.js');
-			script.setAttribute('src', src);
-			document.head.appendChild(script);
+	/**
+	 * 获取 当前 script 标签的路径
+	 */
+	let getCurrentScriptPath = {
+
+		/**
+		 * 获取 当前 script 标签的路径
+		 * 
+		 * @returns {string} 路径。
+		 */
+		method_1: function () {
+
+			// 1、获取当前正在执行的 script 标签
+			const currentScriptElement = document.currentScript;
+
+			// 2、用 getAttribute() 方法 获取原始值
+			// 获取原始 src 属性值（未解析）
+			const currentScriptSrcAttributeValue = currentScriptElement.getAttribute('src');
+			// 输出当前脚本的完整路径
+			// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
+			console.log(`当前 CommonUI.js 的文件路径:${currentScriptSrcAttributeValue}`);
+
+			return currentScriptSrcAttributeValue;
+		}, 
+
+		/**
+		 * 获取 当前 script 标签的路径
+		 * 
+		 * @returns {string} 路径。
+		 */
+		method_2: function () { 
+			// 1、获取当前正在执行的 script 标签
+			const currentScriptElement = document.currentScript;
+
+			// 2、用 src 属性 获取
+			const currentScriptPath = currentScriptElement.src;
+			// 输出当前脚本的完整路径
+			// 当前 CommonUI.js 的文件路径:file:///D:/Develop/My%20Repositories/Github/CommonUI/js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径:http://127.0.0.1:5500/js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径:http://localhost:5500/js/CommonUI.js
+			console.log(`当前 CommonUI.js 的文件路径:${currentScriptPath}`); 
+
+			return currentScriptPath;
 		}
+	}
 
-		// 加载 script 脚本 -> 方式二
-		function loadScriptElement_Method_2(src) {
-			var script = document.createElement('script');
+	/**
+	 * 获取项目根路径
+	 * 
+	 * @returns {string} 路径。
+	 */
+	let getProjectRootPath = function (scriptSrc){
+		
+		// const scriptSrc = getCurrentScriptPath.method_1();
+		// const scriptSrc = getCurrentScriptPath.method_2();
+
+		const strIndex = scriptSrc.indexOf("/js/CommonUI.js");
+		// strIndex: 2
+		// console.log(`strIndex: ${strIndex}`);
+		
+		const projectRootPath = scriptSrc.substring(0, strIndex);
+		// projectRootPath: ..
+		// console.log(`projectRootPath: ${projectRootPath}`);
+
+		return projectRootPath;
+	}
+
+
+	let createScriptElement = {
+		/**
+		 * 创建 scrsipt 标签
+		 * 
+		 * @param {string} src 
+		 * @returns 
+		 */
+		method_1: function (src) {
+			let script = document.createElement('script');
+		
+			script.setAttribute('type', 'text/javascript');
+			// script.setAttribute('type', 'module');
+
+			// script.setAttribute('src', './js/test.js');
+			script.setAttribute('src', src);
+
+			// document.head.appendChild(script);
+
+			return script;
+		},
+
+		/**
+		 * 创建 scrsipt 标签
+		 * 
+		 * @param {string} src 
+		 * @returns 
+		 */
+		method_2: function (src) {
+			let script = document.createElement('script');
+
 			script.type = 'text/javascript';
-			// script.src = '../js/CommonUI-Common.js';
+			// script.type = 'module';
+			
+			// script.src = './js/test.js';
 			script.src = src;
-			// script.async = true;
+
+			// script.async = true; // 可选：异步加载，不阻塞页面
 			// script.defer = true;
+
+			/*
 			script.onload = function () {
 				console.log('Script loaded successfully!');
 			};
+			*/
+
+			/*
 			script.onerror = () => {
 				console.log(`Script loaded failure!`);
 			};
-			document.head.appendChild(script);
+			*/
+
+			// document.head.appendChild(script);
+
+			return script;
 		}
+	}
+	
 
-
-		// /**
-		//  * Attaches callbacks for the resolution and/or rejection of the Promise.
-		//  * @param onfulfilled The callback to execute when the Promise is resolved.
-		//  * @param onrejected The callback to execute when the Promise is rejected.
-		//  * @returns A Promise for the completion of which ever callback is executed.
-		//  */
-		// then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): Promise<TResult1 | TResult2>;
-		// 
-		// /**
-		//  * Attaches a callback for only the rejection of the Promise.
-		//  * @param onrejected The callback to execute when the Promise is rejected.
-		//  * @returns A Promise for the completion of the callback.
-		//  */
-		// catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): Promise<T | TResult>;
-
-		// 加载 script 脚本 -> Promise
-		function loadScriptElement_Method_3_Promise(src) {
-			new Promise(
-				(resolve, reject) => {
-					const script = document.createElement('script');
-
-					script.type = 'text/javascript';
-					// script.type = 'module';
-					script.src = src;
-					// script.async = true; // 可选：异步加载，不阻塞页面
-					// script.defer = true;
-
-					script.onload = function () {
-						console.log(`${src} 加载完成`);
-						// resolve(`${src} 加载完成`);
-						resolve(script);
-					};
-
-					script.onerror = () => {
-						reject(new Error(`加载 ${src} 失败`));
-					};
-
-					document.head.appendChild(script);
-				}
-			).then(
-				(value) => {
-					// b.js 已加载完成，可以安全调用 b.js 中定义的函数或变量
-					console.log(`开始执行依赖 ${src} 的代码`);
-					console.log(`开始执行依赖 ${script.src} 的代码`);
-					// 比如调用 b.js 中的函数：
-					// someFunctionFromB();
-				},
-				(reason) => {
-					console.log(`开始执行依赖 ${src} 的代码`);
-				}
-			).catch(
-				reason => {
-					console.error(reason);
-				}
-			);
-		}
+	let insertScriptElement = {
+		/**
+		 * 插入 script 标签
+		 * 
+		 * @param {*} scriptElement 
+		 */
+		insert: function (scriptElement) { 
+			document.head.appendChild(scriptElement);
+		},
 		
-		// 加载 script 脚本 -> Promise
-		function loadScriptElement_Method_3_1_Promise(src) {
-			function loadScript(src) {
-				return new Promise((resolve, reject) => {
-					const script = document.createElement('script');
-
-					script.type = 'text/javascript';
-					// script.type = 'module';
-					script.src = src;
-					// script.async = true; // 可选：异步加载，不阻塞页面
-					// script.defer = true;
-
-					script.onload = () => resolve(script);
-					script.onerror = () => reject(new Error(`Script load error: ${src}`));
-					document.head.appendChild(script);
-				});
-			}
-			
-			// 使用示例：
-			loadScript('b.js')
-			.then(() => {
-				// b.js 已加载完成，可以安全调用 b.js 中定义的函数或变量
-				console.log('开始执行依赖 b.js 的代码');
-				// 比如调用 b.js 中的函数：
-				// someFunctionFromB();
-			})
-			.catch(err => {
-				console.error(err);
-			});
-		}
-
-		// 加载 script 脚本 -> Promise
-		function loadScriptElement_Method_3_2_Promise_load_multiple_files() {
-			function loadScript(src) {
-				return new Promise((resolve, reject) => {
-					const script = document.createElement('script');
-
-					script.type = 'text/javascript';
-					// script.type = 'module';
-					script.src = src;
-					// script.async = true; // 可选：异步加载，不阻塞页面
-					// script.defer = true;
-
-					script.onload = () => resolve(script);
-					script.onerror = () => reject(new Error(`Script load error: ${src}`));
-					document.head.appendChild(script);
-				});
-			}
-
-			// 顺序加载多个脚本
-			loadScript('b1.js')
-			.then(() => loadScript('b2.js'))
-			.then(() => loadScript('b3.js'))
-			.then(() => {
-				console.log('所有脚本加载完成');
-				// 执行你的逻辑
-			})
-			.catch(console.error);
-		}
-		
-		// 加载 script 脚本 -> Promise: 并行执行（所有任务同时开始）
-		// ✅ 优点：快
-		// ❌ 缺点：如果一个失败，整个 Promise.all 会 reject（除非用 Promise.allSettled） 
-		function loadScriptElement_Method_3_3_Promise_load_multiple_files() {
-			const urls = ['a.js', 'b.js', 'c.js'];
-
-			function loadScript(src) {
-				return new Promise((resolve, reject) => {
-					const script = document.createElement('script');
-					script.src = src;
-					script.onload = () => resolve(src);
-					script.onerror = () => reject(new Error(`Failed to load ${src}`));
-					document.head.appendChild(script);
-				});
-			}
-
-			// 并行加载所有脚本
-			Promise.all(urls.map(url => loadScript(url)))
-			.then(results => {
-				console.log('所有脚本加载完成:', results); // ['a.js', 'b.js', 'c.js']
-				// 继续执行后续逻辑
-			})
-			.catch(err => {
-				console.error('某个脚本加载失败:', err);
-			});
-		}
-
-		// 加载 script 脚本 -> Promise: 串行执行（一个接一个）
-		// 使用 async/await + for...of：
-		// ✅ 适合有依赖关系的任务（比如 b.js 依赖 a.js） 
-		function loadScriptElement_Method_3_4_Promise_load_multiple_files() {
-			async function loadScriptsInOrder(urls) {
-				const results = [];
-				for (const url of urls) {
-					try {
-						const result = await loadScript(url);
-						results.push(result);
-						console.log(`${url} 加载完成`);
-					} catch (err) {
-						console.error(`${url} 加载失败:`, err);
-						// 可选择继续 or 中断
-						// throw err; // 中断
-					}
-				}
-				return results;
-			}
-
-			// 使用
-			loadScriptsInOrder(['a.js', 'b.js', 'c.js'])
-			.then(() => {
-				console.log('所有脚本按顺序加载完成');
-			});
-		}
-
-		// 加载 script 脚本 -> async/await
-		function loadScriptElement_Method_4_async_await(src) {
-			function loadScript(src) {
-				return new Promise((resolve, reject) => {
-					const script = document.createElement('script');
-					script.src = src;
-					script.onload = () => resolve(script);
-					script.onerror = () => reject(new Error(`Script load error: ${src}`));
-					document.head.appendChild(script);
-				});
-			}
-
-			async function load() {
-				try {
-					let b1_script = await loadScript('b1.js');
-					await loadScript('b2.js');
-					await loadScript('b3.js');
-					console.log('全部加载完成');
-					// 执行后续逻辑
-				} catch (err) {
-					console.error(err);
-				}
-			}
-
-			load();
-		}
-
-
-		// 加载 script 脚本 -> 在第一个 script 标签前 加载
-		let loadBeforeFirstScriptElement = (scriptElement) => {
+		/**
+		 * 插入 script 标签 -> 在第一个 scrsipt 标签前 插入
+		 * 
+		 * @param {*} scriptElement 
+		 */
+		insertBeforeFirstScriptElement: function (scriptElement) { 
 			let scriptElementArray = document.scripts;
 			// console.log(scriptElementArray.length);
 			if (scriptElementArray && scriptElementArray.length > 0) {
 				scriptElementArray[0].parentNode.insertBefore(scriptElement, scriptElementArray[0]);
 			}
-		}
+		},
 
-		// 加载 script 脚本 -> 在当前 script 标签前 加载
-		let loadBeforeCurrentScriptElement = scriptElement => {
+		/**
+		 * 插入 script 标签 -> 在当前 script 标签前 插入
+		 * 
+		 * @param {*} scriptElement 
+		 */
+		insertBeforeCurrentScriptElement: function (scriptElement) { 
 			let currentScriptElement = document.currentScript;
 			// console.log(currentScriptElement);
 			currentScriptElement.parentNode.insertBefore(scriptElement, currentScriptElement);
 		}
-
-
-		/* 1、获取当前 CommonUI.js 的文件路径 */
-		// 1.1、获取当前正在执行的 script 标签
-		const currentScriptElement = document.currentScript;
-
-		// 1.2、用 getAttribute() 获取原始值
-		// 获取原始 src 属性值（未解析）
-		const currentScriptSrcAttributeValue = currentScriptElement.getAttribute('src');
-		// 输出当前脚本的完整路径
-		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
-		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
-		// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
-		console.log(`当前 CommonUI.js 的文件路径:${currentScriptSrcAttributeValue}`); 
-
-		// 1.3、
-		const currentScriptPath = currentScriptElement.src;
-		// 输出当前脚本的完整路径
-		// 当前 CommonUI.js 的文件路径:file:///D:/Develop/My%20Repositories/Github/CommonUI/js/CommonUI.js
-		// 当前 CommonUI.js 的文件路径:http://127.0.0.1:5500/js/CommonUI.js
-		// 当前 CommonUI.js 的文件路径:http://localhost:5500/js/CommonUI.js
-		console.log(`当前 CommonUI.js 的文件路径:${currentScriptPath}`); 
-
-
-		const strIndex = currentScriptSrcAttributeValue.indexOf("/js/CommonUI.js");
-		// strIndex: 2
-		console.log(`strIndex:${strIndex}`); 
-		const pathPrefix = currentScriptSrcAttributeValue.substring(0, strIndex);
-		// pathPrefix:..
-		console.log(`pathPrefix:${pathPrefix}`);
-
-		
-		const CommonUI_Debug_path = pathPrefix + "/js/CommonUI-Debug.js";
-		const CommonUI_Common_path = pathPrefix + "/js/CommonUI-Common.js"
-		const CommonUI_Util_path = pathPrefix + "/js/CommonUI-Util.js"
-		
-		
-		// 2、设置要加载的 js 文件路径
-
-		let scriptElementCommonUICommon = document.createElement("script");
-		scriptElementCommonUICommon.setAttribute("type", "text/javascript");
-		// scriptElementCommonUICommon.setAttribute("src", '../js/CommonUI-Common.js');
-		scriptElementCommonUICommon.setAttribute("src", CommonUI_Common_path);
-
-		loadBeforeFirstScriptElement(scriptElementCommonUICommon);
-		
-		var scriptElementCommonUIUtil = document.createElement('script');
-		scriptElementCommonUIUtil.type = 'text/javascript';
-		// scriptElementCommonUIUtil.src = '../js/CommonUI-Util.js';
-		scriptElementCommonUIUtil.src = CommonUI_Util_path;
-		// scriptElementCommonUIUtil.async = true;
-		// scriptElementCommonUIUtil.defer = true;
-		scriptElementCommonUIUtil.onload = function () {
-			console.log('/js/CommonUI-Util.js Script loaded successfully!!!');
-		};
-		scriptElementCommonUIUtil.onerror = function () {
-			console.log('/js/CommonUI-Util.js Script loaded failure!!!');
-		};
-
-		loadBeforeCurrentScriptElement(scriptElementCommonUIUtil);
-		
-	})();
-
+	}
 
 	
-	// new CommonUI();
-	// new CommonUI({});
-	// new CommonUI({b_enable_debug: false,});
 
-	// const _obj_CommonUI = new CommonUI();
-	// const _obj_CommonUI = new CommonUI({});
-	const _obj_CommonUI = new CommonUI({b_enable_debug: false,});
+	/**
+	 * 加载 script 脚本
+	 * 
+	 * @param {string} src 
+	 * @returns 
+	 */
+	let loadScript = (src) => {
+		return new Promise((resolve, reject) => {
+			// 1、创建节点
+			const script = createScriptElement.method_2(src);
+
+			/*
+				节点类型（nodeType）在HTML DOM中的应用
+				
+					在HTML DOM中，节点类型（nodeType）是一个非常重要的属性，它用于区分不同类型的节点，例如元素节点、文本节点和注释节点。
+					每种节点类型都有一个与之对应的数值，这些数值在编程时可以用来判断节点的具体类型。
+
+				节点类型的数值及含义
+
+					节点类型的数值是一个整数，它代表了节点的类型。
+					以下是一些常见的节点类型及其对应的数值：
+						● 元素节点（Element Node）：如果一个节点是元素节点，它的nodeType属性将返回1。元素节点是HTML或XML文档中的标签，如 <div> 或 <p>。
+						● 属性节点（Attribute Node）：如果一个节点是属性节点，它的nodeType属性将返回2。属性节点是元素的属性，如 class 或 id。
+						● 文本节点（Text Node）：如果一个节点是文本节点，它的nodeType属性将返回3。文本节点包含元素或属性中的实际文本内容。
+						● 注释节点（Comment Node）：如果一个节点是注释节点，它的nodeType属性将返回8。注释节点是文档中的注释内容，如 <!-- 注释内容 -->。
+
+				+-----------+--------------------------------------------------------+------+
+				| 节点类型   | 说明                                                   | 值
+				+-----------+--------------------------------------------------------+------+
+				|元素节点    | 每一个HTML标签都是一个元素节点，如 <div> 、 <p>、<ul>等	 | 1
+				|属性节点    | 元素节点（HTML标签）的属性，如 id 、class 、name 等。	 | 2
+				|文本节点    | 元素节点或属性节点中的文本内容。	                         | 3
+				|注释节点    | 表示文档注释，形式为<!-- comment text -->。	            | 8
+				|文档节点    | 表示整个文档（DOM 树的根节点，即 document ）	             | 9	
+				+-----------+--------------------------------------------------------+------+
+			*/
+			
+			// script.nodeType: 1
+			// console.log("script.nodeType:", script.nodeType);
+			
+			// script.nodeName: SCRIPT
+			// console.log("script.nodeName:", script.nodeName);
+			
+			// script.nodeValue: null
+			// console.log("script.nodeValue:", script.nodeValue); // 输出 null，元素节点对于 nodeValue 不支持
+
+			// typeof script: object
+			// console.log("typeof script:", typeof script);
+			
+			// Object.prototype.toString.call(script): [object HTMLScriptElement]
+			// console.log("Object.prototype.toString.call(script):", Object.prototype.toString.call(script));
+
+			script.onload = () => resolve(src);
+			script.onerror = () => reject(new Error(`Failed to load ${src}`));
+
+			// 2、插入节点
+			insertScriptElement.insertBeforeFirstScriptElement(script);
+		});
+	}
+	
+
+	// 1、获取当前 CommonUI.js 的文件 src 路径
+
+	const scriptSrc = getCurrentScriptPath.method_1();
+	// const scriptSrc = getCurrentScriptPath.method_2();
+
+	// 2、获取项目根路径
+	const projectRootPath = getProjectRootPath(scriptSrc);
+
+	// 3、设置其他 script 路径
+	const CommonUI_Debug_path = projectRootPath + "/js/CommonUI-Debug.js";
+	const CommonUI_Common_path = projectRootPath + "/js/CommonUI-Common.js"
+	const CommonUI_Util_path = projectRootPath + "/js/CommonUI-Util.js"
+
+	// 4、加载 script 脚本
+	let loadScriptsSequentially = async () => {
+		try {
+			// 如果启用调试模式，则先加载 CommonUI-Debug.js
+			await loadScript(CommonUI_Debug_path);
+			await loadScript(CommonUI_Common_path);
+			await loadScript(CommonUI_Util_path);
+			
+			console.log('全部加载完成');
+			
+			// 执行后续逻辑
+
+			// new CommonUI();
+			// new CommonUI({});
+			// new CommonUI({b_enable_debug: false,});
+
+			// const _obj_CommonUI = new CommonUI();
+			// const _obj_CommonUI = new CommonUI({});
+			const _obj_CommonUI = new CommonUI({b_enable_debug: false,});
+
+		} catch (error) {
+			console.error('Error loading scripts:', error);
+		}
+	}
+
+	loadScriptsSequentially();
+	
+	/* End - 加载 script 脚本 */
+	
 	
 })(window);
 
