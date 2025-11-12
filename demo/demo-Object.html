@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>测试 Object</title>
+
+		<!-- Start - Prism -->
+		
+		<link href="../lib/Prism/prism-1.30.0/themes/prism.css" rel="stylesheet">
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-coy.css" rel="stylesheet"> -->
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		
+
+		<script src="../lib/Prism/prism-1.30.0/prism.js"></script>
+		
+		<script src="../lib/Prism/prism-1.30.0/plugins/autoloader/prism-autoloader.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.js"></script>
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.js"></script>
+
+		<!-- 在代码块中显示代码块对应语言的名称；需要放在 plugins/toolbar/prism-toolbar.js 下面 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-language/prism-show-language.js"></script>
+		
+		<!-- 添加一个按钮，可以在单击时将代码块内容复制到剪贴板 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.js"></script>
+
+		<!-- 显示隐藏字符，例如制表符和换行符 -->
+		<link href="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.js"></script>
+
+		<!-- End - Prism -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+
+		</script>
+		
+	</head>
+
+	<body>
+
+		<h1>测试 Object</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<script>
+			(function () {
+				const obj = {
+					name: "Alice",
+					age: 30,
+					city: "New York",
+
+					greet: function() {
+						console.log("Hello, " + this.name + "!");
+					},
+
+					getInfo: function() {
+						return `${this.name} is ${this.age} years old and lives in ${this.city}.`;
+					}
+					
+				};
+			})();
+		</script>
+
+		
+		
+		
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

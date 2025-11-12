@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Regular expressions-正则表达式</title>
+
+		<!-- Start - Prism -->
+		
+		<link href="../lib/Prism/prism-1.30.0/themes/prism.css" rel="stylesheet">
+		<!-- <link href="../lib/Prism/prism-1.30.0/themes/prism-coy.css" rel="stylesheet"> -->
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		
+
+		<script src="../lib/Prism/prism-1.30.0/prism.js"></script>
+		
+		<script src="../lib/Prism/prism-1.30.0/plugins/autoloader/prism-autoloader.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/toolbar/prism-toolbar.js"></script>
+
+		<link href="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/line-numbers/prism-line-numbers.js"></script>
+
+		<!-- 在代码块中显示代码块对应语言的名称；需要放在 plugins/toolbar/prism-toolbar.js 下面 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-language/prism-show-language.js"></script>
+		
+		<!-- 添加一个按钮，可以在单击时将代码块内容复制到剪贴板 -->
+		<script src="../lib/Prism/prism-1.30.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.js"></script>
+
+		<script src="../lib/Prism/prism-1.30.0/plugins/normalize-whitespace/prism-normalize-whitespace.js"></script>
+		
+		<link href="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/unescaped-markup/prism-unescaped-markup.js"></script>
+
+		<!-- 显示隐藏字符，例如制表符和换行符 -->
+		<link href="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.css" rel="stylesheet">
+		<script src="../lib/Prism/prism-1.30.0/plugins/show-invisibles/prism-show-invisibles.js"></script>
+
+		<!-- End - Prism -->
+
+		<style>
+
+			/* Start - 通用样式 */
+			/* 
+			* {
+				margin: 0; 
+				padding: 0; 
+				box-sizing: border-box; 
+			} 
+			*/
+			/* End - 通用样式 */
+
+		</style>
+
+		<script>
+			
+
+		</script>
+		
+	</head>
+
+	<body>
+
+		<h1>IIFE(Immediately Invoked Function Expression)-立即执行函数</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>参考博文</h2>
+
+		<p>
+			Regular expressions <br/>
+			https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions<br/>
+
+			<br/>
+
+			正则表达式<br/>
+			https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_expressions<br/>
+
+			<br/>
+
+			JavaScript RegExp 对象<br/>
+			https://www.runoob.com/jsref/jsref-obj-regexp.html<br/>
+
+			<br/>
+
+			正则表达式的test,exec跟match<br/>
+			https://zhuanlan.zhihu.com/p/1904221874096969691<br/>
+			
+			<br/>
+
+			JavaScript 正则表达式 exec、match、matchAll、test 方法详解<br/>
+			https://juejin.cn/post/6902009306360676366<br/>
+
+			<br/>
+
+		</p>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>基础知识</h2>
+
+		<p>
+
+			<br/>
+
+			
+		</p>
+
+		<p>
+			正则表达式（Regular Expression，简称 Regex 或 RegExp）是一种用来匹配字符串中字符组合的模式。<br/>
+			正则表达式是一种用于模式匹配和搜索文本的工具。<br/>
+			正则表达式提供了一种灵活且强大的方式来查找、替换、验证和提取文本数据。<br/>
+
+			<br/>
+
+			正则表达式（英语：Regular Expression，在代码中常简写为regex、regexp或RE）使用单个字符串来描述、匹配一系列符合某个句法规则的字符串搜索模式。<br/>
+			搜索模式可用于文本搜索和文本替换。<br/>
+		</p>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>入门案例</h2>
+
+		<p>
+			需求1：判断一个字符串是否包含特定字符串
+		</p>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			// 判断字符串中是否包含 'o' 这个字符
+			var str = "hello world";
+			var re = /o/;
+			
+			console.log(re.test(str)); // true
+			
+			console.log(re.exec(str)); // ['o', index: 4, input: 'hello world', groups: undefined]
+
+			console.log(str.match(re)); // ['o', index: 4, input: 'hello world', groups: undefined]
+		</code></pre>
+
+		<script>
+			(function () {
+				var str = "hello world";
+				var re = /o/;
+				
+				// test()
+				//     - 功能：检测字符串是否包含正则表达式匹配的模式，返回布尔值（true或false）。
+				//     - 返回值：仅判断是否存在匹配，不返回具体匹配内容。
+				console.log(re.test(str)); // true
+				
+				// exec()
+				//     - 功能：返回第一个匹配项的详细信息（包括分组、位置等），若未匹配则返回null。
+				//     - 返回值：数组形式，包含匹配内容、分组结果、index（匹配起始位置）和input（原始字符串）。
+				console.log(re.exec(str)); // ['o', index: 4, input: 'hello world', groups: undefined]
+
+				// match()
+				//     - 功能：从字符串中提取所有匹配项（全局匹配时）或第一个匹配项（非全局匹配时）。
+				//     - 返回值：
+				//         - 非全局：返回包含第一个匹配项及其分组的数组。
+				//         - 全局：返回所有匹配项的数组（忽略分组信息）。
+				console.log(str.match(re)); // ['o', index: 4, input: 'hello world', groups: undefined]
+			})();
+		</script>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<p>
+			需求2：判断一个字符串是否包含特定字符串
+		</p>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			// 判断字符串中是否包含 'o' 这个字符
+			var str = "hello world";
+			var re = /o/g;
+			
+			console.log(re.test(str)); // true
+			
+			console.log(re.exec(str)); // ['o', index: 7, input: 'hello world', groups: undefined]
+
+			console.log(str.match(re)); // ['o', 'o']
+		</code></pre>
+
+		<script>
+			(function () {
+				var str = "hello world";
+				var re = /o/g;
+				
+				// test()
+				//     - 功能：检测字符串是否包含正则表达式匹配的模式，返回布尔值（true或false）。
+				//     - 返回值：仅判断是否存在匹配，不返回具体匹配内容。
+				console.log(re.test(str)); // true
+				
+				// exec()
+				//     - 功能：返回第一个匹配项的详细信息（包括分组、位置等），若未匹配则返回null。
+				//     - 返回值：数组形式，包含匹配内容、分组结果、index（匹配起始位置）和input（原始字符串）。
+				console.log(re.exec(str)); // ['o', index: 7, input: 'hello world', groups: undefined]
+
+				// match()
+				//     - 功能：从字符串中提取所有匹配项（全局匹配时）或第一个匹配项（非全局匹配时）。
+				//     - 返回值：
+				//         - 非全局：返回包含第一个匹配项及其分组的数组。
+				//         - 全局：返回所有匹配项的数组（忽略分组信息）。
+				console.log(str.match(re)); // ['o', 'o']
+			})();
+		</script>
+
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>创建正则表达式</h2>
+
+		你可以使用以下两种方法构建一个正则表达式：<br/>
+
+		<br/>
+
+		1、使用一个正则表达式字面量，其由包含在斜杠之间的模式组成
+
+		<pre class="line-numbers"><code class="language-markup">
+			var re = /pattern/modifiers;
+		</code></pre>
+		
+		2、调用RegExp对象的构造函数
+
+		<pre class="line-numbers"><code class="language-markup">
+			var re = new RegExp(pattern, modifiers);
+		</code></pre>
+
+		<pre style="
+					font-family: \"Courier New\", Courier, monospace; 
+					font-size: 16px; 
+					font-weight: 600; 
+					color: black; 
+			"
+		>
+● pattern（模式） 描述了表达式的模式
+● modifiers(修饰符) 用于指定全局匹配、区分大小写的匹配和多行匹配
+		</pre>
+
+		注意：当使用构造函数创造正则对象时，需要常规的字符转义规则（在前面加反斜杠 \）。<br/>
+		比如，以下是等价的：
+
+		<pre class="line-numbers"><code class="language-javascript">
+			var re = /\w+/;
+			var re = new RegExp("\\w+");
+		</code></pre>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			var re = /^\d+$/;
+			var re = new RegExp("^\\d+$");
+		</code></pre>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<h4>实例</h4>
+
+		<pre class="line-numbers"><code class="language-javascript">
+			var re = /\w+/;
+			var re = new RegExp("\\w+");
+		</code></pre>
+
+		<script>
+			(function () {
+				var str = "hello world";
+				var re = new RegExp("d(b+)d", "g");
+				
+				// test()
+				//     - 功能：检测字符串是否包含正则表达式匹配的模式，返回布尔值（true或false）。
+				//     - 返回值：仅判断是否存在匹配，不返回具体匹配内容。
+				console.log(re.test(str));
+				
+				// exec()
+				//     - 功能：返回第一个匹配项的详细信息（包括分组、位置等），若未匹配则返回null。
+				//     - 返回值：数组形式，包含匹配内容、分组结果、index（匹配起始位置）和input（原始字符串）。
+				console.log(re.exec(str));
+
+				// match()
+				//     - 功能：从字符串中提取所有匹配项（全局匹配时）或第一个匹配项（非全局匹配时）。
+				//     - 返回值：
+				//         - 非全局：返回包含第一个匹配项及其分组的数组。
+				//         - 全局：返回所有匹配项的数组（忽略分组信息）。
+				console.log(str.match(re));
+			})();
+		</script>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>常用方法</h2>
+
+		<ul>
+			<li>match()</li>
+			<li>replace()</li>
+			<li>search()</li>
+		</ul>
+		
+		<ul>
+			<li>exec()</li>
+			<li>test()</li>
+		</ul>
+
+		<pre style="
+					font-family: \"Courier New\", Courier, monospace; 
+					font-size: 16px; 
+					font-weight: 600; 
+					color: black; 
+			"
+		>
+test()
+	- 功能：检测字符串是否包含正则表达式匹配的模式，返回布尔值（true或false）。
+	- 返回值：仅判断是否存在匹配，不返回具体匹配内容。
+
+exec()
+	- 功能：返回第一个匹配项的详细信息（包括分组、位置等），若未匹配则返回null。
+	- 返回值：数组形式，包含匹配内容、分组结果、index（匹配起始位置）和input（原始字符串）。
+
+match()
+	- 功能：从字符串中提取所有匹配项（全局匹配时）或第一个匹配项（非全局匹配时）。
+	- 返回值：
+		- 非全局：返回包含第一个匹配项及其分组的数组。
+		- 全局：返回所有匹配项的数组（忽略分组信息）。
+		</pre>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		源码文件: lib.es5.d.ts
+
+		<pre class="line-numbers"><code class="language-javascript"><!--
+interface String {
+    /** Returns a string representation of a string. */
+    toString(): string;
+
+    /**
+     * Matches a string with a regular expression, and returns an array containing the results of that search.
+     * @param regexp A variable name or string literal containing the regular expression pattern and flags.
+     */
+    match(regexp: string | RegExp): RegExpMatchArray | null;
+
+    /**
+     * Replaces text in a string, using a regular expression or search string.
+     * @param searchValue A string or regular expression to search for.
+     * @param replaceValue A string containing the text to replace. When the {@linkcode searchValue} is a `RegExp`, all matches are replaced if the `g` flag is set (or only those matches at the beginning, if the `y` flag is also present). Otherwise, only the first match of {@linkcode searchValue} is replaced.
+     */
+    replace(searchValue: string | RegExp, replaceValue: string): string;
+
+    /**
+     * Replaces text in a string, using a regular expression or search string.
+     * @param searchValue A string to search for.
+     * @param replacer A function that returns the replacement text.
+     */
+    replace(searchValue: string | RegExp, replacer: (substring: string, ...args: any[]) => string): string;
+
+    /**
+     * Finds the first substring match in a regular expression search.
+     * @param regexp The regular expression pattern and applicable flags.
+     */
+    search(regexp: string | RegExp): number;
+
+    /**
+     * Split a string into substrings using the specified separator and return them as an array.
+     * @param separator A string that identifies character or characters to use in separating the string. If omitted, a single-element array containing the entire string is returned.
+     * @param limit A value used to limit the number of elements returned in the array.
+     */
+    split(separator: string | RegExp, limit?: number): string[];
+}
+		--></code></pre>
+
+		源码文件: lib.es5.d.ts
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript"><!--
+interface RegExp {
+    /**
+     * Executes a search on a string using a regular expression pattern, and returns an array containing the results of that search.
+     * @param string The String object or string literal on which to perform the search.
+     */
+    exec(string: string): RegExpExecArray | null;
+
+    /**
+     * Returns a Boolean value that indicates whether or not a pattern exists in a searched string.
+     * @param string String on which to perform the search.
+     */
+    test(string: string): boolean;
+}
+		--></code></pre>
+
+		文件: lib.es2020.string.d.ts
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript"><!--
+interface String {
+    /**
+     * Matches a string with a regular expression, and returns an iterable of matches
+     * containing the results of that search.
+     * @param regexp A variable name or string literal containing the regular expression pattern and flags.
+     */
+    matchAll(regexp: RegExp): RegExpStringIterator<RegExpExecArray>;
+
+    /** Converts all alphabetic characters to lowercase, taking into account the host environment's current locale. */
+    toLocaleLowerCase(locales?: Intl.LocalesArgument): string;
+
+    /** Returns a string where all alphabetic characters have been converted to uppercase, taking into account the host environment's current locale. */
+    toLocaleUpperCase(locales?: Intl.LocalesArgument): string;
+
+    /**
+     * Determines whether two strings are equivalent in the current or specified locale.
+     * @param that String to compare to target string
+     * @param locales A locale string or array of locale strings that contain one or more language or locale tags. If you include more than one locale string, list them in descending order of priority so that the first entry is the preferred locale. If you omit this parameter, the default locale of the JavaScript runtime is used. This parameter must conform to BCP 47 standards; see the Intl.Collator object for details.
+     * @param options An object that contains one or more properties that specify comparison options. see the Intl.Collator object for details.
+     */
+    localeCompare(that: string, locales?: Intl.LocalesArgument, options?: Intl.CollatorOptions): number;
+}
+		--></code></pre>
+
+		<br/>
+		<hr/>
+		<br/>
+
+		<script>
+			(function () {
+				var str = "123abc";
+				var pattern = /^[0-9]+abc$/;
+				console.log(str.match(pattern));
+				
+			})();
+		</script>
+		
+		<script>
+			(function () {
+				let myRe = /d(b+)(c*)d/g;
+				let str = 'cdbbcdbsbzdbd';
+				myRe.test(str);
+			})();
+		</script>
+		
+		<script>
+			(function () {
+				let myRe = /d(b+)(c*)d/g;
+				let str = 'cdbbcdbsbzdbd';
+				myRe.exec(str);
+			})();
+		</script>
+
+		
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		
+
+		<h2>应用</h2>
+
+		<pre class="line-numbers" data-prismjs-copy = "复制文本" data-prismjs-copy-error="按Ctrl+C复制" data-prismjs-copy-success="文本已复制！" data-prismjs-copy-timeout = "1000"><code class="language-javascript"><!--
+/**
+ * 查看部署环境 
+ */
+let _fn_get_run_environment = (function () {
+	// console.log('立即执行函数');
+	// do something immediately
+})();
+
+/**
+ * 获取设备信息
+ */
+let _fn_get_device_info= (function (window) {
+	// console.log('立即执行函数');
+	// do something immediately
+})(window);
+
+/**
+ * 加载 script 脚本 
+ */
+let _fn_load_script = (() => {
+	// console.log('立即执行箭头函数');
+	// do something immediately
+})();
+
+/**
+ * 初始化变量
+ */
+let _fn_init_variables = ((window) => {
+	// console.log('立即执行箭头函数');
+	// do something immediately
+})(window);
+		--></code></pre>
+		
+		
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+	</body>
+</html>

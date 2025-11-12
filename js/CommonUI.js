@@ -726,13 +726,6 @@ class CommonUI {
 
 
 	/**
-	 * 校验是否引入了 第三方 库; 如 jQuery
-	 */
-	verifyImportOtherPackages() {
-
-	}
-
-	/**
 	 * 动态加载与异步加载 JavaScript 详解
 	 */
 	loadScript() {
@@ -858,13 +851,126 @@ class CommonUI {
 
 (function (window) {
 	'use strict';
-	
-	/* Start - 加载 script 脚本 */
+
+	const application_common_constant = {
+		
+		// 部署环境; browser-浏览器, server-本地服务器
+		deployment_environment_info_array: ['browser', 'server'],
+		
+		// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
+		environment_array: ['local', 'development ', 'test', 'production'],
+		
+		// 定义平台设备的正则表达式
+		platform_device_regular_expressions: {
+			Windows: /Windows NT/,
+			Mac: /Mac OS X/,
+			Linux: /Linux/,
+			iPhone: /iPhone/,
+			iPad: /iPad/,
+			Android: /Android/
+		},
+		
+		// 定义浏览器的正则表达式
+		browser_regular_expressions: {
+			Edge: /Edge/,
+			Chrome: /Chrome/,
+			Firefox: /Firefox/,
+			Opera: /Opera/,
+			Safari: /Safari/,
+			Edge: /Edge/,
+			IE: /MSIE/,
+		},
+
+		// 模块
+		module_object: {
+			icon: '/js/modules/icon.js',
+			menu: '/js/modules/menu.js',
+			tab: '/js/modules/tab.js',
+
+			admin: '/js/CommonUI-Admin/CommonUI-Admin.js',
+			blog: '/js/CommonUI-Blog/CommonUI-blog.js',
+
+			lib: {
+				jQuery: '/lib/jQuery/jquery-3.7.1/jquery-3.7.1.js',
+				jQuery_UI: {
+					css: '/lib/jQuery/jquery-ui-1.14.1/jquery-ui.css',
+					js: '/lib/jQuery/jquery-ui-1.14.1/jquery-ui.js',
+				},
+
+				Lodash: '/lib/Lodash/4.17.21/lodash.js',
+			}
+		},
+	}
+
+	const application_config_info = {
+
+		// 项目根路径
+		project_root_path: undefined,
+
+		// 项目部署环境; browser-浏览器, server-本地服务器
+		deployment_environment_info: undefined,
+
+		// 平台浏览器信息
+		platform_browser_info: undefined,
+		
+		// 第三方库
+		libraries_loaded: {
+			// 是否引入了 jQuery
+			b_loaded_jQuery: false,
+
+			// 是否引入了 Lodash
+			b_loaded_Lodash: false,
+		}
+	};
+
+	const default_user_configuration_information = {
+
+		// 是否开启调试模式
+		b_enable_debug: true,
+
+		// 环境; local-本地, development-开发环境, test-测试环境, production-生产环境
+		// environment: application_common_constant.environment_array[0],
+		environment: undefined,
+
+		// 模块
+		modules: ['all'],
+	};
+
+	/**
+	 * 查看部署环境 
+	 */
+	const showDebugInfo = function (info) {
+		window.addEventListener('load', function () {
+			let divDebugInfo = document.createElement('div');
+			divDebugInfo.innerHTML += '<h2>Debug Console</h2>';
+			divDebugInfo.innerHTML += '<p>' + info + '</p>';
+			document.body.appendChild(divDebugInfo);
+		})
+	}
 
 	/**
 	 * 获取 当前 script 标签的路径
 	 */
-	let getCurrentScriptPath = {
+	const getCurrentScriptPath = {
+
+		/*
+			在 JavaScript 的 class 中使用 document.currentScript 返回 null（或 undefined）是很常见的现象，原因如下：
+		
+			📌 原因分析
+			
+				document.currentScript 是一个只读属性，它返回当前正在被解析执行的 <script> 元素。
+				但它有以下限制：
+
+					1、仅在脚本同步执行期间有效
+					  一旦脚本执行完毕（比如进入事件回调、类定义完成之后、异步代码中等），document.currentScript 就会被设为 null。
+					
+					2、在 class 构造函数或方法中调用时，脚本早已执行完毕
+					  当你定义一个 class，JavaScript 引擎会先解析整个脚本，然后才可能实例化类。此时 document.currentScript 已经失效。
+					
+					3、在模块（ESM）中始终为 null
+					  如果你的脚本是以 <script type="module"> 方式加载的，document.currentScript 永远返回 null，这是规范行为。
+
+		*/
 
 		/**
 		 * 获取 当前 script 标签的路径
@@ -880,10 +986,10 @@ class CommonUI {
 			// 获取原始 src 属性值（未解析）
 			const currentScriptSrcAttributeValue = currentScriptElement.getAttribute('src');
 			// 输出当前脚本的完整路径
-			// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
-			// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
-			// 当前 CommonUI.js 的文件路径:../js/CommonUI.js
-			console.log(`当前 CommonUI.js 的文件路径:${currentScriptSrcAttributeValue}`);
+			// 当前 CommonUI.js 的文件路径: ../js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径: ../js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径: ../js/CommonUI.js
+			// console.log(`当前 CommonUI.js 的文件路径: ${currentScriptSrcAttributeValue}`);
 
 			return currentScriptSrcAttributeValue;
 		}, 
@@ -900,10 +1006,10 @@ class CommonUI {
 			// 2、用 src 属性 获取
 			const currentScriptPath = currentScriptElement.src;
 			// 输出当前脚本的完整路径
-			// 当前 CommonUI.js 的文件路径:file:///D:/Develop/My%20Repositories/Github/CommonUI/js/CommonUI.js
-			// 当前 CommonUI.js 的文件路径:http://127.0.0.1:5500/js/CommonUI.js
-			// 当前 CommonUI.js 的文件路径:http://localhost:5500/js/CommonUI.js
-			console.log(`当前 CommonUI.js 的文件路径:${currentScriptPath}`); 
+			// 当前 CommonUI.js 的文件路径: file:///D:/Develop/My%20Repositories/Github/CommonUI/js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径: http://127.0.0.1:5500/js/CommonUI.js
+			// 当前 CommonUI.js 的文件路径: http://localhost:5500/js/CommonUI.js
+			// console.log(`当前 CommonUI.js 的文件路径: ${currentScriptPath}`); 
 
 			return currentScriptPath;
 		}
@@ -914,7 +1020,7 @@ class CommonUI {
 	 * 
 	 * @returns {string} 路径。
 	 */
-	let getProjectRootPath = function (scriptSrc){
+	const getProjectRootPath = function (scriptSrc) {
 		
 		// const scriptSrc = getCurrentScriptPath.method_1();
 		// const scriptSrc = getCurrentScriptPath.method_2();
@@ -930,6 +1036,641 @@ class CommonUI {
 		return projectRootPath;
 	}
 
+	/* 
+		问题
+			如何判断一个前端项目是在浏览器中直接打开（如 file:// 协议），
+			还是通过本地服务器（如 http://localhost）启动的？
+		
+		解答
+			1、判断原理
+				可以通过 JavaScript 检查当前页面的 协议（protocol） 或 域名（host） 来判断运行环境
+	
+				常见协议类型：
+				+-------------------+------------------------------+----------------------------------------------+
+				|协议				|含义							|示例
+				+-------------------------------------------------------------------------------------------------+
+				|file:				|浏览器直接打开本地 HTML 文件	 |file:///C:/project/index.html
+				|http:/https:		|通过本地或远程服务器加载网页	  |http://localhost:3000, https://example.com
+				+-------------------+------------------------------+----------------------------------------------+
+			2、使用
+				方法一：
+					const isRunningOnServer = 
+						window.location.protocol === 'http:' || 
+						window.location.protocol === 'https:'
+					;
+
+					console.log('是否通过服务器运行:', isRunningOnServer);
+
+					输出说明：
+						● 如果你在浏览器中直接双击 .html 文件打开，输出为 false
+						● 如果你使用 Live Server、Vite、Webpack Dev Server、Node.js 等服务器打开，输出为 true
+
+				方法二：结合 host 判断是否是本地开发服务器
+					const isLocalhost = 
+						window.location.hostname === 'localhost' || 
+						window.location.hostname === '127.0.0.1'
+					;
+
+					console.log('是否运行在 localhost:', isLocalhost);
+
+				方法一与方法二结合
+					结合上面两个判断，可以更精确控制逻辑：
+						function checkEnvironment() {
+							const protocol = window.location.protocol;
+							const host = window.location.host;
+
+							if (protocol === 'file:') {
+								console.log('当前是本地文件模式（file://）');
+							} else if (protocol.startsWith('http') && host.includes('localhost')) {
+								console.log('当前运行在本地服务器（如 Vite、Live Server）');
+							} else {
+								console.log('当前运行在正式服务器上');
+							}
+						}
+
+						checkEnvironment();
+
+				封装成通用函数（推荐）
+					function getRunEnvironment() {
+						const { protocol, hostname } = window.location;
+
+						if (protocol === 'file:') {
+							return 'local-file'; // 本地文件打开
+						} else if (hostname === 'localhost' || hostname === '127.0.0.1') {
+							return 'dev-server'; // 本地开发服务器
+						} else {
+							return 'production'; // 生产环境服务器
+						}
+					}
+
+					// 使用
+					const env = getRunEnvironment();
+					console.log('运行环境:', env);
+
+					if (env === 'local-file') {
+						alert('请使用服务器运行此页面，部分功能可能受限。');
+					}
+			3、Vue / React 中的使用建议
+				如果你使用的是 Vue、React 等现代框架：
+					● 在组件生命周期钩子中使用（如 mounted() 或 useEffect()）
+					● 可以封装成一个全局插件或自定义 Hook
+
+				使用
+					import { useEffect, useState } from 'react';
+
+					function useAppEnvironment() {
+						const [env, setEnv] = useState(null);
+
+						useEffect(() => {
+							const { protocol } = window.location;
+							if (protocol === 'file:') {
+								setEnv('local-file');
+							} else if (window.location.hostname === 'localhost') {
+								setEnv('dev-server');
+							} else {
+								setEnv('production');
+							}
+						}, []);
+
+						return env;
+					}
+
+					// 使用
+					function App() {
+						const env = useAppEnvironment();
+
+						if (env === 'local-file') {
+							return <div>请使用服务器运行本应用</div>;
+						}
+
+						return <div>欢迎使用本应用！</div>;
+					}
+		总结
+			+-----------------------+----------------------------------------+
+			|目标				    |方法							          |
+			+----------------------------------------------------------------+
+			|判断是否本地文件打开    |window.location.protocol === 'file:'
+			|判断是否本地服务器运行  |hostname === 'localhost'
+			|封装判断逻辑           |写成通用函数或 React Hook
+			|多环境支持             |支持local-file、dev-server、production
+			+----------------------------------------------------------------+
+
+	*/
+	/**
+	 * 查看部署环境 
+	 */
+	const getApplicationRunEnvironment = () => {
+
+		// console.log(window.location);
+		// console.log(window.document.location);
+		// console.log(document.location);
+		
+		// 这种写法是 ES6 (ECMAScript 2015) 引入的对象解构赋值语法。
+		// 这是一种从对象中提取属性值并赋值给变量的简洁方式。
+		const { protocol, hostname, port } = window.location;
+
+		// +-------------+----------------------+--------------+
+		// | 属性　       | 示例值               | 描述
+		// +-------------+----------------------+--------------+
+		// | protocol    | "https:"             | 协议部分
+		// | hostname    | "www.example.com"    | 域名
+		// | port        | "8080"               | 端口号
+		// | pathname    | "/products"          | 路径部分
+		// | search      | "?id=123"            | 查询字符串
+		// | hash        | "#section1"          | 锚点部分
+		// +-------------+----------------------+--------------+
+
+		// 浏览器
+		// hash: ""
+		// host: ""
+		// hostname: ""
+		// href: "file:///D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
+		// origin: "file://"
+		// pathname: "/D:/Develop/My%20Repositories/Github/CommonUI/html/index.html"
+		// port: ""
+		// protocol: "file:"
+		
+		// Live Server - http://127.0.0.1:5500/html/index.html
+		// hash: ""
+		// host: "127.0.0.1:5500"
+		// hostname: "127.0.0.1"
+		// href: "http://127.0.0.1:5500/html/index.html"
+		// origin: "http://127.0.0.1:5500"
+		// pathname: "/html/index.html"
+		// port: "5500"
+		// protocol: "http:"
+		
+		// Live Server - http://localhost:5500/html/index.html
+		// hash: ""
+		// host: "localhost:5500"
+		// hostname: "localhost"
+		// href: "http://localhost:5500/html/index.html"
+		// origin: "http://localhost:5500"
+		// pathname: "/html/index.html"
+		// port: "5500"
+		// protocol: "http:"
+		
+		if (protocol === 'file:') {
+			console.log("部署环境:" + "browser 浏览器");
+			return application_common_constant.deployment_environment_info_array[0];
+		}
+
+		if (protocol === 'http:' || protocol === 'https:') {
+			console.log("部署环境:" + "server 服务器");
+			if (hostname === 'localhost' || hostname === '127.0.0.1') {
+				console.log("部署环境:" + "server 服务器 - 本地服务器");
+				return application_common_constant.deployment_environment_info_array[1];
+			}
+			return application_common_constant.deployment_environment_info_array[1];
+		}
+
+		return undefined;
+	}
+
+	/**
+	 * 获取运行设备信息 
+	 */
+	const getDeviceInfo = {
+		// lib.dom.d.ts
+		// /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Navigator/userAgent) */
+		// readonly userAgent: string;
+
+		method_use_userAgent: function () {
+			if (window.navigator.userAgent) {
+				let userAgentStr = window.navigator.userAgent;
+
+				/*
+					PC 端
+						Windows 10
+							Edge
+								Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0
+
+							Google
+								Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+
+							Firefox
+								Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:142.0) Gecko/20100101 Firefox/142.0
+				
+					手机端
+						小米 Redmi Note 11
+
+						honor 8c + 华为浏览器
+							Mozilla/5.0 (Linux; Android 8.1.0; BKK-AL10; HMSCore 6.15.0.331) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.196 HuaweiBrowser/16.0.9.302 Mobile Safari/537.36
+						
+						honor 8c + UC浏览器
+							Mozilla/5.0 (Linux; U; Android 8.1.0; zh-CN; BKK-AL10 Build/HONORBKK-AL10) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/100.0.4896.58 UCBrowser/18.2.2.1448 Mobile Safari/537.36
+
+						
+				
+				*/
+				showDebugInfo(userAgentStr);
+				console.log(userAgentStr);
+
+				// 使用 JavaScript 的正则表达式来提取 第一个括号（圆括号）中的内容
+
+				// let userAgentStr = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0';
+				let re = /\(([^)]*)\)/; // 正则表达式，匹配第一个括号中的内容
+				/*
+					正则解释：
+						● \(：匹配字面量左括号 (（需转义）
+						● ([^)]*)：捕获组，匹配 任意不是右括号 ) 的字符，0次或多次
+							○ [^)]：表示“除了 ) 以外的任意字符”
+							○ *：表示匹配 0 次或多次
+						● \)：匹配字面量右括号 )
+					
+					这个正则会非贪婪地匹配第一个 (...) 的内容，即使字符串中有多个括号。 
+				*/
+				let match = userAgentStr.match(re);
+				let firstParenthesesContent = match ? match[1] : null;
+
+				// Windows NT 10.0; Win64; x64
+				console.log(firstParenthesesContent);
+				
+				const userAgentObj = {
+					OS_name: '', // 操作系统名称
+					OS_version: '', // 操作系统版本
+
+					device_name: '', // 设备名称
+
+					browser_name: '', // 浏览器名称
+					browser_version: '', // 浏览器版本
+				};
+
+				// 定义浏览器和设备的正则表达式
+				const deviceReg = {
+					Windows: /Windows NT/,
+					Mac: /Mac OS X/,
+					Linux: /Linux/,
+					iPhone: /iPhone/,
+					iPad: /iPad/,
+					Android: /Android/
+				};
+
+				const browserReg = {
+					Chrome: /Chrome/,
+					Firefox: /Firefox/,
+					Opera: /Opera/,
+					Safari: /Safari/,
+					Edge: /Edge/,
+					IE: /MSIE/,
+				};
+
+				// 提取操作系统和设备信息
+				for (let key in deviceReg) {
+					if (deviceReg[key].test(userAgentStr)) {
+						userAgentObj.OS_name = key;
+						if (key === 'Windows') {
+							userAgentObj.OS_version = userAgentStr.split('Windows NT ')[1].split(';')[0];
+						} else if (key === 'Mac') {
+							userAgentObj.OS_version = userAgentStr.split('Mac OS X ')[1].split(')')[0];
+						} else if (key === 'Linux') {
+							userAgentObj.OS_version = userAgentStr.split('Linux ')[1].split(')')[0];
+						} else if (key === 'iPhone') {
+							userAgentObj.OS_version = userAgentStr.split('iPhone OS ')[1].split(' ')[0];
+						} else if (key === 'iPad') {
+							userAgentObj.OS_version = userAgentStr.split('iPad; CPU OS ')[1].split(' ')[0];
+						} else if (key === 'Android') {
+							userAgentObj.OS_version = userAgentStr.split('Android ')[1].split(';')[0];
+							userAgentObj.device_name = userAgentStr.split('(Linux; Android ')[1].split('; ')[1].split(' Build')[0];
+						}
+					}
+				}
+
+				// 提取浏览器信息
+				Object.entries(browserReg).forEach(([key, value]) => {
+					// console.log(key, value);
+					// console.log(`key: ${key}, value: ${value}`);
+
+					if (browserReg[key].test(userAgentStr)) {
+						userAgentObj.browser_name = key;
+						if (key === 'Chrome') {
+							userAgentObj.browser_version = userAgentStr.split('Chrome/')[1].split(' ')[0];
+						} else if (key === 'Firefox') {
+							userAgentObj.browser_version = userAgentStr.split('Firefox/')[1];
+						} else if (key === 'Opera') {
+							// userAgentObj.browser_version = userAgentStr.split('Version/')[1];
+						} else if (key === 'Safari') {
+							// userAgentObj.browser_version = userAgentStr.split('Version/')[1].split(' ')[0];
+						} else if (key === 'Edge') {
+							userAgentObj.browser_version = userAgentStr.split('Edg/')[1].split(' ')[0];
+						} else if (key === 'IE') {
+							userAgentObj.browser_version = userAgentStr.split('MSIE ')[1].split(' ')[0];
+						} else {
+							return "Unknown browser"; // 其他浏览器...（可根据自己需要确定是否新增其他浏览器的判断）
+						}
+					}
+				});
+
+				return userAgentObj;
+			} else {
+				showDebugInfo("当前浏览器不支持 window.navigator.userAgent");
+
+				console.log("当前浏览器不支持 window.navigator.userAgent");
+				console.log("当前浏览器不支持 navigator.userAgent");
+
+				return null;
+			}
+		},
+
+		// https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData
+		// https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/platform
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/platform
+		// https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/getHighEntropyValues
+		// https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/getHighEntropyValues
+		
+		method_use_userAgentData: function () {
+			if (navigator.userAgentData) { 
+				let uad = window.navigator.userAgentData;
+				// console.log(uad);
+
+				/*
+					Windows 10
+						Edge
+							userAgentData:{"brands":[{"brand":"Chromium","version":"142"},{"brand":"Microsoft Edge","version":"142"},{"brand":"Not_A Brand","version":"99"}],"mobile":false,"platform":"Windows"}
+
+						Google
+							userAgentData:{"brands":[{"brand":"Chromium","version":"142"},{"brand":"Google Chrome","version":"142"},{"brand":"Not_A Brand","version":"99"}],"mobile":false,"platform":"Windows"}
+
+						Firefox
+							当前浏览器不支持 navigator.userAgentData
+				*/
+				showDebugInfo(JSON.stringify(uad));
+				console.log('userAgentData:' + JSON.stringify(uad));
+				
+				// console.log(uad.toJSON());
+				// console.log('userAgentData toJSON():' + JSON.stringify(uad.toJSON()));
+
+				// Uncaught (in promise) TypeError: Failed to execute 'getHighEntropyValues' on 'NavigatorUAData': 1 argument required, but only 0 present.
+				// console.log('userAgentData.getHighEntropyValues:' + JSON.stringify(uad.getHighEntropyValues()));
+				
+				
+				/*
+					https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/platform
+					https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/platform
+			
+					Instance properties - 实例属性
+
+						NavigatorUAData: brands property
+							The brands read-only property of the NavigatorUAData interface returns an array of brand information.
+							NavigatorUAData 接口的 brands 只读属性返回一个包含品牌信息的数组。
+							
+						NavigatorUAData: mobile property
+							The mobile read-only property of the NavigatorUAData interface returns a value indicating whether the device is a mobile device.
+							NavigatorUAData 接口的 mobile 只读属性返回一个值，指示设备是否是移动设备。
+
+						NavigatorUAData: platform property
+							The platform read-only property of the NavigatorUAData interface returns the platform brand information.
+							NavigatorUAData 接口的 platform 只读属性返回平台的品牌信息。
+				*/
+				console.log(navigator.userAgentData.brands);
+				console.log(navigator.userAgentData.mobile);
+				console.log(navigator.userAgentData.platform);
+
+				/*
+					https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/getHighEntropyValues
+					https://developer.mozilla.org/zh-CN/docs/Web/API/NavigatorUAData/getHighEntropyValues
+					
+					Instance methods - 实例方法
+
+						NavigatorUAData: getHighEntropyValues() method
+							The getHighEntropyValues() method of the NavigatorUAData interface is a Promise that resolves with a dictionary object containing the high entropy values the user-agent returns.
+							NavigatorUAData 接口的 getHighEntropyValues() 方法是一个 Promise，它使用包含用户的高熵值的字典对象进行解析代理返回。
+
+						NavigatorUAData: toJSON() method
+							The toJSON() method of the NavigatorUAData interface is a serializer that returns a JSON representation of the low entropy properties of the NavigatorUAData object.
+							NavigatorUAData 接口的 toJSON() 方法是一个序列化器，它返回 NavigatorUAData 对象的低熵属性的 JSON 表示形式。
+
+				*/
+				navigator.userAgentData.getHighEntropyValues(
+					[
+						// brands
+						// 返回包含 brand 和 version 属性的对象数组，指定浏览器品牌及其版本（与 NavigatorUAData.brands 提供的信息相同）。
+						// 请注意，此信息可以在 Sec - CH - UA 标头中发送到服务器（一个低熵客户端提示）。
+						"brands",
+						
+						// mobile
+						// 如果用户代理在移动设备上运行，则返回 true（与 NavigatorUAData.mobile 提供的信息相同）。
+						// 请注意，此信息可以在 Sec - CH - UA - Mobile 标头中发送到服务器（一个低熵客户端提示）。
+						"mobile",
+
+						// platform
+						// 返回一个描述用户代理的运行平台的字符串，例如 "Windows"（与 NavigatorUAData.platform 提供的信息相同）。
+						// 请注意，此信息可以在 Sec-CH-UA-Platform 标头中发送到服务器（一个低熵客户端提示）。
+						"platform",
+
+						// architecture
+						// 一个包含平台架构的字符串。例如，"x86"。请注意，当服务器在 Accept-CH 标头中显式请求该信息后，可以在 Sec-CH-UA-Arch 标头中将该信息发送到服务器。
+						"architecture",
+
+						// bitness
+						// 一个包含平台架构位数的字符串。例如，"32" 或 "64"。请注意，如果服务器在 Accept-CH 标头中明确请求该信息，则可以在 Sec-CH-UA-Bitness 标头中将该信息发送到服务器。
+						"bitness",
+						
+						// formFactor
+						// 一个包含设备外形规格的字符串。例如，"Tablet" 或 "VR"。请注意，如果服务器在 Accept-CH 中明确请求该信息，则可以在 Sec-CH-UA-Form-Factors 标头中将该信息发送到服务器。
+						"formFactor",
+
+						// fullVersionList
+						// 一个具有 "brand" 和 "version" 属性的对象数组，分别表示浏览器名称和完整版本。
+						// 例如，{"brand": "Google Chrome", "version": "103.0.5060.134"}, {"brand": "Chromium", "version": "103.0.5060.134"}。
+						// 请注意，一个对象可能故意包含无效信息，以防止网站依赖固定的浏览器列表。
+						// 请注意，如果服务器在 Accept-CH 中明确请求该信息，则可以在 Sec-CH-UA-Full-Version-List 标头中将该信息发送到服务器。
+						"fullVersionList",
+
+						// model
+						// 一个包含移动设备型号的字符串。例如，"Pixel 2XL"。
+						// 如果设备不是移动设备或者设备型号未知，则 model 将为 ""。
+						// 请注意，如果服务器在 Accept-CH 标头中明确请求该信息，则可以在 Sec-CH-UA-Model 标头中将该信息发送到服务器。
+						"model",
+
+						// platformVersion
+						// 一个包含平台版本的字符串。平台名称本身始终可通过低熵提示 platform 提供。例如，"10.0"。
+						// 请注意，如果服务器在 Accept-CH 中明确请求该信息，则可以在 Sec-CH-UA-Platform-Version 标头中将该信息发送到服务器。
+						"platformVersion",
+
+						// uaFullVersion
+						// 一个包含完整浏览器版本的字符串。例如，"103.0.5060.134"。已弃用，请使用 fullVersionList 替代。
+						// 请注意，如果服务器在 Accept - CH 中明确请求该信息，则可以在 Sec - CH - UA - Full - Version 标头中将该信息发送到服务器。
+						"uaFullVersion",
+
+						// wow64
+						// 一个布尔值，指示用户代理的二进制文件是否在 64 位 Windows 上以 32 位模式运行。
+						// 请注意，如果服务器在 Accept-CH 标头中明确请求该信息，则可以在 Sec-CH-UA-WoW64 标头中将该信息发送到服务器。
+
+					]
+				).then(
+					// (values) => { console.log(values) }
+					// values => { console.log(values) }
+					// values => console.log(values)
+
+					values => {
+						console.log(`平台: ${values.platform}`);
+						console.log(`平台版本: ${values.platformVersion}`);
+						console.log(`架构: ${values.architecture}`);
+						console.log(`设备型号: ${values.model}`);
+						console.log(`完整版本: ${values.uaFullVersion}`);
+					}
+				);
+
+				// console.log(navigator.userAgentData.toJSON());
+
+			} else {
+				showDebugInfo("当前浏览器不支持 window.navigator.userAgentData");
+
+				console.log("当前浏览器不支持 window.navigator.userAgentData");
+				console.log("当前浏览器不支持 navigator.userAgentData");
+
+				return null;
+			}
+			
+		},
+		
+		get_data: function () {
+			// if (window.navigator.userAgentData) {
+			if (navigator.userAgentData) {	
+				return this.method_use_userAgentData();
+			}
+			
+			// if (window.navigator.userAgent) {
+			if (navigator.userAgent) {
+				return this.method_use_userAgent();
+			}
+
+			return undefined;
+		}
+
+	}
+	
+
+	/**
+	 * 校验是否引入了 第三方 库; 如 jQuery、Lodash
+	 */
+	const checkLibrariesLoaded = {
+
+		// const inBrowser = typeof window !== 'undefined';
+		inBrowser: typeof window !== 'undefined',
+		
+		/**
+		 * 校验 jQuery 是否已引入
+		 * 
+		 * jQuery 通常会暴露全局变量 jQuery 和 $（除非使用了 noConflict() 模式）
+		 * 
+		 * 💡 注意：
+		 *     在 Node.js 环境中一般不会引入 jQuery（除非特殊用途），所以通常只在浏览器中检查。 
+		 */
+		is_jQuery_loaded: { 
+			/**
+			 * 校验 Lodash 是否已引入
+			 * 
+			 * @returns {boolean} 是否已引入 jQuery。
+			 */
+			method_1: function () { 
+				return typeof jQuery !== 'undefined';
+			},
+
+			/**
+			 * 校验 Lodash 是否已引入
+			 * 更严格一点（确保是函数）
+			 * 
+			 * @returns {boolean} 是否已引入 jQuery。
+			 */
+			method_2: function () { 
+				return typeof window !== 'undefined' && typeof window.jQuery === 'function';
+			}
+		},
+
+		/**
+		 * 校验 Lodash 是否已引入
+		 * 
+		 * Lodash 通常暴露全局变量 _（下划线）。
+		 * 
+		 * 🔍 说明：
+		 *     Lodash 的 _ 对象上有一个 VERSION 属性，格式如 "4.17.21"，但注意 Underscore.js 也有 _，不过它的 _.VERSION 不包含 "lodash" 字符串。
+		 *     因此可以通过 _.VERSION 是否存在或是否为 Lodash 特有来区分。
+		 */
+		is_lodash_loaded: { 
+			/**
+			 * 校验 Lodash 是否已引入
+			 * 
+			 * @returns {boolean} 是否已引入 Lodash。
+			 */
+			method_1: function () { 
+				return typeof _ !== 'undefined' && typeof _.isObject === 'function';
+			},
+
+			/**
+			 * 校验 Lodash 是否已引入
+			 * 
+			 * 更安全：检查是否是 Lodash 实例（避免与其他库冲突，比如 Underscore）
+			 * 
+			 * @returns {boolean} 是否已引入 Lodash。
+			 */
+			method_2: function () { 
+				return typeof _ !== 'undefined' && _.VERSION && _.VERSION.indexOf('lodash') === 0;
+			},
+
+			/**
+			 * 校验 Lodash 是否已引入
+			 * 
+			 * 更严谨的判断（推荐）：
+			 * 
+			 * @returns {boolean} 是否已引入 Lodash。
+			 */
+			method_3: function () { 
+				return (
+					typeof _ !== 'undefined' &&
+					typeof _.chain === 'function' &&   // Lodash 特有方法
+					typeof _.get === 'function' &&     // _.get 是 Lodash 特有
+					typeof _.tap === 'function'        // Lodash 常用方法
+				);
+			},
+
+			/**
+			 * 校验 Lodash 是否已引入
+			 * 
+			 * 或者直接检查构造器名称（高级用法）：
+			 * 
+			 * @returns {boolean} 是否已引入 Lodash。
+			 */
+			method_4: function () { 
+				return (
+					typeof _ === 'function' &&
+					_.prototype &&
+					_.prototype.constructor.name === 'LodashWrapper'
+				);
+			}
+		}
+	}
+
+	/**
+	 * 初始化项目相关常量
+	 */
+	let _fn_init_project_constant = (() => {
+		// console.log('立即执行箭头函数');
+		// do something immediately
+
+		// 初始化项目根路径
+		// application_config_info['project_root_path'] = getProjectRootPath(getCurrentScriptPath.method_1());
+		application_config_info.project_root_path = getProjectRootPath(getCurrentScriptPath.method_1());
+
+		// 初始化项目部署环境
+		// application_config_info['deployment_environment_info'] = getApplicationRunEnvironment();
+		application_config_info.deployment_environment_info = getApplicationRunEnvironment();
+
+		getDeviceInfo.method_use_userAgent();
+		// getDeviceInfo.method_use_userAgentData();
+		// getDeviceInfo.get_data();
+		// application_config_info.platform_browser_info = undefined;
+
+		// 第三方库加载情况
+		application_config_info.libraries_loaded.b_loaded_jQuery = checkLibrariesLoaded.is_jQuery_loaded.method_1();
+		application_config_info.libraries_loaded.b_loaded_Lodash = checkLibrariesLoaded.is_lodash_loaded.method_1();
+
+	})();
+	
+
+	/* Start - 加载 script 脚本 */
 
 	let createScriptElement = {
 		/**
@@ -1025,7 +1766,6 @@ class CommonUI {
 	}
 
 	
-
 	/**
 	 * 加载 script 脚本
 	 * 
@@ -1088,7 +1828,6 @@ class CommonUI {
 	
 
 	// 1、获取当前 CommonUI.js 的文件 src 路径
-
 	const scriptSrc = getCurrentScriptPath.method_1();
 	// const scriptSrc = getCurrentScriptPath.method_2();
 
