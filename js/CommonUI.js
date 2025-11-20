@@ -165,7 +165,7 @@ class CommonUI {
 
 		this.getDeviceInfo();
 
-		this.loadScript();
+		// this.loadScript();
 
 	}
 
@@ -1252,7 +1252,11 @@ class CommonUI {
 								Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:142.0) Gecko/20100101 Firefox/142.0
 				
 					手机端
-						小米 Redmi Note 11
+						小米 Redmi Note 11 + 小米浏览器
+							Mozilla/5.0 (Linux; U; Android 13; zh-cn; 21091116AC Build/TP1A.220624.014) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.7049.79 Mobile Safari/537.36 XiaoMi/MiuiBrowser/20.6.71104
+
+						小米 Redmi Note 11 + UC浏览器
+							Mozilla/5.0 (Linux; U; Android 13; zh-CN; 21091116AC Build/TP1A.220624.014) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/100.0.4896.58 UCBrowser/18.2.2.1448 Mobile Safari/537.36
 
 						honor 8c + 华为浏览器
 							Mozilla/5.0 (Linux; Android 8.1.0; BKK-AL10; HMSCore 6.15.0.331) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.5735.196 HuaweiBrowser/16.0.9.302 Mobile Safari/537.36

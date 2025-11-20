@@ -78,6 +78,35 @@
 			IIFE<br/>
 			https://developer.mozilla.org/en-US/docs/Glossary/IIFE<br/>
 			https://developer.mozilla.org/zh-CN/docs/Glossary/IIFE<br/>
+
+			<br/>
+			<br/>
+
+			深入理解JS(九)：IIFE，即执函数的锁域魔法<br/>
+			https://juejin.cn/post/7536495433162457103<br/>
+
+			<br/>
+
+			IIFE深度解析：JavaScript立即执行函数全面指南
+			https://juejin.cn/post/7518932901698945064
+
+			<br/>
+
+			JavaScript 立即执行函数表达式<br/>
+			https://tutorial.javascript.ac.cn/javascript-immediately-invoked-function-expression/<br/>
+
+			<br/>
+
+			深入理解JavaScript——立即执行函数（IIFE）<br/>
+			https://segmentfault.com/a/1190000042609685<br/>
+
+			<br/>
+
+			一文讲透 JavaScript 闭包与立即执行函数表达式（IIFE）<br/>
+			https://zhuanlan.zhihu.com/p/690398076<br/>
+
+			<br/>
+
 		</p>
 
 		<br/>
@@ -173,10 +202,10 @@ let _fn_load_script = (() => {
 /**
  * 初始化变量
  */
-let _fn_init_variables = ((window) => {
+let _fn_init_variables = ((window, document) => {
 	// console.log('立即执行箭头函数');
 	// do something immediately
-})(window);
+})(window, document);
 		--></code></pre>
 		
 		
