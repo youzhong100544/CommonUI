@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+@font-face {
+	/* 自定义字体名 */
+	font-family: 'MyCustomFont-AlibabaPuHuiTi-3-35-Thin';
+	
+	/* 字体路径 */
+	src: url(../../lib/font/AlibabaPuHuiTi-3/AlibabaPuHuiTi-3-35-Thin/AlibabaPuHuiTi-3-35-Thin.ttf) format('ttf'),
+		 url(../../lib/font/AlibabaPuHuiTi-3/AlibabaPuHuiTi-3-65-Medium/AlibabaPuHuiTi-3-65-Medium.ttf) format('ttf'),
+	;
+
+	/* font-weight: normal; */
+	/* font-style: normal; */
+	/*
+		font-display属性，可以控制在字体加载期间文本的渲染策略，如使用swap策略允许文本先以备用字体显示，待自定义字体加载完成后再替换。
+	*/
+	font-display: swap;
+}
+

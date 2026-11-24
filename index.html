@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+		<title>Index</title>
+
+		<link rel="icon" href="../favicon.png" type="image/png">
+		
+
+		<style>
+
+		</style>
+
+		<script>
+			/**
+			 * 转发（Forward）和重定向（Redirect）
+			 * 
+			 * 
+			 * @description 页面重定向
+			 * @author CommonUI
+			 * @date 2026-06-10
+			 */
+			const redirect = {
+				/*
+					在 JavaScript 中，可以通过 location.href、location.assign、location.replace、window.open 或 history 对象实现页面跳转。
+
+						常用跳转方法
+
+							方法1: location.href
+
+								window.location.href = "https://www.example.com";
+
+								直接设置 URL，浏览器会跳转到新页面，并保留当前页面在历史记录中，用户可以点击“后退”返回原页面。
+
+							方法2: location.assign()
+
+								window.location.assign("https://www.example.com");
+
+								与 location.href 类似，也会跳转到新页面，并保留当前页面在历史记录中。
+							
+							方法3: location.replace()
+
+								window.location.replace("https://www.example.com");
+
+								跳转到新页面，但会替换当前页面的历史记录，用户无法通过“后退”返回原页面，适合做重定向或过渡页面。
+
+							方法4: window.open()
+
+								window.open("https://www.example.com", "_blank");
+								
+								在新窗口或新标签页中打开指定的 URL，用户可以在新窗口中浏览内容，原页面保持不变。
+
+							方法5: history 对象
+
+								history.back();    // 返回上一页
+								history.forward(); // 前进到下一页
+								history.go(-1);    // 后退一页
+								history.go(1);     // 前进一页
+
+							
+								history.pushState(null, null, "https://www.example.com");
+								
+								通过修改浏览器历史记录实现页面跳转，但不会触发页面刷新，适合单页应用（SPA）中的路由管理。
+
+							方法6:
+
+						小结
+							● 保留历史记录：使用 location.href 或 location.assign()。
+							● 不保留历史记录：使用 location.replace()。
+							● 新窗口打开：使用 window.open()。
+							● 控制浏览器历史：使用 history 对象。
+							● 表单或链接跳转：适合用户交互场景。
+							
+							根据实际需求选择合适的方法，可以实现页面导航、重定向或弹窗跳转等功能。
+				*/
+				method_1: function() {
+					window.location.href = "./html/index.html";
+				},
+
+				method_2: function() {
+					window.location.assign("./html/index.html");
+				},
+
+				method_3: function() {
+					window.location.replace("./html/index.html");
+				},
+
+				method_4: function() {
+					window.open("./html/index.html", "_blank");
+				},
+				
+			};
+
+			// 3 秒后重定向到指定页面
+			setTimeout(() => {
+				redirect.method_3();
+			}, 3000);
+			
+		</script>
+		
+	</head>
+	<body>
+		<h1>CommonUI</h1>
+
+		<br/>
+		<br/>
+
+		<a href="html/index.html" target="_blank"> Index </a>
+
+		<br>
+		<br/>
+
+		<h2> 案例 </h2>
+
+		<a href="examples/login/index.html" target="_blank"> login 登录 </a>
+		
+		<br/>
+
+		<a href="examples/admin/index.html" target="_blank"> admin 后台管理 </a>
+		
+		<br/>
+
+		<br/>
+		<br/>
+
+		<h2> demo </h2>
+
+		<a href="demo/MediaQuery/index.html" target="_blank"> demo -> 媒体查询 </a>
+
+		<br>
+
+		<a href="demo/ECMAScript 6.0/module-模块/index.html" target="_blank"> demo -> ES6 Module - 模块 </a>
+
+		<br>
+
+		<a href="demo/WebComponents/index.html" target="_blank"> demo -> WebComponents </a>
+
+		<br>
+		<br>
+		<br>
+
+		<a href="demo/10_01_get_the_browser_default_font.html" target="_blank"> 小案例 -> 获取浏览器默认字体 </a>
+
+		<br>
+
+		<a href="demo/10_02_CSS_fonts.html" target="_blank"> 小案例 -> CSS 字体 </a>
+
+		<br>
+
+		<a href="demo/案例/标题自动编号/index.html" target="_blank"> 小案例 -> 标题元素自动编号 </a>
+
+		<br>
+
+		<a href="demo/案例/自定义纯手写实现代码块/index.html" target="_blank"> 小案例 -> 自定义实现代码块 </a>
+
+		<br>
+
+	</body>
+</html>

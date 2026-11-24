@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<!-- <html lang="en"> -->
+<!-- <html lang="zh-CN"> -->
+<html lang="zh-Hans-CN">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title> CommonUI - Index </title>
+
+		<!-- Start - favicon -->
+		
+		<!-- 普通 favicon -->
+		<!-- <link rel="icon" href="../favicon.ico" type="image/x-icon"> -->
+
+		<!-- PNG 格式（推荐，支持透明） -->
+		<!-- <link rel="icon" href="../favicon.png" type="image/png"> -->
+		
+		<!-- SVG 格式（推荐，支持矢量图） -->
+		<!-- <link rel="icon" href="../favicon.svg" type="image/svg+xml"> -->
+
+		<!-- Emoji -->
+		<!-- dominant-baseline: Auto/Middle/Hanging -->
+		<!-- <link rel="icon" href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text font-size='90' dominant-baseline='hanging'>🔥</text></svg>" type="image/svg+xml" > -->
+		<!-- <link rel="icon" href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text font-size='80' dominant-baseline=%22hanging%22>🍂</text></svg>" type="image/svg+xml" > -->
+		<link rel="icon" href="data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text font-size='80' dominant-baseline='hanging'>🌽</text></svg>" type="image/svg+xml" >
+
+		<!-- End - favicon -->
+
+		<!-- <link rel="stylesheet" type="text/css" href="../css/CommonUI.css" > -->
+
+		<!-- <script type="text/javascript" src="../lib/jQuery/jquery-3.7.1/jquery-3.7.1.js"></script> -->
+		<!-- <script type="text/javascript" src="../lib/Lodash/4.17.21/lodash.js"></script> -->
+		<!-- <script type="text/javascript" src="../js/CommonUI.js"></script> -->
+		
+		<style>
+
+			/* 
+			* {
+				margin: 0;
+				padding: 0;
+			} 
+			*/
+
+			p {
+				/* 不换行 */
+				white-space: nowrap;
+			}
+
+			table {
+				border: 1px solid black;
+				/* border-collapse: collapse; */
+			}
+			th, td {
+				border: 1px solid black;
+				padding: 5px;
+			}
+			tbody tr:nth-child(odd) { /* 奇数行 */
+				background-color: #7177775e;
+			}
+			tbody tr:nth-child(even) { /* 偶数行 */
+				background-color: #FFFFFF;
+			}
+			
+
+		</style>
+
+		<script>
+
+			/*
+				document.readyState
+
+					document.readyState 是浏览器原生提供的只读属性，用于反映当前文档的加载状态。
+					共 3 种状态，分别是 `loading`、`interactive` 和 `complete`。
+					它的返回值是以下三个字符串之一：
+
+					`document.readyState` 一共 **3 种状态**：
+
+					1. loading
+						文档正在加载，DOM 树还没解析完成。
+
+						此时 `<html>` 还在解析，DOM 节点拿不全。
+
+					2. interactive
+						DOM 解析完成（DOM 树构建好了），但是**图片、样式表、脚本等资源还没加载完**。
+
+						这个状态触发 `DOMContentLoaded` 事件。
+
+					3. complete
+						页面**所有资源全部加载完毕**（DOM + 图片、css、js、视频、iframe 等）。
+
+						这个状态触发 `window.load`（window.onload）事件。
+
+					三种状态
+						+----------------+-----------------------------------+--------------------------------------------------------------------------------+
+						状态值           含义                                典型触发时机
+						+----------------+-----------------------------------+--------------------------------------------------------------------------------+
+						"loading"        文档正在加载中                      HTML 解析尚未完成，DOM 树还在构建
+						"interactive"    文档已解析完毕，但子资源仍在加载    DOMContentLoaded 事件触发时；此时 DOM 可操作，但图片/样式表/iframe 等可能未加载完
+						"complete"       文档及所有子资源均已加载完成        load 事件触发时；页面完全就绪
+						+----------------+-----------------------------------+--------------------------------------------------------------------------------+
+
+					⚙️ 关键行为说明
+						● 只读属性：不能赋值修改，只能读取。
+						● 状态单向递进：loading → interactive → complete，不会回退。
+						● 与事件的对应关系：
+							○ DOMContentLoaded 触发时，readyState 变为 "interactive"
+							○ load 触发时，readyState 变为 "complete"
+						● 脚本执行时的状态：
+							○ <script> 标签内联或同步加载时，readyState 通常为 "loading"
+							○ defer 脚本执行时，readyState 为 "interactive"
+							○ async 脚本执行时，readyState 可能是 "loading" 或 "interactive"（取决于加载完成时机）
+					
+					💡 配套代码，直观看变化
+						
+						console.log(document.readyState);
+
+						document.addEventListener('readystatechange', () => {
+							console.log('readyState改变：', document.readyState);
+						})
+
+						document.addEventListener('DOMContentLoaded', () => {
+							console.log('DOMContentLoaded，状态：', document.readyState); // interactive
+						})
+
+						window.addEventListener('load', () => {
+							console.log('window load，状态：', document.readyState); // complete
+						})
+
+					⚠️ 注意事项
+						● readyState 反映的是文档本身的加载状态，不包括动态插入的资源（如后续通过 JS 添加的 <img>）。
+						● 在 SPA（单页应用）路由切换时，readyState 不会重新回到 "loading"，它只在首次页面加载时经历完整生命周期。
+						● 不要将 readyState === 'complete' 等同于“用户可以交互”；某些懒加载内容或异步数据请求可能在 complete 之后才完成。
+
+			*/
+
+
+			/*
+				document.addEventListener('DOMContentLoaded', function () {}); 与 window.addEventListener('load', function () {}); 与 window.onload = function () {} 之间的区别
+			
+				对比项        document.addEventListener('DOMContentLoaded')                 window.addEventListener('load')                      window.onload
+				触发时机      HTML 解析完成，DOM 树构建完毕（不等待图片、样式、子框架）     页面所有资源（图片、CSS、JS、iframe）全部加载完成    同 window.addEventListener('load') 事件
+				监听目标      document                                                      window                                               window
+				绑定方式      addEventListener                                              addEventListener                                     属性赋值
+				能否绑定多个  ✅ 可以                                                      ✅ 可以                                             ❌ 只能一个（后覆盖前）
+				是否覆盖      不覆盖                                                        不覆盖                                               会覆盖之前的
+				执行顺序      最早                                                          最晚                                                 与 window.addEventListener('load') 同一时机
+				兼容性        IE9+                                                          IE9+                                                 所有浏览器
+
+			
+			*/
+
+			/*
+				document.readyState / DOMContentLoaded /window.load 对比
+			*/
+			
+
+			console.log("document.readyState: %s", document.readyState);
+
+			document.addEventListener('DOMContentLoaded', () => {
+				console.log("document.addEventListener\('DOMContentLoaded'\) - 1");
+			});
+
+			document.addEventListener('DOMContentLoaded', function () {
+				console.log("document.addEventListener\('DOMContentLoaded'\) - 2");
+			});
+
+
+			window.addEventListener('load', () => {
+				console.log("window.addEventListener\('load'\) - 1");
+			});
+
+			window.addEventListener('load', function () {
+				console.log("window.addEventListener\('load'\) - 2");
+			});
+
+
+			/*
+				⚠️ 注意：window.onload 只能绑定一个函数，后绑定的会覆盖前面的。
+				如果需要绑定多个函数，建议使用 window.addEventListener('load', function() {})。
+			*/
+			window.onload = () => {
+				console.log("window.onload - 1");
+			}
+
+			window.onload = function () {
+				console.log("window.onload - 2");
+			}
+		</script>
+	</head>
+	<body>
+		
+		<h1>index</h1>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2>参考博文</h2>
+		
+		<p>
+			JavaScript | DOM事件等级<br/>
+			https://juejin.cn/post/7264920948760035380
+
+			<br/><br/>
+
+			DOM事件机制<br/>
+			https://zhuanlan.zhihu.com/p/349008526
+
+			<br/><br/>
+			
+		
+			
+		</p>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2> HTML5 和 HTML4.01 / XHTML 完整详细对比 </h2>
+
+		<table>
+			<caption><strong>汇总对比简表</strong></caption>
+			<thead>
+				<tr>
+					<th>维度</th>
+					<th>HTML4.01 / XHTML1.0</th>
+					<th>HTML5</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>DOCTYPE</th>
+					<td>长 DTD，区分 3 种模式</td>
+					<td> &lt;!DOCTYPE html&gt; 极简</td>
+				</tr>
+				<tr>
+					<th>语法</th>
+					<td>XHTML 强制严格闭合、引号、小写；错即报错</td>
+					<td>容错，空元素不用闭合，部分标签可省略结束标签</td>
+				</tr>
+				<tr>
+					<th>页面结构</th>
+					<td>div 堆砌，无语义</td>
+					<td>header/nav/article/section 等语义标签</td>
+				</tr>
+				<tr>
+					<th>音视频</th>
+					<td>依赖 Flash 插件</td>
+					<td>&lt;video&gt; `` 原生</td>
+				</tr>
+				<tr>
+					<th>表单</th>
+					<td>input 类型少，校验全靠 JS</td>
+					<td>email/date 等新类型、required/pattern 原生校验</td>
+				</tr>
+				<tr>
+					<th>绘图</th>
+					<td>无原生方案</td>
+					<td>&lt;canvas&gt; + 内嵌 SVG</td>
+				</tr>
+				<tr>
+					<th>本地存储</th>
+					<td>Cookie（4KB 限制）</td>
+					<td>localStorage、sessionStorage、IndexedDB</td>
+				</tr>
+				<tr>
+					<th>JS 能力</th>
+					<td>单线程，无后台</td>
+					<td>WebWorker、WebSocket、FileAPI、定位等</td>
+				</tr>
+				<tr>
+					<th>设计原则</th>
+					<td>结构 + 样式混杂（有 font/center 标签）</td>
+					<td>结构、样式、行为分离，样式全部交给 CSS</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+
+		<h2> &lt;!DOCTYPE html&gt; 作用 </h2>
+		
+		<p>
+			&lt;!DOCTYPE html&gt; 是 HTML 文档类型声明，必须写在 HTML 文件的第一行，放在 &lt;html&gt; 标签之前。<br/>
+			它不是 HTML 标签，没有结束标签，也不区分大小写。<br/>
+		</p>
+
+		<br/>
+
+		<h3> 主要作用 </h3>
+
+		<table>
+			<!-- <caption><strong>主要作用</strong></caption> -->
+			<thead>
+				<tr>
+					<th>作用</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>触发标准模式</td>
+					<td>告诉浏览器按 W3C 标准渲染页面，避免进入怪异模式</td>
+				</tr>
+				<tr>
+					<td>声明文档类型</td>
+					<td>告诉浏览器这是 HTML5 文档</td>
+				</tr>
+				<tr>
+					<td>保证兼容性</td>
+					<td>让页面在不同浏览器中表现更一致</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br/>
+
+		<h3> 为什么它很重要？ </h3>
+
+		<p>
+			如果缺少 &lt;!DOCTYPE html&gt;，浏览器可能会进入 怪异模式（Quirks Mode），模拟旧版浏览器的非标准渲染方式，可能导致：
+		</p>
+		<ul>
+			<li>CSS 盒模型计算异常（比如 width 包含 padding 和 border）</li>
+			<li>页面布局错乱</li>
+			<li>不同浏览器显示不一致</li>
+		</ul>
+
+		<br/>
+
+		<h3> HTML5 写法 </h3>
+
+		<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta charset=&quot;UTF-8&quot;&gt;
+		&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+		&lt;title&gt;页面标题&lt;/title&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		页面内容
+	&lt;/body&gt;
+&lt;/html&gt;
+		</pre>
+
+		<br/>
+
+		<h3> HTML 4.01 的 DOCTYPE </h3>
+
+		<table>
+			<!-- <caption><strong>主要作用</strong></caption> -->
+			<thead>
+				<tr>
+					<th>类型</th>
+					<th>写法</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Strict</td>
+					<td>
+						&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01//EN&quot; &quot;http://www.w3.org/TR/html4/strict.dtd&quot;&gt;
+					</td>
+					<td>
+						严格模式，不包含展示性、过时元素，不允许框架集
+					</td>
+				</tr>
+				<tr>
+					<td>Transitional</td>
+					<td>
+						&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+					</td>
+					<td>
+						过渡模式，允许部分过时元素和属性
+					</td>
+				</tr>
+				<tr>
+					<td>Frameset</td>
+					<td>
+						&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.01 Frameset//EN&quot; &quot;http://www.w3.org/TR/html4/frameset.dtd&quot;&gt;
+					</td>
+					<td>
+						允许使用 &lt;frameset&gt; / &lt;frame&gt;&lt;/frame&gt;
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br/>
+
+		<h3> XHTML 1.0 的 DOCTYPE </h3>
+
+		<table>
+			<!-- <caption><strong>主要作用</strong></caption> -->
+			<thead>
+				<tr>
+					<th>类型</th>
+					<th>写法</th>
+					<th>说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Strict</td>
+					<td>
+						&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+					</td>
+					<td>严格 XML 格式，不允许表现性元素</td>
+				</tr>
+				<tr>
+					<td>Transitional</td>
+					<td>
+						&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+					</td>
+					<td>允许部分过时元素</td>
+				</tr>
+				<tr>
+					<td>Frameset</td>
+					<td>
+						&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Frameset//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd&quot;&gt;
+					</td>
+					<td>允许框架集</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<br/>
+
+		<h3> XHTML 1.1 的 DOCTYPE </h3>
+
+		<pre>
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+		</pre>
+
+		<br/>
+
+		<h3> 为什么早期写法这么长？ </h3>
+
+		<p>
+			因为 HTML 4.01 和 XHTML 1.0 基于 SGML，需要通过 DOCTYPE 引用 DTD 来告诉浏览器文档遵循哪些规则。而 HTML5 不再基于 SGML，
+		</p>
+		<br/>
+
+
+		<br/>
+		<br/>
+		<hr/>
+		<hr/>
+		<br/>
+		<br/>
+		
+	</body>
+</html>

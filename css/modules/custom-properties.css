@@ -1,0 +1,164 @@
+@charset "UTF-8";
+
+/* ################################################################################################################# */
+/* # Start - CSS custom properties (variables) # */
+/* ################################################################################################################# */
+
+/* CSS custom properties (variables) */
+/* CSS 自定义属性 (变量) */
+
+:root {
+
+	/* 是否开启调试 */
+	--bEnableDebug: true;
+
+	/* 
+		颜色表示方法
+			1、关键字表示法
+			2、十六进制表示法
+			3、三位十六进制表示法
+			4、RGB(Red Green Blue)表示法
+				使用红、绿、蓝三个颜色通道的值来表示颜色，每个通道的值范围从 0 到 255。
+				例如，红色表示为rgb(255, 0, 0)，绿色表示为rgb(0, 255, 0)。
+			5、RGBA(Red Green Blue Alpha)表示法
+				涉及到透明度的元素，就用这个来表示。
+				类似于 RGB 表示法，但增加了一个表示透明度的通道（Alpha），范围从 0 到 1;
+				0 表示完全透明，1 表示完全不透明。
+			6、HSL表示法
+				色相是色轮上的度数，从 0 到 360。0 为红色，120 为绿色，240 为蓝色。
+				饱和度是一个百分比值。0% 表示灰色阴影，50% 是 50% 灰色，但可以看到其他颜色，100% 表示全色。
+				亮度也是一个百分比值。0% 为黑色，50%表示50%的光（既不暗也不亮），100% 为白色。
+			7、HSLA表示法
+				HSLA 表示法是基于色相（Hue）、饱和度（Saturation）、亮度（Lightness）的颜色模式，
+				其中的 A 同样表示 Alpha 透明度通道，控制颜色的透明度，和 RGBA 里的 A 取值类似。
+				色相值的范围是 0 到 360 度，
+				饱和度和亮度的取值范围是 0%到 100%，
+				而透明度的取值范围是从 0 到 1。
+	*/
+	/* 透明色 关键字 */
+	--global-transparent-keyword: transparent;
+
+	/* 白色 关键字 */
+	--global-white-keyword: white;
+	/* 白色 十六进制 */
+	--global-white-hex: #ffffff;
+	/* 白色 三位十六进制表示法 */
+	--global-white-hex-short: #fff;
+	/* 白色 RGB */
+	--global-white-rgb: rgb(255, 255, 255);
+	/* 白色 RGBA */
+	--global-white-rgba: rgba(255, 255, 255, 1);
+	/* 白色 HSL */
+	--global-white-hsl: hsla(0, 0%, 100%);
+	/* 白色 HSLA */
+	--global-white-hsla: hsla(0, 0%, 100%, 1);
+	
+	/* 黑色 关键字 */
+	--global-black-keyword: black;
+	/* 黑色 十六进制 */
+	--global-black-hex: #000000;
+	/* 白色 三位十六进制表示法 */
+	--global-black-hex-short: #000;
+	/* 黑色 RGB */
+	--global-black-rgb: rgb(0, 0, 0);
+	/* 黑色 RGBA */
+	--global-black-rgba: rgba(0, 0, 0, 1);
+	/* 黑色 HSL */
+	--global-black-hsl: hsla(0, 100%, 0%);
+	/* 黑色 HSLA */
+	--global-black-hsla: hsla(0, 100%, 0%, 1);
+
+
+	/* 字体 */
+	--global-font-family: "Courier New", Courier, monospace;
+	/* 仅有一个通用字体族名 */
+	/* --global-font-family: serif; */
+	/* --global-font-family: sans-serif; */
+	/* --global-font-family: monospace; */
+	/* 字体大小 */
+	--global-font-size: 1rem;
+	/* 
+		字体粗细
+		
+		normal（默认值400）
+		bold（粗体700）
+		bolder（更粗字体）
+		lighter（更细的字体）
+		100~900的整数倍，值越大字体越粗。
+	*/
+	--global-font-weight: 400;
+	/* 
+		字体样式
+
+		属性值		作用
+		normal		默认值，浏览器会显示标准的字体样式
+		italic		浏览器会显示斜体的字体样式
+		oblique		倾斜
+	*/
+	--global-font-style: normal;
+	/*
+		行高，多行间距
+	*/
+	--global-line-height: 1.5;
+	--global-background-color: #fff;
+
+
+	/* =================================================================== */
+	/* =================================================================== */
+
+
+	--base-background-color: white; 
+	--base-color: black; 
+
+	/* Start - 滚动条 ##################################################################### */
+
+	/* 垂直滚动条默认宽度 */
+	--scrollbar-default-width: 12px; 
+	/* 水平滚动条默认高度 */
+	--scrollbar-default-height: 12px; 
+
+	/* S - 默认主题 ----------------------------------------- */
+
+	/* 滚动条轨道（track）的颜色 */
+	--scrollbar-track-default-background-color: #FCFCFC; 
+	
+	/* 滚动条滑块（thumb）的颜色 */
+	--scrollbar-thumb-default-background-color: #8B8B8B; 
+	--scrollbar-thumb-hover-default-background-color: #636363; 
+	
+	/* 水平和垂直滚动条交汇处的角落区域（右下角) */
+	--scrollbar-corner-default-background-color: #FCFCFC; 
+
+	/* E - 默认主题 ***************************************** */
+
+	/* S - 亮主题 ----------------------------------------- */
+
+	/* 滚动条轨道（track）的颜色 */
+	--scrollbar-track-light-background-color: #FCFCFC; 
+	
+	/* 滚动条滑块（thumb）的颜色 */
+	--scrollbar-thumb-light-background-color: #8B8B8B; 
+	--scrollbar-thumb-hover-light-background-color: #636363; 
+	
+	/* 水平和垂直滚动条交汇处的角落区域（右下角) */
+	--scrollbar-corner-light-background-color: #FCFCFC; 
+
+	/* E - 亮主题 ***************************************** */
+
+	/* S - 暗主题 ----------------------------------------- */
+
+	/* 滚动条轨道（track）的颜色 */
+	--scrollbar-track-dark-background-color: #060608; 
+	
+	/* 滚动条滑块（thumb）的颜色 */
+	--scrollbar-thumb-dark-background-color: #676769; 
+	--scrollbar-thumb-hover-dark-background-color: #FCFCFC; 
+	
+	/* 水平和垂直滚动条交汇处的角落区域（右下角) */
+	--scrollbar-corner-dark-background-color: #060608; 
+
+	/* E - 暗主题 ***************************************** */
+
+
+	/* End - 滚动条 ===================================================================== */
+}
